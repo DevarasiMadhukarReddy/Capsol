@@ -1,0 +1,45 @@
+<template>
+    <lightning-card>
+        <h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Proposal Information</h2>
+        <br>
+        <table class="slds-table slds-p-left_medium" style="background-color:#ffffff">
+            <thead>
+                <tr class="slds-line-height_reset slds-grid slds-gutters slds-p-left_medium">
+                    <th class=" slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate slds-col" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="Platform">Platform</div>
+                    </th>
+                    <th class=" slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate slds-col" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="Branch">Branch</div>
+                    </th>
+                    <th class="slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="OSJLEName">OSJ/LE Name</div>
+                    </th>
+                    <th class="slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="TermLength">Term Length</div>
+                    </th>
+                    <th class="slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="UWType">U/W Type</div>
+                    </th>
+                    <th class="slds-size_2-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate" style="color:#080707;font-weight: bolder;font-family: SalesforceSans;font-size:16px;" title="CampaignName">Campaign Name</div>
+                    </th>
+                    <th class="slds-size_1-of-12" style="background-color:#ffffff" scope="col">
+                        <div class="slds-truncate" style="color:#080707;font-weight: bolder;font-family: Roboto;font-size:16px;" title="delete"></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="slds-m-left_medium">
+                <template for:each={rows} for:item="row" for:index="index" > 
+                    <c-proposal-row row={row} key={row.index} oninptext={handleDelete} show={row.show}>
+                    </c-proposal-row>
+                </template>
+            </tbody>
+        </table>
+        <br/>
+        <template if:true={show}>
+        <div style="text-align:center">
+            <lightning-button variant="brand" label="ADD OFFER" title="ADD OFFER" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+    </lightning-card>
+</template>

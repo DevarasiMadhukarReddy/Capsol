@@ -1,0 +1,4 @@
+<apex:page >
+    <apex:enhancedList type="Activity" height="600" rowsPerPage="25" id="ActivityList" ListId="00BU0000004A41t" customizable="True" />
+    <!-- My Activites Tab ListId="00BU0000004A41t" -->
+</apex:page>

@@ -1,0 +1,142 @@
+<!--CS-1813 Withdraw Application Amol-->
+<aura:component controller="LoanSubmitApplication"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,forceCommunity:availableForAllPageTypes"
+    access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="showMainModel" type="boolean" default="false" />
+    <aura:attribute name="loanApp" type="Loan_Application__c" />
+    <aura:attribute name="errorMsg" type="String" />
+    <aura:attribute name="loadingMsg" type="String" />
+    <aura:attribute name="ErrorData" type="String[]" default="[]" />
+    <!--Start Madhukar Reddy added -->
+    <aura:attribute name="showError" type="Boolean" default="false" />
+    <aura:attribute name="showConfirm1" type="Boolean" default="false" />
+    <aura:attribute name="showConfirm" type="Boolean" default="false" />
+    <aura:attribute name="closeLabel" type="String" default="CANCEL" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <!--Ended Madhukar Reddy added -->
+    <!--<c:submitLoanApplication recordId="{!v.recordId}" />-->
+    <!--Start Madhukar Reddy added -->
+    <div id="mainDiv" class="">
+
+        <div class="outer-div">
+
+            <aura:if isTrue="{!v.showConfirm}">
+                <aura:html tag="style">
+                    <!--   .slds-p-around–medium {
+            padding: 0rem !important;
+            }
+            .slds-modal__content{
+            overflow-y:hidden !important;
+            height:none;
+            max-height:none;
+            }
+            .cuf-content {
+            padding: 0 0rem !important;
+           
+            }-->.cuf-content {
+                    padding: 0 0rem !important;
+                    }
+                    .slds-p-around--medium {
+                    padding: 0rem !important;
+                    }
+                    .slds-modal__content{
+                    overflow-y:hidden !important;
+                    height:unset !important;
+                    max-height:unset !important;
+                    }
+                </aura:html>
+
+                <div class="modal-header slds-modal__header slds-text-heading_large field-title field-fixed">
+                    <h4 class="title slds-text-heading–medium "><b>Confirm Withdrawal</b></h4>
+                </div>
+
+                <div
+                    class="slds-modal__content slds-p-around–x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative slds-m-top_xx-large field-title  ">
+
+                    <form class="slds-form–stacked ">
+                        Do you wish to withdraw this application?
+                    </form>
+                </div>
+
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirm1}">
+                <aura:html tag="style">
+                    <!-- .slds-p-around–medium {
+            padding: 0rem !important;
+            }
+            .slds-modal__content{
+            overflow-y:unset !important;
+            height:unset !important;
+            max-height:unset !important;
+            }
+            .cuf-content {
+            padding: 0 0rem !important;
+            } -->
+                    .cuf-content {
+                    padding: 0 0rem !important;
+                    }
+                    .slds-p-around--medium {
+                    padding: 0rem !important;
+                    }
+                    .slds-modal__content{
+                    overflow-y:hidden !important;
+                    height:unset !important;
+                    max-height:unset !important;
+                    }
+                </aura:html>
+                <div
+                    class="slds-modal__content slds-p-around–x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative slds-m-top_xx-large field-title  ">
+
+
+
+                    <!-- <aura:if isTrue="{!v.loanApp == 'Error in creating an Proposals'}">
+                        <ui:message title="Warning" severity="warning" closable="false">
+                            {!v.loanApp}
+                        </ui:message>
+                    </aura:if>-->
+
+
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <center>
+
+                            <h1 class="header1"><b> Error</b></h1><br />
+                            <h2 class="header2">You cannot withdraw the application before it is submitted.</h2>
+                        </center>
+                    </div>
+
+                    <br />
+                    <!-- <aura:if isTrue="{!v.showError}">
+                        <ui:message title="Error" severity="Error" closable="false">
+                            {!v.loanApp}
+                        </ui:message>
+                    </aura:if>
+
+                    {!v.loadingMsg}-->
+                </div>
+
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirm}">
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1 slds-m-top_xx-large field-fixed ">
+                    <!--<div class="slds-text-align_center slds-m-around_x-medium"> -->
+
+                    <lightning:button variant="Neutral" class="slds-button" label="{!v.closeLabel}"
+                        onclick="{!c.closepopup}" />
+
+                    <lightning:button variant="Brand" class="slds-button" label="CONFIRM"
+                        onclick="{!c.submitapplication}" />
+
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirm1}">
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1 slds-m-top_xx-large field-fixed ">
+                    <lightning:button variant="Neutral" class="slds-button" label="{!v.closeLabel}"
+                        onclick="{!c.closepopup}" />
+
+                </div>
+            </aura:if>
+
+        </div>
+    </div>
+</aura:component>

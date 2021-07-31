@@ -1,0 +1,252 @@
+<template>
+    <!--<template for:each={acbsValue} for:item="acbs">
+        <div key={acbs.internalReferenceIdentifier}>-->
+    <div class="slds-box">
+        <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+            active-section-name={activeSections}>
+            <div class="slds-box">
+                <lightning-accordion-section class="accHeaderTitle" name="A" label={accheader}>
+                    <div class="slds-grid slds-wrap detailsHeader">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Distribution Date</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">Loan Amount</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Loan Category</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={distrubutionDateFlag}>
+                                <lightning-formatted-date-time value={creationDate}>
+                                </lightning-formatted-date-time>
+                            </template>
+                            <template if:false={distrubutionDateFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <template if:true={loanAmountFlag}>
+                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2"
+                                    value={originalAmount}></lightning-formatted-number>
+                            </template>
+                            <template if:false={loanAmountFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={loanCategoryFlag}>
+                                <label style="word-break: break-word;" class="">{loanType}</label>
+                            </template>
+                            <template if:false={loanCategoryFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsHeader">
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="">Interest Type</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <label class="">Maturity Date</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">Outstanding Balance</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue ">
+                        <div class="slds-col slds-size_1-of-3">
+                            <template if:true={interestTypeFlag}>
+                                <label style="word-break: break-word;" class="">{interestRateType}</label>
+                            </template>
+                            <template if:false={interestTypeFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <template if:true={maturityDateFlag}>
+                                <lightning-formatted-date-time value={loanPayoffDate}>
+                                </lightning-formatted-date-time>
+                            </template>
+                            <template if:false={maturityDateFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <template if:true={outstandingBalanceFlag}>
+                                <lightning-formatted-number format-style="currency" value={outstandingLoanBalance}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={outstandingBalanceFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsHeader">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Loan Rate</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Loan Status</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Payment Frequency</label>
+                        </div>
+
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={loanRateFlag}>
+                                <lightning-formatted-number format-style="decimal" value={loanRate}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number> %
+                            </template>
+                            <template if:false={loanRateFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={loanStatusFlag}>
+                                <label style="word-break: break-word;" class="">{loanStatus}</label>
+                            </template>
+                            <template if:false={loanStatusFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={paymentFrequencyFlag}>
+                                <label style="word-break: break-word;" class="">{paymentFrequency}</label>
+                            </template>
+                            <template if:false={paymentFrequencyFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsHeader">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">YTD Total Payments</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">YTD Principal Payments</label>
+                        </div>
+                        <!-- <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">Loan Payoff Date</label>
+                        </div>-->
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">YTD Interest Payments</label>
+                        </div>
+
+
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue">
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={ytdTotalPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={YTDTotal}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={ytdTotalPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <!--<div class="slds-col slds-size_1-of-3  ">
+                            <lightning-formatted-date-time value={loanPayoffDate}>
+                            </lightning-formatted-date-time>
+                        </div>-->
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <template if:true={ytdPrincipalPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={YTDPrinciple}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={ytdPrincipalPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <template if:true={ytdInterestPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={YTDInterest}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={ytdInterestPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsHeader">
+                        <!--<div class="slds-col slds-size_1-of-3 ">
+                            <label class="">Premium Per Period</label>
+                        </div>-->
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <label class="">PY Total Payments</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">PY Principal Payments</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <label class="">PY Interest Payments</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue">
+                        <!--<div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={premiumperPeriodFlag}>
+                                <lightning-formatted-number format-style="currency" value={premiumperPeriodMethod}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={premiumperPeriodFlag}>
+                                <label class="">N/A</label>
+                            </template>
+                        </div>-->
+                        <div class="slds-col slds-size_1-of-3  ">
+                            <template if:true={pyTotalPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={PYTotal}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={pyTotalPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={pyPrincipalPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={PYPrinciple}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={pyPrincipalPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 ">
+                            <template if:true={pyInterestPaymentsFlag}>
+                                <lightning-formatted-number format-style="currency" value={PYInterest}
+                                    maximum-fraction-digits="2">
+                                </lightning-formatted-number>
+                            </template>
+                            <template if:false={pyInterestPaymentsFlag}>
+                                <label class="">NA</label>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- <div class="slds-grid slds-wrap detailsHeader">
+
+                        
+                        
+                    </div>
+                    <div class="slds-grid slds-wrap detailsValue">
+
+                        
+                        
+                    </div>-->
+                </lightning-accordion-section>
+            </div>
+        </lightning-accordion>
+    </div>
+    <!--</div>
+    </template>-->
+</template>

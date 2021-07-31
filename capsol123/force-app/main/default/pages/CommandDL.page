@@ -1,0 +1,19 @@
+<apex:page controller="CommandDLContoller" >
+<apex:pageMessages />
+<apex:form >
+ <br></br>
+<apex:pageBlock rendered="{!result}">
+<apex:outputPanel > 
+Click <apex:outputLink value="/{!$CurrentPage.parameters.id}"> Here </apex:outputLink> to return to the Automated Data Processes 
+</apex:outputPanel>    
+</apex:pageBlock>
+
+<apex:pageBlock title="Information" rendered="{!hideinfo}">
+Click OK to Continue and CANCEL to go back.
+ <br></br> <br></br>
+<apex:commandButton action="{!getFileCopyConfirmation}" value="OK"/> 
+<apex:commandButton action="{!cancel}" value="Cancel"/>
+</apex:pageBlock>
+
+</apex:form>
+</apex:page>

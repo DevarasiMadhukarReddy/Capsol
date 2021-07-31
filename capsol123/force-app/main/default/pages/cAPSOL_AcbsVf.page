@@ -1,0 +1,48 @@
+<!-- Author - Madhukar Reddy Modified on 6/16/2021
+CS-3713 Loan Detail Summary - custom button (Classic)
+   -->
+   <apex:page standardController="Contact" >
+    
+    <div id="LcDisplayId"></div>
+     <!-- CS-3366 Loan Summary Page Spinner Start added by Madhukar Reddy on 6/25/2021-->
+    <apex:slds />
+    <div class="slds-scope">
+        <div id="LoadingvfDIV" role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+            <span class="slds-assistive-text">Loading</span>
+           <div class="slds-spinner__dot-a"></div>
+           <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+     <!--CS-3366 Loan Summary Page Spinner Ended added by Madhukar Reddy on 6/25/2021-->
+    <body>
+        <style>
+            article.slds-card{
+            text-align: initial;
+            border:none!important;
+            }
+            h2.slds-text-heading_medium {
+            width: 100%;
+            display: block;
+            }
+        </style>
+        <script>
+            var contId="{!contact.Id}";
+        
+        $Lightning.use("c:CapsalACBSLoandetail", function() {
+            $Lightning.createComponent("c:CapsolAcbsLoanComp",{'recordId':contId},
+                                       "LcDisplayId",
+                                       function(cmp) {
+                                //CS-3366 Loan Summary Page Spinner start added by Madhukar Reddy on 6/25/2021
+                                       var loadingDivElt = document.getElementById("LoadingvfDIV");
+                                           loadingDivElt.style.display = 'none' 
+                                //CS-3366 Loan Summary Page Spinner Ended added by Madhukar Reddy on 6/25/2021
+                                           console.log('Lightning Web Component created Successfully!!');
+                                       }
+                                       );
+        });
+        </script>
+           
+    </body>
+    
+    <apex:includeLightning />
+</apex:page>

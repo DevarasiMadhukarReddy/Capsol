@@ -1,0 +1,60 @@
+<template>
+    <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+        <template if:true={show}>
+            <div class="appcss">
+                <lightning-input type="text" label="Business Name/DBA" class="appdcss1" disabled></lightning-input>
+                <lightning-input label="Number of Advisors" class="appdcss1" disabled></lightning-input>
+                <lightning-input label="Legal Entity Type" class="appdcss1" disabled></lightning-input>
+                <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                <lightning-input label="Current Firm Type" class="appdcss1" disabled></lightning-input>
+                <lightning-input label="Current Firm Name" class="appdcss1" disabled></lightning-input>
+                <!--CS-2522 Modified by Amol 11_09_2020 End-->
+            </div>
+        </template>
+        <template if:false={show}>
+            <lightning-card>
+
+
+
+                <!--<h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Business Detail</h2>-->
+                <div class="slds-m-around_medium slds-grid slds-gutters">
+                    
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input name="businessLegalNameDBA"  onchange={handlebusinessLegalNameDBA} label = "Business Name/DBA" value={businessDetails.businessLegalNameDBA}  class="bName"></lightning-input> 
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <!--<lightning-input label="Number of Advisors" name="noOfAdvisors" class="slds-m-bottom_x-small" onchange={handlenoOfAdvisors} value={noOfAdvisors}></lightning-input>-->
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label">Number of Advisors</label>
+                            <div class="slds-form-element__control">
+                                <input type="number" class="slds-input" name="noOfAdvisors"
+                                    onchange={handlenoOfAdvisors} value={businessDetails.noOfAdvisors} />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning-combobox name="legalEntity" value={businessDetails.legalEntity}
+                            label="Legal Entity Type" options={legalEntityValues} onchange={handlelegalEntityType}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-m-around_medium slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                        <lightning-combobox name="currentRegistration" value={businessDetails.currentRegistration}
+                            label="Current Firm Type" options={currentRegistrationValues}
+                            onchange={handlecurrentRegistration}></lightning-combobox>
+                        <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                    </div>
+                      <div class="slds-col slds-size_6-of-12">
+                        <lightning-input name="currentCustodian"  onchange={handlecurrentCustodian} label = "Current Firm Name" value={businessDetails.currentCustodian} class="currentFN"></lightning-input> 
+                     </div>
+                </div>
+
+
+            </lightning-card>
+
+
+        </template>
+    </div>
+</template>

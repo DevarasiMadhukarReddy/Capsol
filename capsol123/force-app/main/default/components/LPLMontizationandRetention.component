@@ -1,0 +1,90 @@
+<apex:component controller="LPLMontizationandRetention" access="global">
+    <apex:attribute name="AcctId" type="Id" description="Id of the Loan Application" assignTo="{!Loanid}"/>
+   
+    <html>
+       <style>
+        table, th, td {
+          border: #ececec;
+          border-collapse: collapse;
+
+        }
+        th, td {
+          padding: 5px;
+          text-align: left;    
+        }
+     h3 {
+    font-weight: normal;
+        }
+       // .colHeadr {text-align:center;}     
+   
+      </style> 
+
+   <center> <h3 style="background-color:#ececec;">Approved Offer </h3></center>
+    <table style="width:100%;">
+         <thead> 
+           <!-- <tr>
+             
+                <td>Case Number</td>
+                <td>Loan Application</td> 
+                <td>Offer Date</td>
+                <td>Expiration</td>
+                <td>Borrower</td>
+                <td>Master Rep ID</td> 
+                </tr>-->
+        </thead>
+        <tbody>   
+      <apex:repeat value="{!Monetization}" var="loan"> 
+         
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Case Number</b>:&nbsp;{!loan.LoanApp_MD__r.Case_Number__r.CaseNumber}</td> 
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Borrower</b>:&nbsp;{!loan.LoanApp_MD__r.Primary_Contact_Name__r.name}</td>                
+                    
+                </tr>
+                
+                <tr>
+                    <td><b>Loan Application</b>:&nbsp;{!loan.LoanApp_MD__r.name}</td>                                     
+                    <td><b>Master Rep ID</b>:&nbsp;{!loan.LoanApp_MD__r.Contact_Master_Rep_Id__c}</td>                   
+                </tr>
+                <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Offer Date</b>:&nbsp;<apex:outputField value="{!loan.Date__c}" /></td>  
+                </tr> 
+                <tr>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Expiration</b>:&nbsp;<apex:outputField value="{!loan.Expiration__c}" /></td>
+                </tr>
+                    
+      </apex:repeat>
+   </tbody>  
+    </table>
+    <center> <h3 style="background-color:#ececec;">Forgivable Loan </h3></center>
+     <table style="width:100%;">
+         <thead> 
+           <!-- <tr>
+             
+                <td>Loan Amount ($)</td>
+                <td>Term (Years)</td>
+                <td>Interest Rate</td>
+                 </tr> -->
+        </thead>
+        <tbody>   
+      <apex:repeat value="{!Monetization}" var="loan"> 
+         
+                <tr>
+                 <!--   <td><b>Loan Amount ($)</b>:&nbsp;${!Text(loan.LoanApp_MD__r.Requested_Loan_Amount__c)}</td>-->
+                 <td><b>Loan Amount ($)</b>:&nbsp;<apex:outputField value="{!loan.Max_TA_Amount__c}" /> </td>
+                  
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;<b>Term (Years)</b>:&nbsp;{!loan.Loan_Term__c}</td>
+                  
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;<b>Interest Rate</b>:&nbsp;{!loan.Interest_Rate__c}%</td>
+                                     
+                </tr>
+                    
+      </apex:repeat>
+      
+   </tbody> 
+      </table>
+ </html>  
+</apex:component>

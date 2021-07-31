@@ -1,0 +1,18 @@
+<!-- 
+This component holds the implementation for invoking toast messages at validation
+This component is called from the "Convert Lead" quick action Button in Lead page
+History
+Date           Authors Name       Brief Description of Change
+============   ================   =======================================================================
+May-10-2021	   Karthick S		  LBSFNS-58 - Lead to Opportunity Conversion.  
+ -->
+<aura:component implements="lightning:availableForFlowActions">
+    <aura:attribute name="type" type="string" default="success" />
+    <aura:attribute name="title" type="string" />
+    <aura:attribute name="message" type="string" />    
+    <aura:attribute name="key" type="string" default="" />
+    <aura:attribute name="mode" type="string" default="dismissable" />
+    <aura:attribute name="duration" type="string" default="10" />
+    <aura:attribute name="urlLink" type="string" />
+    <aura:attribute name="urlLabel" type="string" />
+</aura:component>

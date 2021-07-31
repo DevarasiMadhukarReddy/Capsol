@@ -1,0 +1,12 @@
+.THIS.header {
+    background: rgb(247, 249, 251);
+    font-size: 1.5em;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #c1c1c3;
+}
+.THIS.createApplication {
+    display: none;
+}

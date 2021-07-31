@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,forceCommunity:availableForAllPageTypes" access="global">
+    <div class="slds-scrollable--x">
+    <iframe src="{! 'https://lplmainorg--c.visualforce.com/apex/Task_Apex_Page'}" width="100%" height="500px;" frameBorder="0"/>
+    </div>
+</aura:component>

@@ -1,0 +1,74 @@
+<apex:page controller="OppTransitionActivitiesController" tabStyle="Opportunity" sidebar="false" lightningStylesheets="true">
+
+
+<apex:pageBlock title="LPL Transition Team Activities">
+            <apex:outputText value="Lists all Transition Team activities and status. Click " />
+            <apex:outputLink title="Here" value="/sfc/#version?selectedDocumentId=0690P0000038mC8">here</apex:outputLink>
+            <apex:outputText value=" for more details of what is included on page." />
+            <br/>
+            <br/>
+ </apex:pageBlock>           
+
+  <apex:form >
+  <div align="Center" draggable="false" >
+    <apex:commandButton value="Back To Opportunity" action="{!backToOpportunity}" />
+  </div>
+  </apex:form>
+  
+  <apex:pageBlock title="Advisor Details">
+      <apex:pageBlockTable value="{!getAdvisorDetails}" var="adv" style="width:100%">
+          <apex:column headervalue="Contact Name" value="{!adv.name}" style="width:150px"/>
+          <apex:column headervalue="Contact Rep ID" value="{!adv.Rep_ID__c}" style="width:150px"/>
+          <apex:column headervalue="Contact Phone#" value="{!adv.Home_Phone__c}" style="width:150px"/>
+          <apex:column headervalue="Contact Email" value="{!adv.email__c}" style="width:150px"/>
+          <apex:column headervalue="Firm Type" value="{!adv.Firm_Type_Broker_Dealer__c}" style="width:150px"/>
+          <apex:column headervalue="Target TAT Date" value="{!adv.Target_TAT_Date__c}" style="width:150px"/>
+          <apex:column headervalue="Internal Target TAT Date" value="{!adv.Internal_Target_TAT_Date__c}" style="width:150px"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+  
+  <apex:pageBlock title="Onboarding Consultant : {!getAdvisorDetails[0].Integration_Manager__r.Name}" tabStyle="Contact" >
+      <apex:pageBlockTable value="{!getOCTaskDetails}" var="adv" style="width:100%">
+          <apex:column headervalue="Activity Type" value="{!adv.Activity_Type__c}" style="width:250px"/>
+          <apex:column headervalue="Category" value="{!adv.Category__c}" style="width:200px"/>
+          <apex:column headervalue="Status" value="{!adv.Status}" style="width:200px"/>
+          <apex:column headervalue="N/A Status" value="{!adv.Activity_with_a_Status_N_A__c}" style="width:200px"/>
+          <apex:column headervalue="Status Change Date" value="{!adv.Change_Status_Date__c}" style="width:200px"/>
+          <apex:column headervalue="Comment" value="{!adv.Description}" style="width:200px"/>
+          <apex:column headervalue="Due Date" value="{!adv.ActivityDate}" style="width:200px"/> 
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+  <apex:pageBlock title="Regional Transition Partner : {!getAdvisorDetails[0].Regional_Transition_Partner__r.Name}" tabStyle="Contact" >
+      <apex:pageBlockTable value="{!getRTPTaskDetails}" var="adv" style="width:100%">
+          <apex:column headervalue="Activity Type" value="{!adv.Activity_Type__c}" style="width:250px"/>
+          <apex:column headervalue="Category" value="{!adv.Category__c}" style="width:200px"/>
+          <apex:column headervalue="Status" value="{!adv.Status}" style="width:200px"/>
+          <apex:column headervalue="N/A Status" value="{!adv.Activity_with_a_Status_N_A__c}" style="width:200px"/>
+          <apex:column headervalue="Status Change Date" value="{!adv.Change_Status_Date__c}" style="width:200px"/>
+          <apex:column headervalue="Comment" value="{!adv.Description}" style="width:200px"/>
+          <apex:column headervalue="Due Date" value="{!adv.ActivityDate}" style="width:200px"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+  <apex:pageBlock title="Investment Transition Partner : {!getAdvisorDetails[0].Investment_Transition_Consultant__r.Name}" tabStyle="Contact" >
+      <apex:pageBlockTable value="{!getITPTaskDetails}" var="adv" style="width:100%" >
+          <apex:column headervalue="Activity Type" value="{!adv.Activity_Type__c}" style="width:250px"/>
+          <apex:column headervalue="Category" value="{!adv.Category__c}" style="width:200px"/>
+          <apex:column headervalue="Status" value="{!adv.Status}" style="width:200px"/>
+          <apex:column headervalue="N/A Status" value="{!adv.Activity_with_a_Status_N_A__c}" style="width:200px"/>
+          <apex:column headervalue="Status Change Date" value="{!adv.Change_Status_Date__c}" style="width:200px"/>
+          <apex:column headervalue="Comment" value="{!adv.Description}" style="width:200px"/>
+          <apex:column headervalue="Due Date" value="{!adv.ActivityDate}" style="width:200px"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+  <apex:pageBlock title="Transition Support Partner : {!getAdvisorDetails[0].Transition_Support_Partners__r.Name}" tabStyle="Contact" >
+      <apex:pageBlockTable value="{!getTSPTaskDetails}" var="adv" style="width:100%">
+          <apex:column headervalue="Activity Type" value="{!adv.Activity_Type__c}" style="width:250px"/>
+          <apex:column headervalue="Category" value="{!adv.Category__c}" style="width:200px"/>
+          <apex:column headervalue="Status" value="{!adv.Status}" style="width:200px"/>
+          <apex:column headervalue="N/A Status" value="{!adv.Activity_with_a_Status_N_A__c}" style="width:200px"/>
+          <apex:column headervalue="Status Change Date" value="{!adv.Change_Status_Date__c}" style="width:200px"/>
+          <apex:column headervalue="Comment" value="{!adv.Description}" style="width:200px"/>
+          <apex:column headervalue="Due Date" value="{!adv.ActivityDate}" style="width:200px"/>
+      </apex:pageBlockTable>
+  </apex:pageBlock>
+</apex:page>

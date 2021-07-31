@@ -1,0 +1,27 @@
+<template>
+    <template if:true={classic}>
+        <lightning-card style="margin-bottom:.5em;">
+            <c-classic-loan-button record-id={recordId} 
+            onproposalcancelloanapplication={cancelProposalRecord} 
+            onproposalsaveloanapplication={saveProposalRecord} 
+            onproposaleditloanapplication={editProposalRecord} 
+            onsaveloanapplication={saveRecord} 
+            oncancelloanapplication={cancelRecord} 
+            onproposeoffer={handleProposal} 
+            oneditapplication={editRecordData} 
+            
+            data-id="classicbutton" 
+            ></c-classic-loan-button>
+        </lightning-card>
+    </template>
+    <lightning-card style="padding:1em">
+        <template if:true={recordDetails}>
+            <c-wc-detail-page data-id="wcDetailPage" ondetailloanapplication={confirmoOnSave}  record-id={recordId} edit-record={editRecord} classic={classic}></c-wc-detail-page>
+        </template>
+        <template if:false={recordDetails}>
+            <c-wc-proposal-page data-id="wcProposalPage" record-id={recordId} classic={classic}></c-wc-proposal-page>
+        </template>
+    </lightning-card>
+   
+    
+</template>

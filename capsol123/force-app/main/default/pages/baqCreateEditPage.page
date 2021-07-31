@@ -1,0 +1,482 @@
+<!--#############################Change History####################
+         Requirement                                       Developer Name                   Date
+
+Ch-1    Add Branch #1,#2,#3,#4,#5,#6                        Vaibhav Wadhai                 6 july 2017
+Ch-2    Added extension                                     Vaibhav Wadhai                 7 july 2017
+CH-3    baq work order                                      Amit Verma                     17 april 2017
+Ch-4    WO# REQ0035723 Add "Prior Firm Type" field          Vaibhav Jain                    19 Feb 2019
+
+-->
+<apex:page standardController="BAQ__c" extensions="baqCreateEditController" tabStyle="BAQ__c">
+
+
+
+    <apex:form >
+        <head>        
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        </head>
+        <Apex:pageBlock title="Business Analysis Questionnaire" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>                
+            </apex:pageBlockButtons>
+              <apex:pageBlockSection title="Profile Information"></apex:pageBlockSection>
+            <html>
+                <body>
+                
+                    <div class="table" style="font-size:90%">
+                     
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                </tr> 
+                                </thead>
+                            <tbody >
+                                <tr>                                
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="Use for TAT Verification Only"/></td>             
+                                    <td class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Use_for_TAT_Verification_Only__c}" /></td>            
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="Joining RIA or Corporate"  /></td>          
+                                    <td class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Joining_RIA_or_Corporate__c}" /></td>   
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right" ><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                                                            
+                                </tr>
+                                                              
+                                
+                                <tr>
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="Status" /></td>            
+                                    <td  class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Status__c}"/>        </td>
+                                    <!--Ch-4 start-->
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="Prior Firm Type" /></td>            
+                                    <td  class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Prior_Firm_Type__c}"/>        </td>
+                                    <!--Ch-4 end-->
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="BAQ Name" /></td>            
+                                    <td class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Name}"/>        </td>                                   
+                                    <td align="right" class="hdrCaption"><apex:outputLabel value="Number of Advisors" /></td>             
+                                    <td  class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Number_of_Advisors__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                    
+                                    
+                                </tr>
+                                <tr>
+                                    <td align="right"  class="hdrCaption"><apex:outputLabel value="Opportunity" /></td>            
+                                    <td class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Opportunity__c}"/>        </td>                                   
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                    
+                                    
+                                </tr>
+                                <tr>
+                                    <td align="right"  class="hdrCaption"><apex:outputLabel value="Current Custodian" /></td>            
+                                    <td class="hdrCaptionValue"><apex:inputField value="{!BAQ__c.Current_Custodian__c}"/>        </td>                                   
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                    
+                                    
+                                </tr>
+                                
+                                
+                            
+                            <!-- </font> -->
+                            </tbody>
+                        </table>
+                    </div>
+                
+                </body>
+            </html>
+            
+            <apex:pageBlockSection title="Wealth Management Production - Annual"></apex:pageBlockSection>
+            <html>
+                <body>
+                
+                    <div class="table" style="font-size:90%">
+                        <!-- <h2>Basic Table</h2>
+                        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p> -->
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                </tr> 
+                                </thead>
+                            <tbody >
+                                <tr>                                
+                                    <td align="right"><apex:outputLabel value="AUM Mutual Funds"/></td>             
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Mutual_Funds__c}" /></td>            
+                                    <td align="right"><apex:outputLabel value="Total Fee Based AUM*"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.Total_Fee_Based_AUM_Number_Field__c}" /></td>   
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                                                            
+                                </tr>
+                                
+                                 <tr>
+                                    <td align="right"><apex:outputLabel value="Percentage of Mutual Funds Held Direct" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Percentage_of_Mutual_Funds_Held_Direct__c}"/>        </td>
+                                    <td align="right"><apex:outputLabel value="Total Avg Fee %*" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Total_Avg_Fee_Number_Field__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                   
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="AUM Variable Annuities" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Variable_Annuities__c}"/>        </td>
+                                    <td align="right"><apex:outputLabel value="Total Advisory & Brokerage AUM" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Total_Advisory_Brokerage_AUM__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                   
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="AUM Fixed Annuities" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Fixed_Annuities__c}"/>        </td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="AUM Equity" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Equity__c}"/>        </td>                                   
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                    
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="AUM Fixed Income" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Fixed_Income__c}"/> </td>                                
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                 
+                                   
+                                </tr>
+                                
+                               
+                                 <tr>
+                                     <td align="right" class="rule1"><apex:outputLabel value="AUM AI, UIT & Cash"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.AUM_Other__c}" /></td> 
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                  
+                                </tr>
+                               
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Total Transactional/Brokerage AUM" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Total_Transactional_Brokerage_AUM__c}"/></td>                                
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                    
+                                </tr>
+                                
+                                
+                            
+                            <!-- </font> -->
+                            </tbody>
+                        </table>
+                    </div>
+                
+                </body>
+            </html>
+             <apex:pageBlockSection title="Comments" Columns="1">
+                <apex:inputField value="{!BAQ__c.Additional_Comments__c}" />
+            </apex:pageBlockSection> 
+            
+          <apex:pageBlockSection title="LPL USE ONLY"></apex:pageBlockSection>
+            <html>
+                <body>
+                
+                    <div class="table" style="font-size:90%">
+                        <!-- <h2>Basic Table</h2>
+                        <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p> -->
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                </tr> 
+                                </thead>
+                            <tbody >
+                                <tr>                                
+                                    <td align="right"><apex:outputLabel value="Affiliation #1"/></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_1__c}" /></td>            
+                                    <td align="right"><apex:outputLabel value="Branch #1"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.Branch_1__c}" /></td>   
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 1"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_1__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                                                            
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Affiliation #2" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_2__c}"/> </td>
+                                    <td align="right"><apex:outputLabel value="Branch #2" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Branch_2__c}" /></td>
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 2"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_2__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                   
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Affiliation #3" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_3__c}"/> </td>
+                                    <td align="right"><apex:outputLabel value="Branch #3" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Branch_3__c}" /></td>
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 3"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_3__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                 <tr>
+                                    <td align="right"><apex:outputLabel value="Affiliation #4" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_4__c}"/> </td>
+                                    <td align="right"><apex:outputLabel value="Branch #4" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Branch_4__c}" /></td>
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 4"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_4__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Affiliation #5" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_5__c}"/> </td>
+                                    <td align="right"><apex:outputLabel value="Branch #5" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Branch_5__c}" /></td>
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 5"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_5__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Affiliation #6" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Affiliation_6__c}"/> </td>
+                                    <td align="right"><apex:outputLabel value="Branch #6" /></td>             
+                                    <td><apex:inputField value="{!BAQ__c.Branch_6__c}" /></td>
+                                    <td align="right"><apex:outputLabel value="OSJ/LE 6"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.OSJ_LE_6__c}" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Previous LPL Advisor?" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Previous_LPL_Advisor__c}"/> </td>                                   
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                    
+                                    
+                                </tr>
+                                
+                                <tr>
+                                    <td align="right"><apex:outputLabel value="Level Payout Request" /></td>            
+                                    <td><apex:inputField value="{!BAQ__c.Level_Payout_Request__c}" /></td>                                
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                 
+                                   
+                                </tr>
+                                
+                               
+                                 <tr>
+                                    <td align="right" class="rule1"><apex:outputLabel value="Request for Fee Reduction?"  /></td>          
+                                    <td><apex:inputField value="{!BAQ__c.Request_for_Fee_Reduction__c}" /></td> 
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    <td align="right"><apex:outputLabel value=""   /></td>             
+                                    <td><apex:outputLabel value="" /></td>
+                                    
+                                  
+                                </tr>
+                                 
+                            
+                            <!-- </font> -->
+                            </tbody>
+                        </table>
+                    </div>
+                
+                </body>
+            </html>
+                
+        </Apex:pageBlock>
+    </apex:form>
+</apex:page>

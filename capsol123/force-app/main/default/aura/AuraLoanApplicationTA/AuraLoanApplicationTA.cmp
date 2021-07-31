@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute type="boolean" default="true" name="classic"/>
+    <!--<c:testTA recordId="{!v.recordId}" classic="{!v.classic}"/>-->
+    <c:loanDetailComp1 recordId="{!v.recordId}" classic="{!v.classic}"/>
+    <!--<c:loanDetailButton recordId="{!v.recordId}"/>
+    <c:loanDetailComp1 recordId="{!v.recordId}"/>-->
+</aura:component>

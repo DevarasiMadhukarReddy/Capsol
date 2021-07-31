@@ -1,0 +1,38 @@
+<!-- LCR020      Opportunity - Cloud Lending create application Button functionality -->
+<aura:component controller="ApplicationCreator" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="showMainModel" type="boolean" default="false" />
+    <aura:attribute name="opp" type="Opportunity"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="loadingMsg" type="String"/>
+   
+    
+    <aura:if isTrue="{!v.showMainModel}" >
+  <aura:if isTrue="{!v.opp.BAQ__c == null}" >
+            <ui:message title="Error" severity="error">
+                CAUTION!! BAQ reference is mandatory for application creation
+            </ui:message>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.opp.BAQ__c != null}" >
+            <aura:if isTrue="{!!empty(v.errorMsg)}" >
+                <ui:message title="Error" severity="error">
+                    {!v.errorMsg}
+                </ui:message>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.opp.Application__c != null}" >
+                <ui:message title="Warning" severity="warning" aura:id="Hidemsg">
+                    There is an application already associated with this Opportunity! Do you still want to create new application?
+                </ui:message>
+                
+                <div class="slds-align_absolute-center" role="group">
+                    <lightning:button aura:id="createBtn" class="slds-button slds-button--brand" disabled="false" onclick="{!c.createApplicationHandler}">Create Application</lightning:button>
+                </div>
+            </aura:if>
+            
+            {!v.loadingMsg}
+        </aura:if>
+    </aura:if>
+</aura:component>

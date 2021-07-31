@@ -1,0 +1,57 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide various options to create EA Loan Application.
+    Story 			: CS-1107(Sprint12)
+-->
+<template>
+    <!--EA WIZARD CS-1107  User Story Sprint 12-->
+    <template if:true={wizard}>
+        <section class="">
+            <div class="loanapp-home">
+                <header class="slds-modal__header" style="width: -webkit-fill-available;padding-bottom: 3em;" >
+                    <h2  class="slds-modal__title slds-hyphenate" style="font-weight: bolder;">SELECT LOAN TYPE</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium modelcss" style="height:350px;overflow-y:scroll;" >
+                    <!--PAGE 0-->
+                    <div class="slds-align_absolute-center" style="display:block">   
+                        <div class="slds-size_2-of-2" style="margin:2em">
+                            <button title="Growth Loan" onclick={loanGrowth_Type} class="slds-m-left_x-small slds-button slds-button_brand" style="background-color: #0F6CD2; width:200px;" >Growth Loan</button>
+                            <button title="Acquisition Loan" onclick={loanAcquisition_Type} class="slds-m-left_x-small slds-button slds-button_brand" style="background-color: #0F6CD2; width:200px;" >Acquisition Loan</button>
+                        </div> 
+                     <!--Start Updated by Bhanu-->    <div class="slds-size_2-of-2" style="margin:2em">
+                           <!-- <button title="Retention Loan" onclick={loanRetention_Type} class="slds-m-left_x-small slds-button slds-button_brand" style="background-color: #0F6CD2; width:200px;" >Retention Loan</button>-->
+                           <button title="Line Of Credit" onclick={loanLOC_Type} class="slds-m-left_x-small slds-button slds-button_brand" style="background-color: #0F6CD2; width:200px;" >Line Of Credit</button>
+                            
+                           <button title="Refinance Loan" onclick={loanRefinance_Type} class="slds-m-left_x-small slds-button slds-button_brand" style="background-color: #0F6CD2; width:200px;" >Refinance Loan</button>
+                       
+                        </div> 
+                          <!--Ends-->  
+                        
+                    
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer slds-align_absolute-center">
+                <button title="zz" onclick={CloseQA} class="slds-m-left_x-small slds-button slds-button_neutral" style="border-color:#0F6CD2;color:#0F6CD2" >Cancel</button>
+            </footer>
+        </section>
+    </template>
+    <template if:false={wizard}>
+        <template if:true={RetentionWizard}>
+            <c-ea-retention-module record-id={recordId} classic={classic} onparentdata={parentClick}></c-ea-retention-module>
+        </template>
+        <template if:true={GrowthWizard}>
+            <!--GROWTH COMP-->
+        </template>
+        <template if:true={LOCWizard}>
+           <!--LINE OF CREDIT COMP-->
+        </template>
+        <template if:true={AcquisitionWizard}>
+           <!--ACQUISITION COMP-->
+        </template>
+        <template if:true={RefinanceWizard}>
+        
+        </template>
+    </template>
+</template>

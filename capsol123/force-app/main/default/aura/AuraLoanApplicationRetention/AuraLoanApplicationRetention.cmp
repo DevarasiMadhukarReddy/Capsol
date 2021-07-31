@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    
+
+    <c:eaRetentionDetailComp recordId="{!v.recordId}" classic="true" ></c:eaRetentionDetailComp>
+</aura:component>

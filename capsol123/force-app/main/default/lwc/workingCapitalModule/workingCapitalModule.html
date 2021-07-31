@@ -1,0 +1,134 @@
+<template>
+    <section class="">
+        <div class="">
+            <header class="slds-modal__header" style="width: -webkit-fill-available;padding-bottom: 3em;" >
+                <h2  class="slds-modal__title slds-hyphenate" style="font-weight: bolder;">Working Capital Loan Application</h2>
+                <div style="display:block;margin-top:1em;width: -webkit-fill-available;padding-top: 2em">
+                    <article class="slds-card">
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div class="slds-path">
+                                <div class="slds-grid slds-path__track">
+                                    <div class="slds-grid slds-path__scroller-container">
+                                        <div class="slds-path__scroller" role="application">
+                                            <div class="slds-path__scroller_inner">
+                                                <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                                    
+                                                    <li data-id="P1" class={pageCSS.P1} role="presentation">
+                                                        <a aria-selected="true" class="slds-path__link" href="javascript:void(0);" id="path-1" role="option" tabindex="0">
+                                                            <span class="slds-path__stage">
+                                                                <lightning-icon icon-name="utility:check" size="x-small" class="slds-icon slds-icon_x-small" alternative-text="Success" ></lightning-icon>
+                                                                
+                                                            </span>
+                                                            <span class="slds-path__title">Business Details</span>
+                                                        </a>
+                                                    </li>
+
+
+                                                    <li  data-id="P2" class={pageCSS.P2} role="presentation">
+                                                        <a aria-selected="false" class="slds-path__link" href="javascript:void(0);" role="option" tabindex="-1">
+                                                            <span class="slds-path__stage">
+                                                                <lightning-icon icon-name="utility:check" size="x-small" class="slds-icon slds-icon_x-small" alternative-text="Success" ></lightning-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Financial Details</span>
+                                                        </a>
+                                                    </li>
+
+
+                                                    <li  data-id="P3" class={pageCSS.P3} role="presentation">
+                                                        <a aria-selected="false" class="slds-path__link" href="javascript:void(0);"  role="option" tabindex="-1">
+                                                            <span class="slds-path__stage">
+                                                                <lightning-icon icon-name="utility:check" size="x-small" class="slds-icon slds-icon_x-small" alternative-text="Success" ></lightning-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Borrower Information</span>
+                                                        </a>
+                                                    </li>
+
+
+                                                    <li  data-id="P4" class={pageCSS.P4} role="presentation">
+                                                        <a aria-selected="false" class="slds-path__link" href="javascript:void(0);" role="option" tabindex="-1">
+                                                            <span class="slds-path__stage">
+                                                                <lightning-icon icon-name="utility:check" size="x-small" class="slds-icon slds-icon_x-small" alternative-text="Success" ></lightning-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Proposal Information</span>
+                                                        </a>
+                                                    </li>
+
+
+                                                    <li  data-id="P5" class={pageCSS.P5} role="presentation">
+                                                        <a aria-selected="false" class="slds-path__link" href="javascript:void(0);"  role="option" tabindex="-1">
+                                                            <span class="slds-path__stage">
+                                                                <lightning-icon icon-name="utility:check" size="x-small" class="slds-icon slds-icon_x-small" alternative-text="Success" ></lightning-icon>
+                                                            </span>
+                                                            <span class="slds-path__title">Review &amp; Save</span>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </header>
+
+            <template if:true={Page_Section.Page1.active}>
+                <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                   <c-wc-business-detail-comp show-header={showHeader} business-data={Data.BusinessInfo}  onhandlebusinessdata={handlebusinessdata}></c-wc-business-detail-comp>
+                </div>
+            </template>
+            <template if:true={Page_Section.Page2.active}>
+                <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                    <c-wc-financial-detail-comp show-header={showHeader} financial-data={Data.FinancialInfo} display={F2display} onhandlefinancialdata={handlefinancialdata}></c-wc-financial-detail-comp>
+                </div>
+            </template>
+            <template if:true={Page_Section.Page3.active}>
+                <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                    <!--Start Bhanu 8/13/2020 CS-1811 - Custom UI enhancement - Loan Split %-->  
+                    <c-wc-borrower-comp  quickclassic={classic} working-capitl={workingCapitl} ta-record={taRecord} hide-wizard={hideWizard} show-header={showHeader} edit-record={bEditRecord} bow-arr={Data.BorrowerInfo} onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+                 <!--End-->  
+                </div>
+            </template>
+            <template if:true={Page_Section.Page4.active}>
+                <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                    <c-wc-proposal-comp quickaction={quickaction} classic={classic}   show-header={showHeader} edit-record={pEditRecord} proposal-info={Data.ProposalInfo} onhandleproposaldata={handleproposaldata}></c-wc-proposal-comp>
+                </div>
+            </template>
+            <template if:true={Page_Section.Page5.active}>
+                <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;" >
+                    <c-wc-business-detail-comp show-header={showHeader}   business-data={Data.BusinessInfo}  onhandlebusinessdata={handlebusinessdata}></c-wc-business-detail-comp>
+                    
+                    <c-wc-financial-detail-comp show-header={showHeader} edit-record={fEditRecord}  financial-data={Data.FinancialInfo} display={F5display} onhandlefinancialdata={handlefinancialdata}></c-wc-financial-detail-comp>
+                     <!--Start Bhanu 8/13/2020 CS-1811 - Custom UI enhancement - Loan Split %--> 
+                    <c-wc-borrower-comp quickclassic={classic} working-capitl={workingCapitl} ta-record={taRecord} hide-wizard={hideWizard} show-header={showHeader}  edit-record={bEditRecord} bow-arr={Data.BorrowerInfo} onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+                    <!--End-->  
+                    <c-wc-proposal-comp quickaction={quickaction} classic={classic}  show-header={showHeader} edit-record={pEditRecord} proposal-info={Data.ProposalInfo} onhandleproposaldata={handleproposaldata}></c-wc-proposal-comp>
+                    <div>
+                        <lightning-card  >
+                            <h2 class="slds-text-heading_medium" style="text-align:center;color :#4F5861;font-weight: bold;" >Additional Comment</h2>
+                            <div>
+                                <lightning-textarea onchange={handleAdditionalComment}  name="additionalcomment" value={Data.AdditionalComments} label=""></lightning-textarea>
+                            </div>
+                        </lightning-card>
+
+                    </div>
+                </div>
+            </template>
+
+
+            <footer class="slds-modal__footer slds-align_absolute-center">
+                <template if:true={MidPage}>
+                    <lightning-button variant="neutral" label="PREVIOUS" title="PREVIOUS" onclick={prevPage} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="neutral" label="SAVE" title="SAVE" onclick={saveLoanApplication} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="brand" label="NEXT" title="NEXT" onclick={nextPage} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template if:true={Page_Section.Page5.active}>
+                    <lightning-button variant="neutral" label="PREVIOUS" title="PREVIOUS" onclick={prevPage} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button variant="neutral" label="SAVE" title="SAVE" onclick={saveLoanApplication} class="slds-m-left_x-small"></lightning-button>
+                </template>
+            </footer>
+        </div>
+    </section>
+</template>

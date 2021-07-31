@@ -1,0 +1,22 @@
+lightning-input,  
+ c-lookup-item {  
+   position: relative; 
+   border-radius: 4px;  
+   display: block;  
+ }  
+ c-lookup-item {  
+   margin: 1px 0;  
+ }  
+ lightning-input:before,  
+ c-lookup-item:before,  
+ selectoptions:before {  
+   color: #dddbda;  
+   position: absolute;  
+   top: -9px;  
+   left: 4px;  
+   background-color: #ffffff;  
+   padding: 0 4px;  
+ }  
+ selectoptions {  
+   border: solid 1px #ecebea;  
+ }

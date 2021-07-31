@@ -1,0 +1,195 @@
+<aura:component controller="LoanSubmitApplication"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader,forceCommunity:availableForAllPageTypes"
+                access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="showMainModel" type="boolean" default="false" />
+    <aura:attribute name="loanApp" type="Loan_Application__c" />
+    <aura:attribute name="errorMsg" type="String" />
+    <aura:attribute name="loadingMsg" type="String" />
+    <aura:attribute name="ErrorData" type="String[]" default="[]" />
+    <!--Start Madhukar Reddy added -->
+    <aura:attribute name="showError" type="Boolean" default="false" /> 
+    <aura:attribute name="showConfirm1" type="Boolean" default="false" /> 
+    <aura:attribute name="showConfirm" type="Boolean" default="false" />
+    <aura:attribute name="closeLabel" type="String" default="CANCEL" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="hasSubmitted" type="Boolean" />
+    <!--Ended Madhukar Reddy added -->
+    <!--<c:submitLoanApplication recordId="{!v.recordId}" />-->
+    <!--Start Madhukar Reddy added -->
+    <div id="mainDiv" class="" >
+        
+        <div class="outer-div">
+            <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner aura:id="Spinner" variant="brand" class="spinner2" />
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirm}">
+                <aura:html tag="style">
+                    <!--   .slds-p-around–medium {
+            padding: 0rem !important;
+            }
+            .slds-modal__content{
+            overflow-y:hidden !important;
+            height:none;
+            max-height:none;
+            }
+            .cuf-content {
+            padding: 0 0rem !important;
+           
+            }-->.cuf-content {
+                    padding: 0 0rem !important;
+                    }
+                    .slds-p-around--medium {
+                    padding: 0rem !important;
+                    }       
+                    .slds-modal__content{
+                    overflow-y:hidden !important;
+                    height:unset !important;
+                    max-height:unset !important;
+                    }
+                </aura:html>
+                
+                <div class="modal-header slds-modal__header slds-text-heading_large field-title field-fixed">
+                    <h4 class="title slds-text-heading–medium ">                        
+                        <aura:if isTrue="{!v.hasSubmitted == false}">
+                        <b>Confirm Submission</b>
+                        </aura:if>
+                         <aura:if isTrue="{!v.hasSubmitted}">
+                       <!-- <b>Error</b>-->
+                        </aura:if>
+                        
+                    </h4> 
+                </div>
+                
+                <div class="slds-modal__content slds-p-around–x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative slds-m-top_xx-large field-title  ">
+                    
+                    <form class="slds-form–stacked ">
+                        <aura:if isTrue="{!v.hasSubmitted == false}">
+                        <b>Do you wish to submit this application form?</b>
+                        </aura:if>
+                         <aura:if isTrue="{!v.hasSubmitted}">
+                        <b>This Loan Application is Submitted</b>
+                        </aura:if>
+                        
+                    </form>
+                </div>
+                
+            </aura:if>
+            <aura:if isTrue="{!v.showMainModel}">
+                <aura:html tag="style">
+                    <!-- .slds-p-around–medium {
+            padding: 0rem !important;
+            }
+            .slds-modal__content{
+            overflow-y:unset !important;
+            height:unset !important;
+            max-height:unset !important;
+            }
+            .cuf-content {
+            padding: 0 0rem !important;
+            } -->
+                    .cuf-content {
+                    padding: 0 0rem !important;
+                    }
+                    .slds-p-around--medium {
+                    padding: 0rem !important;
+                    }       
+                    .slds-modal__content{
+                    overflow-y:hidden !important;
+                    height:unset !important;
+                    max-height:unset !important;
+                    }
+                </aura:html>
+                <div class="slds-modal__content slds-p-around–x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative slds-m-top_xx-large field-title  ">
+                    
+                    
+                    
+                    <aura:if isTrue="{!v.loanApp == 'Error in creating an Proposals'}">
+                        <ui:message title="Warning" severity="warning" closable="false">
+                            {!v.loanApp}
+                        </ui:message>
+                    </aura:if>
+                    <aura:if isTrue="{!v.ErrorData.length>0}">
+                        
+                        <div class="slds-modal__content slds-p-around_medium slds-scrollable_y"  style="height:390px;">
+                            
+                            <ui:message title="Error" severity="error" closable="true">
+                                This Application requires this mandatory information before it can be submitted.
+                            </ui:message>
+                            <!-- <ul>
+                    <aura:iteration items="{!v.ErrorData}" var="	">
+                        <li>{!da}</li>
+                    </aura:iteration>
+                </ul>
+                </aura:if> --> <!--Commented by madhukar Reddy -->
+                            <aura:iteration items="{!v.ErrorData}" var="error">
+                                <h1 class="slds-p-around_small">{!error}</h1>
+                            </aura:iteration>
+                            
+                        </div>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.loanApp == ''}">
+                        
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <center>
+                                <img src="{!$Resource.Congrats}" />
+                                <h1 class="header1"><b>Congrats!</b></h1><br />
+                                <h2 class="header2">Your loan application has been successfully submitted</h2>
+                            </center>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.loanApp == 'Data Power'}">
+                    
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <center>
+                                
+                                <h1 class="header1"><b>Gateway Error</b></h1><br />
+                                <h2 class="header2">Application cannot be submitted at this time as
+                                an error has occurred. A ticket has been raised and a
+                                system admin will resolve and contact you in 24 hours</h2>
+                            </center>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.loanApp == 'Mule Soft'}">
+                    
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <center>
+                    
+                                <h1 class="header1"><b>Orchestration Error</b></h1><br />
+                                <h2 class="header2">Application cannot be submitted at this time as
+                                    an error has occurred. A ticket has been raised and a
+                                    system admin will resolve and contact you in 24 hours</h2>
+                            </center>
+                        </div>
+                    </aura:if>
+                    <br/>
+                    <aura:if isTrue="{!v.showError}">
+                        <ui:message title="Error" severity="Error" closable="false">
+                            {!v.loanApp}
+                        </ui:message>
+                    </aura:if>
+                    
+                    {!v.loadingMsg}
+                </div>
+                
+            </aura:if>
+            <aura:if isTrue="{!v.showConfirm}">
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1 slds-m-top_xx-large field-fixed " >
+                    <!--<div class="slds-text-align_center slds-m-around_x-medium"> -->
+                    
+                    <lightning:button variant="Neutral" class="slds-button" label="{!v.closeLabel}" onclick="{!c.closepopup}" />
+                    <aura:if isTrue="{!v.hasSubmitted == false}">
+                    	<lightning:button variant="Brand"  class="slds-button" disabled="{!v.showConfirm1}" label="CONFIRM" onclick="{!c.submitapplication}" />
+                    </aura:if>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.showMainModel}">
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1 slds-m-top_xx-large field-fixed " >
+                    <lightning:button variant="Neutral" class="slds-button" label="{!v.closeLabel}" onclick="{!c.closepopup}" />
+                    
+                </div></aura:if>
+            <!--Ended Madhukar Reddy added -->
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,93 @@
+<template>
+  <template if:true={show}>
+
+    <div class="appcss">
+      <lightning-input label="Business Name/DBA" class="appdcss1" disabled></lightning-input>
+      <lightning-input label="Number of Advisors"  class="appdcss1" disabled></lightning-input>
+      <lightning-input label="Legal Entity Type" class="appdcss1" disabled></lightning-input>
+      <lightning-input label="Current Registration" class="appdcss1" disabled></lightning-input>
+      <lightning-input label="Current Custodian" class="appdcss1" disabled></lightning-input>
+  </div>
+  </template>
+  <template if:false={show}>
+    <lightning-card>
+        
+          
+            
+        <!--<h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Business Detail</h2>-->
+        <div class="slds-m-around_medium slds-grid slds-gutters" >
+            <div class="slds-col slds-size_6-of-12">
+                <!--<lightning-input label="Business Name/DBA" name="businessLegalNameDBA" class="slds-m-bottom_x-small test" onchange={handleBusinessLegalNameDBA} value={businessLegalNameDBA}></lightning-input>-->
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" >Business Name/DBA</label>
+                    <div class="slds-form-element__control">
+                      
+                      <input type="text" data-item={index} class="slds-input" name="businessLegalNameDBA"  onchange={handlebusinessLegalNameDBA} value={businessLegalNameDBAVal} />
+                    </div>
+                  </div>
+
+
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+                <!--<lightning-input label="Number of Advisors" name="noOfAdvisors" class="slds-m-bottom_x-small" onchange={handlenoOfAdvisors} value={noOfAdvisors}></lightning-input>-->
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" >Number of Advisors</label>
+                    <div class="slds-form-element__control">
+                      <input type="text"  class="slds-input" name="noOfAdvisors" onchange={handlenoOfAdvisors} value={noOfAdvisorsVal} />
+                    </div>
+                  </div>
+            </div>
+            <div class="slds-col slds-size_3-of-12">
+              
+                <label for="FieldSelect" class="slds-form-element__label">
+                    Legal Entity Type
+                </label>
+                <select class="slds-select" name = "legalEntity" onchange={handlelegalEntityType} >
+                    <option value="None">Select</option>
+                    <option value="Individual">Individual</option>
+                    <option value="Sole Proprietorship">Sole Proprietorship</option>
+                    <option value="Partnership">Partnership</option>
+                    <option value="Corporation">Corporation</option>
+                    <option value="Limited Liability Company">Limited Liability Company</option>
+                </select>
+            </div>
+        </div>
+        <div class="slds-m-around_medium slds-grid slds-gutters">
+            <div class="slds-col slds-size_6-of-12">
+              <label for="Current Registration" class="slds-form-element__label slds-no-flex iHead">
+                Current Registration
+            </label>
+            <select class="slds-select" name = "legalEntity" onchange={handlecurrentRegistration} >
+               <!-- <option value="IRA Only">IRA Only</option>-->
+              <!--  <option value="Broker/Dealer">Broker/Dealer</option>-->
+               <!-- <option value="Hybrid IRA/Dual-Registered">Hybrid IRA/Dual-Registered</option>-->
+               <option value="Broker dealer">Broker dealer</option>
+               <option value="RIA">RIA</option>
+               <option value="Dual Registered">Dual Registered</option>
+
+            </select>
+                <!--<lightning-input label="Current Registration" class="slds-m-bottom_x-small"></lightning-input>-->
+                <!--<div class="slds-form-element">
+                    <label class="slds-form-element__label" >Current Registration</label>
+                    <div class="slds-form-element__control">
+                      <input type="text"  placeholder="Status" name="currentRegistration" onchange={handlecurrentRegistration} class="slds-input" value={currentRegistrationVal}  />
+                    </div>
+                  </div>-->
+            </div>
+            <div class="slds-col slds-size_6-of-12">
+                <!--<lightning-input label="Current Custodian" class="slds-m-bottom_x-small"></lightning-input>-->
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" >Current Custodian</label>
+                    <div class="slds-form-element__control">
+                      <input type="text"  placeholder="Status" name="currentCustodian" onchange={handlecurrentCustodian} value={currentCustodianVal} class="slds-input"  />
+                    </div>
+                  </div>
+            </div>
+        </div>
+      
+      
+    </lightning-card>
+    </template>
+
+</template>

@@ -1,0 +1,13 @@
+.appcss{
+    display:inline-flex;
+    width:100%;
+    font-size:11px;
+}
+.appdcss{
+    margin:1em!important;
+    width:33%;
+}
+label.slds-input.lblInput{
+    border:none!important;
+    padding:0!important;
+}

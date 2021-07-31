@@ -1,0 +1,148 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide the option to Enter Financial Details.
+    Story 			: CS-1325(Sprint13)
+-->
+<template>
+    <lightning-card>
+        <template if:true={quickAction}>
+            <template if:true={lastPage}>
+                <h2  class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Financial Details</h2>
+                <div style="    display: inline-flex; margin: 2em auto 0 2em; width: 100%;">
+                    <lightning-input style="width:23.6%;margin-right:1em;" onchange={LoanAmountChange} label="Requested Loan Amount" onkeypress={checkNumberlength}  value={financialData.LoanAmount}  type="number" min="0" formatter="currency" step="0.01" class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-combobox style="width:23.6%;margin-left:1em;margin-right:1em;" onchange={LoanTermChange}  value={financialData.LoanTerm}  name="RequestedLoanTerm"  label="Requested Loan Term" options={YearPicklistValues} ></lightning-combobox>
+                    <lightning-input style="width:23.6%;margin-left:1em;margin-right:1em;" onchange={IntrestRateChange} label="Interest Rate" onkeypress={checkNumberlength1}  value={financialData.IntrestRate} type="number" min="0" formatter="percent-fixed" step="0.01" class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-input style="width:23.6%;margin-left:1em;margin-right:2em;" type="date" date-style="short" label="Requested Funding Date" onchange={FundingDateChange} value={financialData.FundingDate} ></lightning-input>
+                </div>
+            </template>
+            <template if:false={lastPage}>
+                <div class="slds-size_2-of-2" style="margin:1em;display:flex">
+                    <lightning-input style="width:50%;margin:1em" onchange={LoanAmountChange} label="Requested Loan Amount" onkeypress={checkNumberlength}  value={financialData.LoanAmount}  type="number" min="0" formatter="currency" step="0.01" class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-combobox style="width:50%;margin:1em" onchange={LoanTermChange}  value={financialData.LoanTerm}  name="RequestedLoanTerm"  label="Requested Loan Term" options={YearPicklistValues} ></lightning-combobox>
+                </div>
+                <div class="slds-size_2-of-2" style="margin:1em;display:flex">
+                    <lightning-input style="width:50%;margin:1em" onchange={IntrestRateChange} label="Interest Rate" onkeypress={checkNumberlength1}  value={financialData.IntrestRate} type="number" min="0" formatter="percent-fixed" step="0.01" class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-input style="width:50%;margin:1em" type="date" date-style="short" label="Requested Funding Date" onchange={FundingDateChange} value={financialData.FundingDate} ></lightning-input> 
+                </div>
+
+            </template>
+
+        </template>
+        <template if:false={quickAction}>
+
+            <template if:true={editRecord}>
+                <div style="    display: inline-flex; width: 100%;">
+                    <lightning-input style="width:23.6%;margin-left:1em" onchange={LoanAmountChange} label="Requested Loan Amount" onkeypress={checkNumberlength}  value={financialData.LoanAmount}  type="number" min="0" formatter="currency" step="0.01" class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-combobox style="width:23.6%;margin-left:1em" onchange={LoanTermChange}  value={financialData.LoanTerm}  name="RequestedLoanTerm"  label="Requested Loan Term" options={YearPicklistValues} ></lightning-combobox>
+                    <lightning-input style="width:23.6%;margin-left:1em" onchange={IntrestRateChange} label="Interest Rate" onkeypress={checkNumberlength1}  value={financialData.IntrestRate} type="number" min="0" formatter="percent-fixed" step="0.01"  class="slds-m-bottom_x-small"></lightning-input>
+                    <lightning-input style="width:23.6%;margin-left:1em" type="date" date-style="short" label="Requested Funding Date" onchange={FundingDateChange} value={financialData.FundingDate} ></lightning-input>
+                </div>
+                <div class="appcss" style=" display: inline-flex;  width: 100%;">
+                    <div class="slds-form-element appdcss" style="width:23.6%;margin-left:1em">
+                        <label class="slds-form-element__label" >Total Advisory AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalAdvisoryAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" style="width:23.6%;margin-left:1em">
+                        <label class="slds-form-element__label" >Total Brokerage AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalBrokerageAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss " style="width:23.6%;margin-left:1em">
+                        <label class="slds-form-element__label" >Total AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:false={editRecord}>
+               <!---Bhanu changes Start-->    <div class="appcss">
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Requested Loan Amount</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.LoanAmount} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Requested Loan Term</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{financialData.LoanTerm}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Interest Rate</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{financialData.IntrestRate} %</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Requested Funding Date</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{financialData.FundingDate}</label>
+                        </div>
+                    </div>  <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label" ></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div> </div>  <div class="slds-form-element appdcss">
+                            <label class="slds-form-element__label" ></label>
+                            <div class="slds-form-element__control">
+                                <label class="slds-input lblInput"> </label>
+                            </div> </div>
+                </div>
+                <div class="appcss">
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Total Advisory AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalAdvisoryAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Total Brokerage AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalBrokerageAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss" >
+                        <label class="slds-form-element__label" >Total AUM</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <lightning-formatted-number value={financialData.TotalAUM} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                            </label>
+                        </div>
+                    </div> <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label" ></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div> </div>  <div class="slds-form-element appdcss">
+                            <label class="slds-form-element__label" ></label>
+                            <div class="slds-form-element__control">
+                                <label class="slds-input lblInput"> </label>
+                            </div> </div> <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label" ></label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> </label>
+                                </div> </div>
+                </div>  <!---Bhanu changes Ends--> 
+            </template>
+        </template>
+
+    </lightning-card>
+    
+</template>

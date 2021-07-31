@@ -1,0 +1,28 @@
+<apex:page standardController="Contact" sidebar="False">
+    
+    <div id="LcDisplayId"></div>
+    <body>
+        <style>
+            article.slds-card{
+            text-align: initial;
+            border:none!important;
+            }
+            h2.slds-text-heading_medium {
+            width: 100%;
+            display: block;
+            }
+        </style>
+        <script>
+        var conId="{!Contact.Id}";
+        //alert(oppId);
+        $Lightning.use("c:customUIfromVF", function() {
+            $Lightning.createComponent("c:EALoanComp",{'recordId':conId,'classic':true},"LcDisplayId",
+                                       function(cmp) {
+                                           cmp.set('v.classic',true);
+                                           console.log('Component created, do something cool here');
+                                       });
+        });
+        </script>
+    </body>
+    <apex:includeLightning />
+</apex:page>

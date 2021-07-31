@@ -1,0 +1,1492 @@
+<template>
+    <template if:true={classic}>
+        <lightning-card style="margin-bottom:.5em;">
+            <c-classic-loan-button data-id="classicbuttonTA" record-id={recordId}  onproposalcancelloanapplication={cancelProposalRecord}
+                onproposalsaveloanapplication={saveProposalRecord} onproposaleditloanapplication={editProposalRecord}
+                onsaveloanapplication={saveRecord} oncancelloanapplication={cancelRecord}
+                onproposeoffer={handleProposal} oneditapplication={editRecord}></c-classic-loan-button>
+        </lightning-card>
+    </template>
+    <template if:true={lData}>
+        <lightning-card>
+            <lightning-accordion allow-multiple-sections-open="true" active-section-name={activeSection}>
+                <template if:false={ProposalRecord}>
+                    <lightning-accordion-section name="Application_Info" label="Application Information"
+                        class="slds-accordion__summary">
+                        <div class="appcss">
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Application Number</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> <a
+                                            onclick={recordlink}>{lData.zz.AW.ApplicationNumber}</a></label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Status</label>
+                                <div class="slds-form-element__control">
+                                    <label style="font-weight: bold;color:#666666"
+                                        class="slds-input lblInput">{lData.zz.AW.Status}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Loan Purpose</label>
+                                <div class="slds-form-element__control">
+                                    <label style="font-weight: bold;color:#666666"
+                                        class="slds-input lblInput">{lData.zz.AW.LoanPurpose}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Loan Category</label>
+                                <div class="slds-form-element__control">
+                                    <label style="font-weight: bold;color:#666666"
+                                        class="slds-input lblInput">{lData.zz.AW.LoanType}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Application Type</label>
+                                <div class="slds-form-element__control">
+                                    <label style="font-weight: bold;color:#666666"
+                                        class="slds-input lblInput">{lData.zz.AW.ApplicationType}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">  <label class="slds-form-element__label">Record Type</label>
+                                <div class="slds-form-element__control"> <label style="font-weight: bold;color:#666666"
+                                        class="slds-input lblInput">{lData.zz.SDW.RecordTypeName}</label>
+                                </div> </div> </div></lightning-accordion-section>                    <lightning-accordion-section name="Bussiness_Info" label="Bussiness Details">
+                        <div class="appcss"><template if:false={EditRecord}>
+                                <div class="slds-form-element appdcss"><label class="slds-form-element__label">Business Name/DBA</label>
+                                    <div class="slds-form-element__control"><label class="slds-input lblInput"
+                                            style="word-break: break-word;">{lData.zz.BSW.BusinessLegalNameDBA}</label>
+                                    </div>   </div>  <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">Number of Advisors</label>
+                                    <div class="slds-form-element__control"> <label style="font-weight: bold;color:#666666;word-break: break-word;"
+                                            class="slds-input lblInput">{lData.zz.BSW.Advisor}</label>
+                                    </div> </div>  <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">Legal Entity Type</label>
+                                    <div class="slds-form-element__control">
+                                        <label style="font-weight: bold;color:#666666"
+                                            class="slds-input lblInput">{lData.zz.BSW.LegalEntityType}</label>
+                                    </div></div> <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">Current Firm Type</label> <!--CS-2522 Modified by Amol 11_09_2020 -->
+                                    <div class="slds-form-element__control"> <label style="font-weight: bold;color:#666666"
+                                            class="slds-input lblInput">{lData.zz.BSW.CurrentRegistration}</label>
+                                    </div>  </div>
+                                <div class="slds-form-element appdcss"><label class="slds-form-element__label">Current Firm Name</label> <!--CS-2522 Modified by Amol 11_09_2020 -->
+                                    <div class="slds-form-element__control"> <label style="font-weight: bold;color:#666666;word-break: break-word;"
+                                            class="slds-input lblInput">{lData.zz.BSW.CurrentCustodian}</label>                                    </div>
+                                </div> <div class="slds-form-element appdcss"> <label class="slds-form-element__label"></label>
+                                    <div class="slds-form-element__control"> <label class="slds-input lblInput"> </label>
+                                    </div></div></template>  <template if:true={EditRecord}>
+                                <lightning-input type="text" label="Business Name/DBA" class="appdcss bName" data-id="BusinessName"
+                                  value={lData.zz.BSW.BusinessLegalNameDBA} onchange={handleChangeBusinessName} ></lightning-input>
+                                <lightning-input type="number" label="Number of Advisors" class="appdcss"
+                                    data-id="Advisor" value={lData.zz.BSW.Advisor}></lightning-input>
+                                <lightning-combobox options={LegalEntity} label="Legal Entity Type" class="appdcss"
+                                    data-id="EntityType" value={lData.zz.BSW.LegalEntityType}></lightning-combobox>
+                                <lightning-combobox label="Current Firm Type" options={Registration} class="appdcss"
+                                    data-id="Registration" value={lData.zz.BSW.CurrentRegistration}></lightning-combobox> <!--CS-2522 Modified by Amol 11_09_2020 -->
+                                <lightning-input label="Current Firm Name" class="appdcss currentFN" data-id="CurrentCustodian"
+                                    value={lData.zz.BSW.CurrentCustodian} onchange={handleChangeCurrentCustodian} ></lightning-input> <!--CS-2522 Modified by Amol 11_09_2020 -->
+                                </template>
+                        </div> </lightning-accordion-section><lightning-accordion-section name="Financial_Info" label="Financial Details">
+                        <lightning-card><h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder">Financial
+                                Details</h2> <div class="slds-grid slds-wrap"><div class="slds-size_1-of-2" style="padding: 1em 0em;border-right: 1px solid #DDDBDA;margin-top: 3em;">
+                                    <h2 class="slds-text-heading_medium" style="width:200px;font-family: arial,medium;font-size: 18px;line-height: 14px;text-align:center;font-weight:bold">
+                                        AUM/Product Mix</h2> <div><h3 class="slds-text-heading_small" style="text-align:center;margin:2em 0 0">
+                                            MUTUAL FUNDS </h3> <div
+                                            style="margin-bottom:1px solid black;padding:1em;border-bottom:1px solid #DDDBDA">
+                                            <table> <tr> <td style="padding:1em 0em;width:30%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        <span>Mutual Funds (Directly Held)</span></td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;width:50%;text-align:left">
+
+                                                        <template if:true={EditRecord}>
+                                                            <lightning-input data-id="mfdh" onfocus={checkData}
+                                                                type="number" name="mfdh" value={mfdh}
+                                                                formatter="currency" step="0.01" label=""
+                                                                class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                                disabled={edisabled}></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="mfdh" format-style="currency"
+                                                                maximum-fraction-digits="2" value={mfdh}>
+                                                            </lightning-formatted-number>
+                                                        </template>
+
+                                                    </td>
+
+                                                    <td style="width:20%">
+                                                        {PercentData.mfdh} %
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style="padding:1em 0em;width:30%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        <Span>Mutual Funds (Custodied)</Span></td>
+                                                    <td
+                                                        style="padding-left: 2em;padding-right: 2em;width:50%;text-align:left">
+
+                                                        <template if:true={EditRecord}>
+                                                            <lightning-input data-id="mfc" onfocus={checkData}
+                                                                type="number" name="mfc" value={mfc}
+                                                                formatter="currency" step="0.01" label=""
+                                                                class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                                disabled={edisabled}></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="mfc" format-style="currency"
+                                                                maximum-fraction-digits="2" value={mfc}>
+                                                            </lightning-formatted-number>
+                                                        </template></td> <td style="width:20%"> {PercentData.mfc} %</td>                                              </tr>
+                                            </table></div> </div> <div> <h3 class="slds-text-heading_small" style="text-align:center;margin:2em 0 0">
+                                            BROKERAGE FUNDS </h3> <div  style="margin-bottom:1px solid black;padding:1em 2em;border-bottom:1px solid #DDDBDA">
+                                            <table> <tr><td style="padding:1em 0em;width:30%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Total Mutual Funds</td> <td  style="padding-left: 3em;padding-right: 2em;width:50% ;text-align: left;">
+                                                        &nbsp; <lightning-formatted-number format-style="currency"
+                                                            maximum-fraction-digits="2" value={TotMFC}>     </lightning-formatted-number> &nbsp; (calculated)
+                                                    </td><td style="width:20%">{PercentData.totMFC} %</td> </tr>
+                                                <tr><td style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Variable Annuities</td><td style="padding-left: 2em;padding-right: 2em;text-align:left">
+                                                        <template if:true={EditRecord}> <lightning-input data-id="va" onfocus={checkData}
+                                                                type="number" name="va" value={va} formatter="currency"
+                                                                step="0.01" label="" class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM} disabled={edisabled}>
+                                                            </lightning-input>   </template>  <template if:false={EditRecord}>
+                                                            <lightning-formatted-number  style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="va" format-style="currency"
+                                                                maximum-fraction-digits="2" value={va}>
+                                                            </lightning-formatted-number>
+                                                        </template></td>
+                                                    <td>{PercentData.va} %</td></tr> <tr>
+                                                    <td  style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Fixed Annuities</td> <td style="padding-left: 2em;padding-right: 2em;text-align:left">
+                                                        <template if:true={EditRecord}> <lightning-input data-id="fa" onfocus={checkData}
+                                                                type="number" name="fa" value={fa} formatter="currency"
+                                                                step="0.01" label="" class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM} disabled={edisabled}>
+                                                            </lightning-input></template> <template if:false={EditRecord}>
+                                                            <lightning-formatted-number style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="fa" format-style="currency"
+                                                                maximum-fraction-digits="2" value={fa}>
+                                                            </lightning-formatted-number>   </template>
+                                                    </td><td>{PercentData.fa} %</td></tr><tr><td style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Equity</td><td style="padding-left: 2em;padding-right: 2em;text-align:left">
+                                                        <template if:true={EditRecord}>                                                            <lightning-input data-id="eq" onfocus={checkData}
+                                                                type="number" name="eq" value={eq} formatter="currency"
+                                                                step="0.01" label="" class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM} disabled={edisabled}>
+                                                            </lightning-input>
+                                                        </template>  <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="eq" format-style="currency"
+                                                                maximum-fraction-digits="2" value={eq}>
+                                                            </lightning-formatted-number>
+                                                        </template>  </td>  <td>{PercentData.eq} %</td>
+                                                </tr><tr><td style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Fixed Income</td>   <td style="padding-left: 2em;padding-right: 2em;text-align:left">
+                                                        <template if:true={EditRecord}>
+                                                            <lightning-input data-id="fi" onfocus={checkData}
+                                                                type="number" name="fi" value={fi} formatter="currency"
+                                                                step="0.01" label="" class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM} disabled={edisabled}>
+                                                            </lightning-input>  </template>
+                                                        <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="fi" format-style="currency"
+                                                                maximum-fraction-digits="2" value={fi}>
+                                                            </lightning-formatted-number>
+                                                        </template>
+
+                                                    </td><!---Start CS-2745- Fixed income percentage calculation-->
+                                                    <td>{PercentData.fi} %</td><!---Ends-->           </tr>
+                                                <tr>   <td   style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        AI, UIT & Cash</td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;text-align:left;">
+
+                                                        <template if:true={EditRecord}>
+                                                            <lightning-input data-id="aiuitCash" onfocus={checkData}
+                                                                type="number" name="aiuitCash" value={aiuitCash}
+                                                                formatter="currency" step="0.01" label=""
+                                                                class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                                disabled={edisabled}></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="aiuitCash" format-style="currency"
+                                                                maximum-fraction-digits="2" value={aiuitCash}>
+                                                            </lightning-formatted-number>
+                                                        </template> </td> <td>{PercentData.aiuitCash} %</td>                                                </tr>
+                                            </table> </div><div style="padding: 1em;">
+                                            <table> <tr><td   style="padding:1em 0em;text-align:right;width: 30%;color:#003B71;margin-bottom:4px;">
+                                                        Total Brokerage Funds</td>   <td
+                                                        style="padding-left: 3em;padding-right: 2.3em;width:50%;text-align: left;">
+                                                        &nbsp; <lightning-formatted-number format-style="currency"
+                                                            maximum-fraction-digits="2" value={totBAUM}>
+                                                        </lightning-formatted-number> &nbsp; (calculated)
+                                                    </td>  <td style="padding: 2em;width:20%;white-space: nowrap;">
+                                                        {PercentData.totBAUM} %</td>
+                                                </tr>  <tr> <td  style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Total Advisory AUM</td> <td style="padding-left: 2em;padding-right: 2em;text-align:left;">
+
+                                                        <template if:true={EditRecord}>
+                                                            <lightning-input data-id="totAdvAum" onfocus={checkData}
+                                                                type="number" name="totAdvAum" value={totAdvAum}
+                                                                formatter="currency" step="0.01" label=""
+                                                                class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                                disabled={edisabled}></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={EditRecord}>
+                                                            <lightning-formatted-number
+                                                                style="font-weight: bold;color:#666666;padding: 1em;"
+                                                                data-id="totAdvAum" format-style="currency"
+                                                                maximum-fraction-digits="2" value={totAdvAum}>
+                                                            </lightning-formatted-number>
+                                                        </template>
+
+                                                    </td>
+                                                    <td> {PercentData.totAdvAum} %</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        style="padding:1em 0em;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                        Total AUM</td>
+                                                    <td style="padding-left: 3em;padding-right: 2em;text-align: left;">
+                                                        &nbsp; <lightning-formatted-number format-style="currency"
+                                                            maximum-fraction-digits="2" value={totAUM}>
+                                                        </lightning-formatted-number> &nbsp; (calculated)
+                                                    </td>
+                                                    <td style="padding: 2em;width:20%;white-space: nowrap;">
+                                                        {PercentData.totAUM} %</td>
+
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2" style="padding:1em;margin-top: 3em;">
+                                    <h2 class="slds-text-heading_medium" style="text-align:left;font-weight:bold">
+                                        Production GDC</h2>
+
+                                    <div style="margin:2em 0em">
+                                        <table>
+                                            <tr>
+                                                <td
+                                                    style="padding:1em 0em;width:40%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                    Advisory GDC</td>
+                                                <td
+                                                    style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+
+                                                    <template if:true={EditRecord}>
+                                                        <lightning-input data-id="advRev" onfocus={checkData}
+                                                            type="number" name="advRev" value={advRev}
+                                                            formatter="currency" step="0.01" label=""
+                                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                            disabled={edisabled}></lightning-input>
+                                                    </template>
+
+                                                    <template if:false={EditRecord}>
+                                                        <lightning-formatted-number
+                                                            style="font-weight: bold;color:#666666;padding: 1em;"
+                                                            data-id="advRev" format-style="currency"
+                                                            maximum-fraction-digits="2" value={advRev}>
+                                                        </lightning-formatted-number>
+                                                    </template>
+
+                                                </td>
+                                                <td style="width:20%"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td
+                                                    style="padding:1em 0em;width:40%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                    Brokerage GDC</td>
+                                                <td
+                                                    style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+
+                                                    <template if:true={EditRecord}>
+                                                        <lightning-input data-id="broRev" onfocus={checkData}
+                                                            type="number" name="broRev" value={broRev}
+                                                            formatter="currency" step="0.01" label=""
+                                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}
+                                                            disabled={edisabled}></lightning-input>
+                                                    </template>
+
+                                                    <template if:false={EditRecord}>
+                                                        <lightning-formatted-number
+                                                            style="font-weight: bold;color:#666666;padding: 1em;"
+                                                            data-id="broRev" format-style="currency"
+                                                            maximum-fraction-digits="2" value={broRev}>
+                                                        </lightning-formatted-number>
+                                                    </template>
+
+
+                                                </td>
+                                                <td style="width:20%"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td
+                                                    style="padding:1em 0em;width:40%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                    Total GDC</td>
+                                                <td
+                                                    style="padding-left: 3em;padding-right: 2em;width:45%;text-align: left;">
+                                                    <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={totProduction}>
+                                                    </lightning-formatted-number> &nbsp; (calculated)
+                                                </td>
+                                                <td style="width:20%"></td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    style="padding:1em 0em;width:40%;text-align:right;color:#003B71;margin-bottom:4px;">
+                                                    % GDC ROA</td>
+                                                <td
+                                                    style="padding-left: 3em;padding-right: 2em;width:40%;text-align: left;">
+                                                    <lightning-formatted-number maximum-fraction-digits="2" value={GDC}>
+                                                    </lightning-formatted-number> (calculated)
+
+                                                </td>
+                                                <td style="width:20%"></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </lightning-card>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Borrower_Info" label="Borrower Details"
+                        class="TALoan slds-accordion__summary">
+                        <c-wc-borrower-comp edit-record={bEditRecord} working-capitl={workingCapitl}
+                            ta-record={taRecord} hide-wizard={hideWizard} bow-arr={Data.BorrowerInfo}
+                            onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Proposal_Info" label="Proposal Details">
+                        <c-proposal-comp1 data-id="prop" edit-proposal={EditRecord}></c-proposal-comp1>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Additional_Info" label="Additional Comments ">
+                        <template if:false={EditRecord}>
+                            <pre>{lData.zz.AdditionalComment}</pre>
+                        </template>
+                        <template if:true={EditRecord}>
+                         <!--   <lightning-textarea class="slds-textarea Addcomment" style="height:160px"
+                                data-id="AdditionalComment">{lData.zz.AdditionalComment}</lightning-textarea>-->
+
+                        <lightning-textarea name="additionalcomment" data-id="AdditionalComment" label=""
+                                        value={lData.zz.AdditionalComment} onchange={handleChangeAdditionalComments} class="Addcomment"></lightning-textarea>
+                              
+                        </template>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Additional_Contacts" label="Additional Contacts">
+                        <div class="appcss">
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Assigned Recruiter</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput">
+                                        <template if:true={lData.zz.ACW.AssignedRecruiterId}>
+                                            <a
+                                                href={lData.zz.ACW.AssignedRecruiter_Link}>{lData.zz.ACW.AssignedRecruiterName}</a>
+                                        </template>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Internal Recruiter(RD)</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput">
+                                        <template if:true={lData.zz.ACW.InternalRecruiterId}>
+                                            <a
+                                                href={lData.zz.ACW.InternalRecruiter_Link}>{lData.zz.ACW.InternalRecruiterName}</a>
+                                        </template>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Business Development</label>
+
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput">
+                                        <template if:true={lData.zz.ACW.BusinessConsultantId}>
+                                            <a
+                                                href={lData.zz.ACW.BusinessConsultant_Link}>{lData.zz.ACW.BusinessConsultantName}</a>
+                                        </template>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Preparer Name</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> {lData.zz.ACW.PreparerName}</label>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Servicer Name</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> {lData.zz.ACW.ServicerName}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label"></label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="System_Info" label="System Information">
+                        <div class="appcss">
+                            <template if:true={lData.zz.SDW}>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">Created By</label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput"><a
+                                                href={lData.zz.SDW.Created_Link}>{lData.zz.SDW.CreatedName}</a>&nbsp;
+                                            <lightning-formatted-date-time value={lData.zz.SDW.CreatedDate}
+                                                year="numeric" month="numeric" day="numeric" hour="numeric"
+                                                weekday="long"></lightning-formatted-date-time>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">Last Modified By</label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput"><a
+                                                href={lData.zz.SDW.LastModified_Link}>{lData.zz.SDW.LastModifiedName}</a>&nbsp;
+                                            <lightning-formatted-date-time value={lData.zz.SDW.LastModifiedDate}
+                                                year="numeric" month="numeric" day="numeric" hour="numeric"
+                                                weekday="long"></lightning-formatted-date-time></label>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label"> CLO Application Id</label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput">{lData.zz.CLO.CLO_ApplicationId}</label>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label">CLO Customer Group Id</label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput">{lData.zz.CLO.CLO_CustomerGroup}</label>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label"></label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput"> </label>
+                                    </div>
+                                </div>
+                                <div class="slds-form-element appdcss">
+                                    <label class="slds-form-element__label"></label>
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-input lblInput"> </label>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                    </lightning-accordion-section>
+                </template>
+                <template if:true={ProposalRecord}>
+                    <lightning-accordion-section name="Application_Info" label="Application Information"
+                        class="slds-accordion__summary">
+                        <div class="appcss">
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Business Name/DBA</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput">
+                                        <template if:true={lData.zz.ACW.BusinessConsultantId}>
+
+                                            <label style="word-break: break-word;"
+                                                class="slds-input lblInput">{lData.zz.BSW.BusinessLegalNameDBA}</label>
+
+                                        </template>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Application Number</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> <a
+                                            onclick={recordlink}>{lData.zz.AW.ApplicationNumber}</a></label>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Date</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"
+                                        if:true={Offers.offer0}>{Offers.offer0.Datee}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label"> Expiration</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"
+                                        if:true={Offers.offer0}>{Offers.offer0.Expiration}</label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label"> Verified AUM</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput" if:true={Offers.offer0}>
+
+                                        <lightning-formatted-number format-style="currency" maximum-fraction-digits="2"
+                                            value={Offers.offer0.VerifiedAssets}></lightning-formatted-number>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label">Approved T12 GDC</label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput" if:true={Offers.offer0}>
+
+                                        <lightning-formatted-number format-style="currency" maximum-fraction-digits="2"
+                                            value={Offers.offer0.ApprovedT12}></lightning-formatted-number>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label"></label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> </label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section name="Forgivable" label="Forgivable">
+                        <label
+                            style="    margin-left: 1.3em;font-weight: bold;font-size: 13px;text-align: left;letter-spacing: 0px;color: #000000;opacity: 1;"
+                            if:true={Offers.offer0}>{Offers.offer0.Clause}</label>
+                        <div class="slds-grid">
+
+                            <table style="width:fit-content">
+
+                                <colgroup>
+                                    <col style="background-color:none">
+                                    <template if:true={Offers.offer0}>
+                                        <col data-id={Offers.offer0.OfferId} style="background-color:none">
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <col style="background-color:none">
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <col data-id={Offers.offer1.OfferId} style="background-color:none">
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <col style="background-color:none">
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <col data-id={Offers.offer2.OfferId} style="background-color:none">
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <col style="background-color:none">
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <col data-id={Offers.offer3.OfferId} style="background-color:none">
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <col style="background-color:none">
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <col data-id={Offers.offer4.OfferId} style="background-color:none">
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <col style="background-color:none">
+                                    </template>
+                                </colgroup>
+                                <thead>
+                                    <td class="tbhead"></td>
+                                    <template if:true={Offers.offer0}>
+                                        <td class="tbhead" id={Offers.offer0.OfferId} >
+                                            <a href={Offers.offer0.OfferLink} >
+                                                {Offers.offer0.OfferName}
+                                            </a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class="tbhead"></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="tbhead" id={Offers.offer1.OfferId} >
+                                            <a href={Offers.offer1.OfferLink}>
+                                                {Offers.offer1.OfferName}
+                                            </a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class="tbhead"></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="tbhead" id={Offers.offer2.OfferId} >
+                                            <a href={Offers.offer2.OfferLink}>
+                                                {Offers.offer2.OfferName}
+                                            </a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class="tbhead"></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="tbhead" id={Offers.offer3.OfferId} >
+                                            <a href={Offers.offer3.OfferLink}>
+                                                {Offers.offer3.OfferName}
+                                            </a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class="tbhead"></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class="tbhead" id={Offers.offer4.OfferId} >
+                                            <a href={Offers.offer4.OfferLink}>
+                                                {Offers.offer4.OfferName}
+                                            </a>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </thead> <tr><td class="tbhead tdleft" style="font-size:13px;">MAX TA Amount</td>                                  <template if:true={Offers.offer0}>
+                                        <td class=""><lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="offer0MAX_TA_Amount" value={Offers.offer0.MAX_TA_Amount}></lightning-formatted-number>
+                                        </td>  </template> <template if:false={Offers.offer0}> <td class=""></td>
+                                    </template> <template if:true={Offers.offer1}> <td class="">
+                                            <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="offer1MAX_TA_Amount" value={Offers.offer1.MAX_TA_Amount}></lightning-formatted-number>
+                                        </td> </template> <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">
+                                            <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="offer2MAX_TA_Amount" value={Offers.offer2.MAX_TA_Amount}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="">
+                                            <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="offer3MAX_TA_Amount" value={Offers.offer3.MAX_TA_Amount}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template> <template if:true={Offers.offer4}><td class="">   <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="offer4MAX_TA_Amount" value={Offers.offer4.MAX_TA_Amount}></lightning-formatted-number>
+                                        </td> </template><template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </tr>
+                                <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;padding-top:1em;">Accepted TA AMOUNT
+                                    </td>
+
+                                    <template if:true={Offers.offer0}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:true={disabled}>
+                                                    <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.TA_Amount}></lightning-formatted-number>
+                                                </template>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer0TAAmount" name="TAAMOUNT" type="number" value={Offers.offer0.TA_Amount1}></lightning-input>
+                                            </template> </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:true={disabled}>
+                                                    <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                            <template if:false={disabled}>
+                                                <lightning-input data-id="offer1TAAmount" name="TAAMOUNT" type="number" value={Offers.offer1.TA_Amount1}></lightning-input>
+                                            </template>
+                                            </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:true={disabled}>
+                                                    <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                            <template if:false={disabled}>
+                                                <lightning-input data-id="offer2TAAmount" name="TAAMOUNT" type="number" value={Offers.offer2.TA_Amount1}></lightning-input>
+
+                                            </template>
+                                            </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer3TAAmount" name="TAAMOUNT" type="number" value={Offers.offer3.TA_Amount1}></lightning-input>
+                                            </template> 
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer4TAAmount" name="TAAMOUNT" type="number" value={Offers.offer4.TA_Amount1}></lightning-input>
+                                            </template>
+
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                            </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.TA_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class=""></td>
+                                    </template>
+                                </tr>
+                                <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;padding-top:1em;">OSJ AMOUNT</td>
+
+                                    <template if:true={Offers.offer0}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:true={disabled}>
+                                                    <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                            <template if:false={disabled}>
+                                                <lightning-input data-id="offer0OSJAmount" name="OSJAMOUNT" type="number" value={Offers.offer0.OSJ_Amount1} onchange={OsjAmountChange} onkeypress={checkNumberlength1} min="0" step="0.01"></lightning-input>
+
+                                            </template>
+                                            </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer1OSJAmount" name="OSJAMOUNT" type="number" value={Offers.offer1.OSJ_Amount1}></lightning-input>
+                                            </template>
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.OSJ_Amount}></lightning-formatted-number>
+                                            </template>   </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer2OSJAmount" name="OSJAMOUNT" type="number" value={Offers.offer2.OSJ_Amount1}></lightning-input>
+                                           
+                                            </template>
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.OSJ_Amount}></lightning-formatted-number>
+                                            </template> </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer3OSJAmount" name="OSJAMOUNT" type="number" value={Offers.offer3.OSJ_Amount1}></lightning-input>
+                                            </template>
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.OSJ_Amount}></lightning-formatted-number>
+                                            </template> </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer4OSJAmount" name="OSJAMOUNT" type="number" value={Offers.offer4.OSJ_Amount1}></lightning-input>
+                                            </template>
+                                            <template if:true={disabled}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.OSJ_Amount}></lightning-formatted-number>
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class=""></td>
+                                    </template>
+                                </tr>              
+
+<!--  Bhanu CS-3779 Start--> <tr><td class="tbhead tdleft" style="font-size:13px;padding-top:1em;vertical-align: top;">OSJ/Non OSJ Rep ID</td><template if:true={Offers.offer0}>
+                                        <td class="" style='vertical-align: top;'> <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                    {Offers.offer0.OSJ_NON_OSJ_Rep_Id}</template> <template if:false={disabled}>
+                                                <lightning-input type="text" maxlength="4" class="OSJRepId0"  data-id="offer0OSJRepId" name="OSJRepId" value={Offers.offer0.OSJ_NON_OSJ_Rep_Id}  ></lightning-input>
+                                            </template> </template><template if:false={ProposalEditRecord}>{Offers.offer0.OSJ_NON_OSJ_Rep_Id}
+                                            </template></td> </template> <template if:false={Offers.offer0}>  <td class=""></td>
+                                    </template> <template if:true={Offers.offer1}> <td class="" style='vertical-align: top;'> <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}> <lightning-input type="text" maxlength="4" class="OSJRepId1" data-id="offer1OSJRepId" name="OSJRepId" value={Offers.offer1.OSJ_NON_OSJ_Rep_Id}  ></lightning-input>
+                                            </template><template if:true={disabled}> {Offers.offer1.OSJ_NON_OSJ_Rep_Id}</template>   </template>
+                                            <template if:false={ProposalEditRecord}>{Offers.offer1.OSJ_NON_OSJ_Rep_Id}
+                                            </template> </td> </template>  <template if:false={Offers.offer1}>
+                                        <td class=""></td>  </template> <template if:true={Offers.offer2}>
+                                        <td class="" style='vertical-align: top;'>  <template if:true={ProposalEditRecord}>  <template if:false={disabled}>
+                                                    <lightning-input type="text" maxlength="4" class="OSJRepId2" data-id="offer2OSJRepId" name="OSJRepId" value={Offers.offer2.OSJ_NON_OSJ_Rep_Id}  ></lightning-input>
+                                            </template> <template if:true={disabled}> {Offers.offer2.OSJ_NON_OSJ_Rep_Id}
+                                            </template> </template>  <template if:false={ProposalEditRecord}>  {Offers.offer2.OSJ_NON_OSJ_Rep_Id}
+                                            </template>   </td> </template> <template if:false={Offers.offer2}>
+                                        <td class=""></td> </template>  <template if:true={Offers.offer3}>   <td class="" style='vertical-align: top;'>
+                                            <template if:true={ProposalEditRecord}>  <template if:false={disabled}>
+                                                    <lightning-input type="text" maxlength="4" class="OSJRepId3" data-id="offer3OSJRepId" name="OSJRepId" value={Offers.offer3.OSJ_NON_OSJ_Rep_Id}  ></lightning-input>
+                                                </template><template if:true={disabled}> {Offers.offer3.OSJ_NON_OSJ_Rep_Id}
+                                            </template> </template> <template if:false={ProposalEditRecord}> {Offers.offer3.OSJ_NON_OSJ_Rep_Id}
+                                            </template> </td> </template>   <template if:false={Offers.offer3}><td class=""></td>
+                                    </template> <template if:true={Offers.offer4}><td class="" style='vertical-align: top;' ><template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>   <lightning-input type="text" maxlength="4" class="OSJRepId4" data-id="offer4OSJRepId" name="OSJRepId" value={Offers.offer4.OSJ_NON_OSJ_Rep_Id}  ></lightning-input>
+                                            </template><template if:true={disabled}>{Offers.offer4.OSJ_NON_OSJ_Rep_Id}  </template>
+                                        </template> <template if:false={ProposalEditRecord}> {Offers.offer4.OSJ_NON_OSJ_Rep_Id}
+                                            </template>  </td>  </template> <template if:false={Offers.offer4}>
+                                        <td class=""></td>   </template>  </tr>
+<!--  Bhanu CS-3779 Ends--> <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;">TA% of VAUM</td> <template if:true={Offers.offer0}>
+                                        <td class="">{Offers.offer0.TA_Rate}</td>  </template>  <template if:false={Offers.offer0}>
+                                        <td class=""></td> </template><template if:true={Offers.offer1}>
+                                        <td class="">{Offers.offer1.TA_Rate}</td>  </template>
+                                    <template if:false={Offers.offer1}>   <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">{Offers.offer2.TA_Rate}</td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="">{Offers.offer3.TA_Rate}</td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class="">{Offers.offer4.TA_Rate}</td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </tr>
+                                <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;">Backend</td>
+                                    <template if:true={Offers.offer0}>
+                                        <td class="">{Offers.offer0.Backend}</td>
+                                    </template><template if:false={Offers.offer0}><td class=""></td> </template> <template if:true={Offers.offer1}><td class="">{Offers.offer1.Backend}</td></template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">{Offers.offer2.Backend}</td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class="">{Offers.offer3.Backend}</td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class="">{Offers.offer4.Backend}</td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </tr>
+                                <tr>
+                                    <!--Bhanu CS-2515 Start-->
+                                    <td class="tbhead tdleft" style="font-size:13px;">Backend Hurdle</td>
+                                    <template if:true={Offers.offer0}>
+                                        <td class="">
+                                           
+                                            <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.Backend_Benchmark}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="">
+                                            <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.Backend_Benchmark}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.Backend_Benchmark}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer2}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer3}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.Backend_Benchmark}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.Backend_Benchmark}></lightning-formatted-number>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </tr>  <!--Bhanu CS-2515 Ends-->
+                                <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;;padding-top:1em">Backend Date 1</td>
+
+                                    <template if:true={Offers.offer0}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer0BackendDate1" name="BackendDate1"
+                                                    type="date" value={Offers.offer0.BackendDate10}></lightning-input>
+                                                </template>
+                                                <template if:true={disabled}>
+                                                    {Offers.offer0.BackendDate1} 
+                                                </template>
+                                                </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                
+                                                {Offers.offer0.BackendDate1}
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer1BackendDate1" name="BackendDate1"
+                                                    type="date" value={Offers.offer1.BackendDate10}></lightning-input>
+                                                </template>
+                                                <template if:true={disabled}>
+                                                    {Offers.offer1.BackendDate1}
+                                                </template>
+                                                </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                {Offers.offer1.BackendDate1} 
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer1}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer2}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer2BackendDate1" name="BackendDate1"
+                                                    type="date" value={Offers.offer2.BackendDate10}></lightning-input>
+                                                </template> <template if:true={disabled}>{Offers.offer2.BackendDate1}</template> </template> <template if:false={ProposalEditRecord}>{Offers.offer2.BackendDate1} </template>  </td>  </template> <template if:false={Offers.offer2}>
+                                        <td class=""></td> </template> <template if:true={Offers.offer3}>
+                                        <td class=""><template if:true={ProposalEditRecord}> <template if:false={disabled}>
+                                                <lightning-input data-id="offer3BackendDate1" name="BackendDate1"
+                                                    type="date" value={Offers.offer3.BackendDate10}></lightning-input> </template>
+                                                    <template if:true={disabled}>{Offers.offer3.BackendDate1}</template>
+                                           </template><template if:false={ProposalEditRecord}>{Offers.offer3.BackendDate1} 
+                                            </template> </td> </template> <template if:false={Offers.offer3}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer4}> <td class=""><template if:true={ProposalEditRecord}>
+                                        <template if:false={disabled}>
+                                                <lightning-input data-id="offer4BackendDate1" name="BackendDate1"
+                                                    type="date" value={Offers.offer4.BackendDate10}></lightning-input>
+                                                </template>
+                                            
+                                                <template if:true={disabled}>
+                                                    {Offers.offer4.BackendDate1}
+
+                                                </template>
+                                            </template><template if:false={ProposalEditRecord}> {Offers.offer4.BackendDate1} 
+                                            </template>   </td>  </template> 
+                                            <template if:false={Offers.offer4}>
+                                        <td class=""></td>   </template>   </tr> <tr class="proposoalborder">
+                                    <td class="tbhead tdleft" style="font-size:13px;;padding-top:1em;">Backend Date 2
+                                        </td> <template if:true={Offers.offer0}>
+                                        <td class=""> <template if:true={ProposalEditRecord}>
+                                            <template if:false={disabled}>
+                                                <lightning-input data-id="offer0BackendDate2" name="BackendDate2"
+                                                    type="date" value={Offers.offer0.BackendDate20}></lightning-input>
+                                                </template>
+                                                    <template if:true={disabled}>
+                                                        {Offers.offer0.BackendDate2}
+    
+                                                    </template>
+                                          
+                                                </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                {Offers.offer0.BackendDate2}
+                                            </template>
+                                        </td>
+                                    </template>
+                                    <template if:false={Offers.offer0}>
+                                        <td class=""></td>
+                                    </template>
+
+                                    <template if:true={Offers.offer1}>
+                                        <td class="">
+                                            <template if:true={ProposalEditRecord}>
+                                                <template if:false={disabled}>
+                                                <lightning-input data-id="offer1BackendDate2" name="BackendDate2"
+                                                    type="date" value={Offers.offer1.BackendDate20}></lightning-input>
+                                                </template>
+                                                    <template if:true={disabled}>
+                                                        {Offers.offer1.BackendDate2}
+    
+                                                    </template>
+                                           
+                                                </template>
+                                            <template if:false={ProposalEditRecord}>
+                                                {Offers.offer1.BackendDate2}
+                                            </template>
+                                        </td> </template>   <template if:false={Offers.offer1}>
+                                        <td class=""></td>  </template>  <template if:true={Offers.offer2}>
+                                        <td class="">   <template if:true={ProposalEditRecord}>
+                                            <template if:false={disabled}>
+                                                <lightning-input data-id="offer2BackendDate2" name="BackendDate2"
+                                                    type="date" value={Offers.offer2.BackendDate20}></lightning-input>  </template> 
+                                                    <template if:true={disabled}>
+                                                        {Offers.offer2.BackendDate2}
+    
+                                                    </template>
+
+                                            </template>    <template if:false={ProposalEditRecord}>
+                                                {Offers.offer2.BackendDate2} </template>
+                                        </td> </template>
+                                    <template if:false={Offers.offer2}><td class=""></td>
+                                    </template> <template if:true={Offers.offer3}>
+                                        <td class=""><template if:true={ProposalEditRecord}>
+                                            <template if:false={disabled}><lightning-input data-id="offer3BackendDate2" name="BackendDate2"
+                                                    type="date" value={Offers.offer3.BackendDate20}></lightning-input>
+                                                </template>
+                                                    <template if:true={disabled}>
+                                                        {Offers.offer3.BackendDate2}
+    
+                                                    </template>
+                                           
+                                                </template> <template if:false={ProposalEditRecord}>
+                                                {Offers.offer3.BackendDate2}</template>
+                                        </td></template> <template if:false={Offers.offer3}>
+                                        <td class=""></td> </template> <template if:true={Offers.offer4}>
+                                        <td class=""><template if:true={ProposalEditRecord}>
+                                            <template if:false={disabled}>  <lightning-input data-id="offer4BackendDate2" name="BackendDate2"
+                                                    type="date" value={Offers.offer4.BackendDate20}></lightning-input>
+                                                </template>
+                                        
+                                                    <template if:true={disabled}>
+                                                        {Offers.offer4.BackendDate2}
+    
+                                                    </template>
+                                        
+                                                </template> <template if:false={ProposalEditRecord}>
+                                                {Offers.offer4.BackendDate2} </template>
+                                        </td> </template> <template if:false={Offers.offer4}>
+                                        <td class=""></td> </template>
+                                </tr> <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;">Platform</td> <template if:true={Offers.offer0}> <td class="">{Offers.offer0.Platform}</td>
+                                    </template>  <template if:false={Offers.offer0}> <td class=""></td> </template> <template if:true={Offers.offer1}>
+                                        <td class="">{Offers.offer1.Platform}</td></template>  <template if:false={Offers.offer1}>   <td class=""></td>
+                                    </template> <template if:true={Offers.offer2}> <td class="">{Offers.offer2.Platform}</td> </template>
+                                    <template if:false={Offers.offer2}>  <td class=""></td>  </template><template if:true={Offers.offer3}>
+                                        <td class="">{Offers.offer3.Platform}</td>                                 </template>
+                                    <template if:false={Offers.offer3}><td class=""></td>
+                                    </template> <template if:true={Offers.offer4}>  <td class="">{Offers.offer4.Platform}</td> </template>
+                                    <template if:false={Offers.offer4}> <td class=""></td> </template>   </tr><tr> <td class="tbhead tdleft" style="font-size:13px;">Branch</td>
+                                    <template if:true={Offers.offer0}> <td class="">{Offers.offer0.Branch}</td>
+                                    </template><template if:false={Offers.offer0}>  <td class=""></td> </template> <template if:true={Offers.offer1}>
+                                        <td class="">{Offers.offer1.Branch}</td></template><template if:false={Offers.offer1}>
+                                        <td class=""></td>  </template>  <template if:true={Offers.offer2}>
+                                        <td class="">{Offers.offer2.Branch}</td></template> <template if:false={Offers.offer2}>   <td class=""></td> </template>                                    <template if:true={Offers.offer3}>
+                                        <td class="">{Offers.offer3.Branch}</td>  </template>  <template if:false={Offers.offer3}> <td class=""></td>
+                                    </template><template if:true={Offers.offer4}>   <td class="">{Offers.offer4.Branch}</td> </template>
+                                    <template if:false={Offers.offer4}> <td class="tbhead"></td>
+                                    </template> </tr> <tr> <td class="tbhead tdleft" style="font-size:13px;">OSJ</td>
+                                    <template if:true={Offers.offer0}> <td class="">{Offers.offer0.OSJ}</td>
+                                    </template> <template if:false={Offers.offer0}><td class=""></td>
+                                    </template><template if:true={Offers.offer1}><td class="">{Offers.offer1.OSJ}</td>
+                                    </template> <template if:false={Offers.offer1}> <td class=""></td>
+                                    </template> <template if:true={Offers.offer2}>
+                                        <td class="">{Offers.offer2.OSJ}</td>
+                                    </template><template if:false={Offers.offer2}><td class=""></td> </template>
+                                    <template if:true={Offers.offer3}><td class="">{Offers.offer3.OSJ}</td>
+                                    </template><template if:false={Offers.offer3}><td class=""></td>
+                                    </template><template if:true={Offers.offer4}> <td class="">{Offers.offer4.OSJ}</td>
+                                    </template> <template if:false={Offers.offer4}> <td class=""></td> </template>
+                                </tr>   <tr> <td class="tbhead tdleft" style="font-size:13px;">Term</td>
+                                    <template if:true={Offers.offer0}>  <td class="">{Offers.offer0.Terms}</td>
+                                    </template>  <template if:false={Offers.offer0}>
+                                        <td class=""></td> </template> <template if:true={Offers.offer1}>
+                                        <td class="">{Offers.offer1.Terms}</td></template><template if:false={Offers.offer1}>
+                                        <td class=""></td></template> <template if:true={Offers.offer2}> <td class="">{Offers.offer2.Terms}</td>  </template>
+                                    <template if:false={Offers.offer2}> <td class=""></td> </template><template if:true={Offers.offer3}>
+                                        <td class="">{Offers.offer3.Terms}</td> </template> <template if:false={Offers.offer3}>
+                                        <td class=""></td> </template> <template if:true={Offers.offer4}><td class="">{Offers.offer4.Terms}</td></template>
+                                    <template if:false={Offers.offer4}><td class="tbhead"></td> </template>
+                                </tr><tr class="proposoalborder">
+                                    <td class="tbhead tdleft" style="font-size:13px;">Payout</td>
+                                    <template if:true={Offers.offer0}><td class=""><lightning-formatted-number format-style="decimal" maximum-fraction-digits="2" minimum-fraction-digits="2" value={Offers.offer0.Payout}></lightning-formatted-number> %
+                                        </td></template><template if:false={Offers.offer0}><td class=""></td>
+                                    </template><template if:true={Offers.offer1}>
+                                        <td class=""><lightning-formatted-number format-style="decimal" maximum-fraction-digits="2" minimum-fraction-digits="2" value={Offers.offer1.Payout}></lightning-formatted-number> %
+                                        </td></template>
+                                    <template if:false={Offers.offer1}><td class=""></td></template>
+                                    <template if:true={Offers.offer2}><td class=""><lightning-formatted-number format-style="decimal" maximum-fraction-digits="2" minimum-fraction-digits="2" value={Offers.offer2.Payout}></lightning-formatted-number> %
+                                        </td></template>
+                                    <template if:false={Offers.offer2}><td class=""></td>
+                                    </template><template if:true={Offers.offer3}>
+                                        <td class=""><lightning-formatted-number format-style="decimal" maximum-fraction-digits="2" minimum-fraction-digits="2" value={Offers.offer3.Payout}></lightning-formatted-number> %
+                                        </td></template><template if:false={Offers.offer3}><td class=""></td>
+                                    </template><template if:true={Offers.offer4}>
+                                        <td class=""><lightning-formatted-number format-style="decimal" maximum-fraction-digits="2" minimum-fraction-digits="2" value={Offers.offer4.Payout}></lightning-formatted-number> %
+                                        </td> </template><template if:false={Offers.offer4}><td class="tbhead"></td>
+                                    </template></tr>
+                                <tr><td class="tbhead tdleft" style="font-size:13px;">Campaign</td> <template if:true={Offers.offer0}>
+                                        <td class="">{Offers.offer0.Campiagn}</td></template>
+                                    <template if:false={Offers.offer0}> <td class=""></td> </template>  <template if:true={Offers.offer1}>
+                                        <td class="">{Offers.offer1.Campiagn}</td> </template>   <template if:false={Offers.offer1}>
+                                        <td class=""></td> </template>  <template if:true={Offers.offer2}>
+                                        <td class="">{Offers.offer2.Campiagn}</td> </template> <template if:false={Offers.offer2}>
+                                        <td class=""></td></template> <template if:true={Offers.offer3}> <td class="">{Offers.offer3.Campiagn}</td>
+                                    </template>  <template if:false={Offers.offer3}> <td class=""></td>
+                                    </template> <template if:true={Offers.offer4}>  <td class="">{Offers.offer4.Campiagn}</td>
+                                    </template> <template if:false={Offers.offer4}> <td class="tbhead"></td> </template></tr>
+                        <!-- CS-4402 Add Campaign Offer Accepted field to Proposal Offer view  modified by Madhukar Reddy 23/07/2021 Start-->
+                                  <tr><td class="tbhead tdleft" style="font-size:13px">Campaign Offer Selected</td>
+                                      <template if:true={Offers.offer0}>
+                                        <td class=""> <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                    {Offers.offer0.Campaign_Offer_Selected}</template> <template if:false={disabled}>                                            
+                                                <lightning-combobox options={CampaignOfferSelected} data-id="offer0Campaign_Offer_Selected" name="CampaignOfferSelected1" value={Offers.offer0.Campaign_Offer_Selected} ></lightning-combobox>
+                                            </template> </template><template if:false={ProposalEditRecord}>{Offers.offer0.Campaign_Offer_Selected}
+                                            </template></td> </template> <template if:false={Offers.offer0}>  <td class=""></td>
+                                    </template> 
+                                    <template if:true={Offers.offer1}>
+                                        <td class="" > <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                    {Offers.offer1.Campaign_Offer_Selected}</template> <template if:false={disabled}>                                            
+                                                <lightning-combobox options={CampaignOfferSelected} data-id="offer1Campaign_Offer_Selected" name="CampaignOfferSelected1" value={Offers.offer1.Campaign_Offer_Selected} ></lightning-combobox>
+                                            </template> </template><template if:false={ProposalEditRecord}>{Offers.offer1.Campaign_Offer_Selected}
+                                            </template></td> </template> <template if:false={Offers.offer1}>  <td class=""></td>
+                                    </template>
+                                <template if:true={Offers.offer2}>
+                                    <td class="" > <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                {Offers.offer2.Campaign_Offer_Selected}</template> <template if:false={disabled}>                                            
+                                            <lightning-combobox options={CampaignOfferSelected} data-id="offer2Campaign_Offer_Selected" name="CampaignOfferSelected1" value={Offers.offer2.Campaign_Offer_Selected} ></lightning-combobox>
+                                        </template> </template><template if:false={ProposalEditRecord}>{Offers.offer2.Campaign_Offer_Selected}
+                                        </template></td> </template> <template if:false={Offers.offer2}>  <td class=""></td>
+                                </template> 
+                                <template if:true={Offers.offer3}>
+                                    <td class=""> <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                {Offers.offer3.Campaign_Offer_Selected}</template> <template if:false={disabled}>                                            
+                                            <lightning-combobox options={CampaignOfferSelected} data-id="offer3Campaign_Offer_Selected" name="CampaignOfferSelected1" value={Offers.offer3.Campaign_Offer_Selected} ></lightning-combobox>
+                                        </template> </template><template if:false={ProposalEditRecord}>{Offers.offer3.Campaign_Offer_Selected}
+                                        </template></td> </template> <template if:false={Offers.offer3}>  <td class=""></td>
+                                </template>  
+                                <template if:true={Offers.offer4}>
+                                    <td class=""> <template if:true={ProposalEditRecord}>  <template if:true={disabled}>
+                                                {Offers.offer4.Campaign_Offer_Selected}</template> <template if:false={disabled}>                                            
+                                            <lightning-combobox options={CampaignOfferSelected} data-id="offer4Campaign_Offer_Selected" name="CampaignOfferSelected1" value={Offers.offer3.Campaign_Offer_Selected} ></lightning-combobox>
+                                        </template> </template><template if:false={ProposalEditRecord}>{Offers.offer4.Campaign_Offer_Selected}
+                                        </template></td> </template> <template if:false={Offers.offer4}>  <td class=""></td>
+                                </template>                             
+                            </tr> 
+                               <!-- CS-4402 Add Campaign Offer Accepted field to Proposal Offer view  Ended -->     
+                                <tr><td class="tbhead tdleft" style="font-size:13px;">Waivers</td>
+                                    <template if:true={Offers.offer0}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.Waivers}></lightning-formatted-number>
+                                        </td> </template><template if:false={Offers.offer0}><td class=""></td>  </template>
+                                    <template if:true={Offers.offer1}>  <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.Waivers}></lightning-formatted-number>
+                                        </td> </template><template if:false={Offers.offer1}>  <td class=""></td> </template>
+                                    <template if:true={Offers.offer2}> <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.Waivers}></lightning-formatted-number>
+                                        </td> </template><template if:false={Offers.offer2}> <td class=""></td>
+                                    </template> <template if:true={Offers.offer3}><td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.Waivers}></lightning-formatted-number>
+                                        </td></template><template if:false={Offers.offer3}>
+                                        <td class=""></td>   </template>  <template if:true={Offers.offer4}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.Waivers}></lightning-formatted-number>
+                                        </td> </template> <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td>
+                                    </template>
+                                </tr>
+                                <tr class="proposoalborder">
+                                    <td class="tbhead tdleft" style="font-size:13px;">Admin Fee</td>
+                                    <template if:true={Offers.offer0}>  <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer0.Admin_Fee}></lightning-formatted-number>
+                                        </td> </template>  <template if:false={Offers.offer0}> <td class=""></td>
+                                    </template> <template if:true={Offers.offer1}> <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer1.Admin_Fee}></lightning-formatted-number>
+                                        </td> </template> <template if:false={Offers.offer1}>
+                                        <td class=""></td> </template><template if:true={Offers.offer2}> <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer2.Admin_Fee}></lightning-formatted-number>
+                                        </td></template><template if:false={Offers.offer2}>
+                                        <td class=""></td></template>
+                                    <template if:true={Offers.offer3}><td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer3.Admin_Fee}></lightning-formatted-number>
+                                        </td></template>
+                                    <template if:false={Offers.offer3}><td class=""></td> </template> <template if:true={Offers.offer4}>
+                                        <td class=""> <lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={Offers.offer4.Admin_Fee}></lightning-formatted-number>
+                                        </td> </template>  <template if:false={Offers.offer4}>   <td class="tbhead"></td>  </template>
+                                </tr> <tr class="proposoalborder"> <td class="tbhead tdleft" style="font-size:13px;">Note </td>
+                                    <template if:true={Offers.offer0}> <td class=""><div><a onclick={shwNoteListWindow} id={Offers.offer0.NoteListId}>{Offers.offer0.NoteLength} Note</a>
+                                                <br /><button class="slds-button slds-button_neutral" style="border:1px solid #0F6CD2;color:#0F6CD2" id={Offers.offer0.NoteButtonId} disabled={disabled}  onclick={showNoteWindow}>Add Note</button></div>
+                                        </td></template><template if:false={Offers.offer0}><td class="tbhead"></td>
+                                    </template><template if:true={Offers.offer1}><td class=""> <div> <a onclick={shwNoteListWindow}
+                                                    id={Offers.offer1.NoteListId}>{Offers.offer1.NoteLength} Note</a>
+                                                <br /> <button class="slds-button slds-button_neutral" style="border:1px solid #0F6CD2;color:#0F6CD2" id={Offers.offer1.NoteButtonId} disabled={disabled}
+                                                    onclick={showNoteWindow}>Add Note</button>
+                                            </div> </td> </template> <template if:false={Offers.offer1}>
+                                        <td class="tbhead"></td> </template><template if:true={Offers.offer2}>
+                                        <td class=""><div> <a onclick={shwNoteListWindow} id={Offers.offer2.NoteListId}>{Offers.offer2.NoteLength} Note</a>
+                                                <br /> <button class="slds-button slds-button_neutral"  style="border:1px solid #0F6CD2;color:#0F6CD2"
+                                                    id={Offers.offer2.NoteButtonId} disabled={disabled} onclick={showNoteWindow}>Add Note</button></div>
+                                        </td> </template><template if:false={Offers.offer2}> <td class="tbhead"></td></template> <template if:true={Offers.offer3}>
+                                        <td class=""><div><a onclick={shwNoteListWindow}
+                                                    id={Offers.offer3.NoteListId}>{Offers.offer3.NoteLength} Note</a>
+                                                <br />   <button class="slds-button slds-button_neutral"                                                    style="border:1px solid #0F6CD2;color:#0F6CD2"
+                                                    id={Offers.offer3.NoteButtonId} disabled={disabled}
+                                                    onclick={showNoteWindow}>Add Note</button>
+                                            </div> </td> </template> <template if:false={Offers.offer3}>
+                                        <td class="tbhead"></td> </template><template if:true={Offers.offer4}><td class=""><div>
+                                                <a onclick={shwNoteListWindow} id={Offers.offer4.NoteListId}>{Offers.offer4.NoteLength} Note</a>
+                                                <br /> <button class="slds-button slds-button_neutral"  style="border:1px solid #0F6CD2;color:#0F6CD2"
+                                                    id={Offers.offer4.NoteButtonId} disabled={disabled} onclick={showNoteWindow}>Add Note</button>
+                                            </div> </td></template><template if:false={Offers.offer4}> <td class="tbhead"></td>
+                                    </template></tr> <tr> <td></td> <template if:true={Offers.offer0}>
+                                        <template if:false={disabled}> <td><button style="background:#0F6CD2" id={Offers.offer0.SelectButtonId}                                                  onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                                    OFFER</button></td> </template>
+                                        <template if:true={disabled}> <template if:true={Offers.offer0.OfferSelected}>
+                                                <td><label>{Offers.offer0.ProposalStatus}</label></td>  </template>
+                                            <template if:false={Offers.offer0.OfferSelected}>  <td></td> </template> </template>  </template><template if:false={Offers.offer0}>
+                                        <td class="tbhead"></td></template><template if:true={Offers.offer1}> <template if:false={disabled}> <td><button style="background:#0F6CD2" id={Offers.offer1.SelectButtonId}
+                                                    onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                                    OFFER</button></td>   </template> <template if:true={disabled}>    <template if:true={Offers.offer1.OfferSelected}>
+                                                <td><label>{Offers.offer1.ProposalStatus}</label></td>   </template> <template if:false={Offers.offer1.OfferSelected}> <td></td>  </template>
+                                        </template>  </template><template if:false={Offers.offer1}> <td class="tbhead"></td>    </template>  <template if:true={Offers.offer2}> <template if:false={disabled}>
+                                            <td><button style="background:#0F6CD2" id={Offers.offer2.SelectButtonId}
+                                                    onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                                    OFFER</button></td> </template>  <template if:true={disabled}>
+                                            <template if:true={Offers.offer2.OfferSelected}>
+                                                <td><label>{Offers.offer2.ProposalStatus}</label></td>
+                                            </template> <template if:false={Offers.offer2.OfferSelected}>
+                                                <td></td>   </template>   </template> </template>
+                                    <template if:false={Offers.offer2}><td class="tbhead"></td></template> <template if:true={Offers.offer3}><template if:false={disabled}><td><button style="background:#0F6CD2" id={Offers.offer3.SelectButtonId} onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                                    OFFER</button></td>  </template> <template if:true={disabled}><template if:true={Offers.offer3.OfferSelected}><td><label>{Offers.offer3.ProposalStatus}</label></td></template>  <template if:false={Offers.offer3.OfferSelected}>                                                <td></td> </template>  </template> </template>
+                                    <template if:false={Offers.offer3}> <td class="tbhead"></td>                                   </template><template if:true={Offers.offer4}> <template if:false={disabled}> <td><button style="background:#0F6CD2" id={Offers.offer4.SelectButtonId} onclick={onselectOffer} class="slds-button slds-button_brand">Select OFFER</button></td>
+                                        </template><template if:true={disabled}><template if:true={Offers.offer4.OfferSelected}>
+                                                <td><label>{Offers.offer4.ProposalStatus}</label></td></template>
+                                            <template if:false={Offers.offer4.OfferSelected}><td></td>  </template> </template></template>  <template if:false={Offers.offer4}>
+                                        <td class="tbhead"></td> </template> </tr> </table>
+                        </div> </lightning-accordion-section> <lightning-accordion-section name="Repayable" label={RepayableSection}>
+                        <label style="    margin-left: 1.3em;font-weight: bold;font-size: 15px;text-align: left;letter-spacing: 0px;color: #000000;opacity: 1;"   if:true={forgivable}>{forgivable.Clause}</label>
+                        <div class="slds-grid"><table style="width:fit-content"> <colgroup> <col style="background-color:none">
+                                    <template if:true={forgivable}> <col data-id={forgivable.OfferId} style="background-color:none">
+                                    </template>  <template if:false={forgivable}> <col style="background-color:none">
+                                    </template> </colgroup>   <tr> <td class="tbhead tdleft" style="font-size:13px;">Approved Loan Amount</td><template if:true={forgivable}>  <template if:true={forgivable.LoanAmount}>
+                                            <td><lightning-formatted-number format-style="currency" maximum-fraction-digits="2" data-id="ApprovedLoanAmount" value={forgivable.LoanAmount}></lightning-formatted-number></td>
+                                        </template> <template if:false={forgivable.LoanAmount}>
+                                            <td></td> </template> <td></td> </template><template if:false={forgivable}>
+                                        <td></td></template><td></td> <td></td> <td></td><td></td> </tr>
+                                <tr> <td class="tbhead tdleft" style="font-size:13px;;padding-top:1em">Accepted Loan
+                                        Amount</td> <template if:true={forgivable}>
+                                        <td class=""> <!--Bhanu CS-2916 Start--><template if:true={ProposalEditRecord}>
+                        <template if:false={disabledRepayable}>
+                        <lightning-input data-id="AcceptedLoanAmount" name="AcceptedLoanAmount" type="number" value={forgivable.AcceptedLoanAmount1}></lightning-input>
+                            <lightning-formatted-number style="display:none;" format-style="currency" maximum-fraction-digits="2" data-id="ApprovedLoanAmount" value={forgivable.LoanAmount}></lightning-formatted-number>
+                        </template></template>  <template if:false={disabledRepayable1}>
+                                                <template if:false={ProposalEditRecord}>
+                                                <lightning-input data-id="AcceptedLoanAmount" name="AcceptedLoanAmount" type="number" value={forgivable.AcceptedLoanAmount1}></lightning-input>
+                                            </template>  </template> <template if:true={ShowAcceptedLoanAmount}>
+                                                <template if:false={ProposalEditRecord}>  <template if:true={disabledRepayable}>
+                                                <label style="margin-top:4px;"><lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={forgivable.AcceptedLoanAmount}></lightning-formatted-number></label>
+                                            </template> </template>  <template if:false={disabledRepayable}>
+                                                <template if:false={ProposalEditRecord}> <label style="margin-top:4px;"><lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={forgivable.AcceptedLoanAmount}></lightning-formatted-number></label>
+                                            </template>  </template></template><template if:true={disabledRepayable}>
+                                                <label style="margin-top:4px;"><lightning-formatted-number format-style="currency" maximum-fraction-digits="2" value={forgivable.AcceptedLoanAmount}></lightning-formatted-number></label>
+                                            </template><!--Bhanu CS-2916 Ends-->
+                                        </td>
+                                    </template> <template if:false={forgivable}> <td></td>  </template>  <td></td> <td></td>
+                                    <td></td> <td></td></tr> <tr> <td class="tbhead tdleft" style="font-size:13px;">Term</td>
+                                    <template if:true={forgivable}><template if:true={forgivable.Term}><td>{forgivable.Term} Years</td>
+                                        </template>  <template if:false={forgivable.Term}>  <td></td></template>  <td></td></template>
+                                    <template if:false={forgivable}>   <td></td> </template>  <td></td><td></td><td></td>    <td></td>
+                                </tr> <tr>
+                                    <td class="tbhead tdleft " style="font-size:13px;">Intrest Rate</td>  <template if:true={forgivable}>
+                                        <template if:true={forgivable.IntrestRate}>  <td>{forgivable.IntrestRate}%</td>
+                                        </template>  <template if:false={forgivable.IntrestRate}>
+                                            <td></td>  </template>    <td></td>    </template>   <template if:false={forgivable}>  <td></td> </template> <td></td> <td></td>  <td></td>    <td></td></tr>      <tr>
+                                    <td class="tbhead tdleft" style="font-size:13px;">Note</td> <template if:true={forgivable}>
+                                        <td class=""> <div>   <a onclick={shwRNoteListWindow}   id={forgivable.NoteListId}>{forgivable.NoteLength} Note</a> <br />
+                                                <button style="border:1px solid #0F6CD2;color:#0F6CD2"
+                                                    class="slds-button slds-button_neutral" id={forgivable.NoteButtonId}
+                                                    disabled={disabled} onclick={showNoteWindowforgivable}>Add
+                                                    Note</button>
+                                            </div></td></template><template if:false={forgivable}>
+                                        <td class="tbhead"></td></template> <td></td> <td></td>
+                                    <td></td> <td></td> </tr> <tr>
+                                    <td></td><template if:true={forgivable}> <template if:false={disabledRepayable}>
+                                            <td><button style="background:#0F6CD2" id={forgivable.SelectButtonId}
+                                                    onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                                    OFFER</button></td> </template>   <template if:true={disabledRepayable}>
+                                            <template if:true={forgivable.OfferSelected}> <td><label>{forgivable.ProposalStatus}</label></td>
+                                            </template> <template if:false={forgivable.OfferSelected}>
+                                                <td></td> </template></template> </template>
+                                    <template if:false={forgivable}>
+                                        <td></td></template>   <td></td> <td></td><td></td>  <td></td> </tr> </table>  </div>
+                    </lightning-accordion-section></template>  </lightning-accordion>   </lightning-card>
+    </template>
+    <template if:true={showConfirm}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty">
+                </header><div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+                    style="text-align:center;padding-top: 2em;padding-top: 2em;padding-top: 2em;padding-top: 10em;padding-bottom: 10em;">
+                    <p style="color: #0F6CD2;font-size:2em">Please Confirm your offer selection.</p>
+                    <template if:true={forgivableMsg}> <p style="font-size:1em;margin-top:20px;color:red;">Please enter Accepted Loan Amount</p>
+                    </template>	
+                  <!--Bhanu CS-2517 Start-->   <template if:true={ApprovedAmntMsg}> <p style="font-size:1em;margin-top:20px;color:red;">The Accepted Loan Amount cannot be greater than the Maximum Amount Approved for this loan</p>
+                    </template>	 <!--Bhanu CS-2517 Ends-->
+                    <template if:true={forgivableMsgTA}> <p style="font-size:1em;margin-top:20px;color:red;">Please enter Accepted TA AMOUNT</p>
+                    </template> <template if:true={forgivableMsg1}> <p style="font-size:1em;margin-top:20px;">Please click on Cancel if you want to update the Accepted Loan Amount, otherwise click on Confirm</p>
+                    </template></div>  <footer class="slds-modal__footer" style="text-align:center">
+                    <button class="slds-button slds-button_neutral" onclick={closeWindow}
+                        style="border:1px solid #0F6CD2;color:#0F6CD2">Cancel</button>
+                    <button class="slds-button slds-button_brand" style="background:#0F6CD2"
+                        onclick={confirmWindow}>Confirm</button>
+                </footer> </div>  </section>    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template><template if:true={showNote}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty"
+                    style="border-bottom:1px solid rgb(176, 173, 171);">  <center>
+                        <h1 style="font-weight: 800;font-size: 2em;padding: .5em 0em .5em 0em;"> {noteHeader}</h1>
+                    </center>  </header>
+               <!-- <div class="slds-modal__content slds-p-around_medium">
+                    <label style="font-weight:bold;color:#0F6CD2">Add Note</label>
+                    <textarea data-id="note" class="slds-textarea" style="height:150px"></textarea>
+                </div>  madhu commented -->
+               <div class="slds-modal__content slds-p-around_medium">
+                    <label style="font-weight:bold;color:#0F6CD2">Add Note</label>
+                    <lightning-textarea name="Notes" data-id="note" label=""
+                         onchange={handleChangenote} class="Addnote" style="height:100px"></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer" style="text-align:center">
+                    <button class="slds-button slds-button_neutral" style="border:1px solid #0F6CD2;color:#0F6CD2"
+                        onclick={closeNoteWindow1}>Cancel</button>
+                    <button class="slds-button slds-button_neutral" style="background:#0F6CD2;color:#fff"
+                        onclick={closeNoteWindow}>Add</button></footer>
+            </div></section> <div class="slds-backdrop slds-backdrop_open"></div> </template> <template if:true={showNoteList}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container"> <header class="slds-modal__header slds-modal__header_empty"></header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <ul><template for:each={Nlist} for:item="ss"> <li key={ss.Id}>{ss.Body}---{ss.CreatedBy.Name}--{ss.CreatedDate}</li>
+                        </template> </ul></div> <footer class="slds-modal__footer"> <button class="slds-button slds-button_brand" onclick={closmNoteListWindow}>ok</button>   </footer> </div></section>
+        <div class="slds-backdrop slds-backdrop_open"></div> </template> <template if:true={loading}>
+        <div class="loader">
+            <lightning-spinner size="medium" variant="brand" alternative-text="loading"></lightning-spinner>
+        </div>
+    </template>
+
+</template>

@@ -1,0 +1,516 @@
+<apex:page Controller="MergecontactpageController" tabStyle="Contact" lightningStylesheets="true">
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+        td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 2px;
+        }
+        th {
+        border: 1px solid #dddddd;
+        text-align: Right;
+        padding: 2px;
+        }
+    </style>
+    
+    <script>
+    $(document).ready(function(){
+        alert('Hello, jQuery');
+        $('.element input[type=radio]:first').each(function(){
+            $(this).attr('checked', true);
+        });
+    });
+    </script>
+    <!--<Spinner code Start>-->
+    <style>
+                .spinnerBg{
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    background-color: #000;
+                    opacity: 0.2;
+                    z-index: 999999;
+                }
+                .spinner{
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    background-image: url("/img/loading32.gif");
+                    background-size: 16px;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    background-position: center;
+                    z-index: 9999999;
+                    opacity: 1;
+                }
+   </style>
+  <apex:actionStatus id="spinnerStatus">    
+                    <apex:facet name="start">
+                     <div class="spinnerBg" />
+                    <div class="spinner" />
+                </apex:facet>
+    </apex:actionStatus>
+    <!--<Spinner code Stop>-->
+    <apex:form id="frmProducer">
+        <div class="container">
+            <apex:pageBlock title="Step 1. Select the records to merge" id="pbProducer" rendered="{!!editSection}">
+                <p>All Contacts with similar UniqueId value are shown below. Please select up to three records that you wish to merge into one.  </p>
+                <div align="Right">
+                    <apex:commandButton value="Next" action="{!getSelected}"/>
+                    <apex:commandButton value="Cancel" action="{!Cancel}"/>
+                </div>
+                <apex:pageBlockSection title="List Of Available Contacts" columns="1">
+                    <apex:pageblockTable value="{!Contacts}" var="a" id="pageblockTable" columnsWidth="5%,15%,15%,15%,15%,15%,20%">
+                        <apex:column style="text-align:right" headerValue="Select" width="50">
+                            <apex:inputCheckbox value="{!a.selected}" id="checkedone"/>
+                        </apex:column>
+                        <apex:column style="text-align:right" headervalue="First Name" value="{!a.cc.Firstname}"/>
+                        <apex:column style="text-align:right" headervalue="Last Name" value="{!a.cc.Lastname}"/>
+                        <apex:column style="text-align:right" headervalue="Discovery Data Rep CRD" value="{!a.cc.Data_Link2__DDL_RepID__c}"/>
+                        <apex:column style="text-align:right" headervalue="Email" value="{!a.cc.Email}"/>
+                        <apex:column style="text-align:right" headervalue="Phone" value="{!a.cc.phone}"/>
+                        <apex:column style="text-align:right" headervalue="Enterprise Name" value="{!a.cc.AccountId}"/>
+                    </apex:pageblockTable>
+                </apex:pageBlockSection>
+                <apex:pageMessages />
+                <div align="Right">
+                    <apex:commandButton value="Next" action="{!getSelected}"/>
+                    <apex:commandButton value="Cancel" action="{!Cancel}"/>
+                </div>
+            </apex:pageBlock>
+        </div>
+        <apex:pageBlock title="Step 2. Selected Contacts to merge" rendered="{!editSection}">
+            <div>
+                <p>Select the values that you want to retain in the merged record. The Master Record selected will retain read-only and hidden field values.
+                    The oldest Created By date and user will be retained in the merged record. 
+                </p>
+                <p>Note: Activities, Notes, Attachments, Cases, Opportunities, and Campaign History related to these Contacts will be associated with the resulting merged record.</p>
+          
+            </div>
+            <!--<Spinner code>-->
+            <apex:pageMessages id="showerrormsg"></apex:pageMessages>
+            <div align="Right">
+                <apex:commandButton value="Previous" action="{!Previous}"/>
+                <apex:commandButton value="Merge" action="{!Save}" status="spinnerStatus" rerender="showerrormsg"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </div>
+            <div>    
+                <!--apex:pageMessages /!--> 
+               
+                <table>
+                    <tr>
+                        <th class="text-center" bgcolor="#56458c" style="color:white">Name</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td>
+                                <apex:outputField value="{!data1.firstname}"/> &nbsp; <apex:outputField value="{!data1.Lastname}"/>
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <!--<Added action function for master record fix>-->
+                    <apex:actionfunction name="callByRadio" action="{!selectcon}" rerender="hidden">
+                        <apex:param name="conid" value="" />
+                    </apex:actionfunction>
+                    <tr>
+                        <th class="text-center" bgcolor="#56458c" style="color:white">Master Record</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td> 
+                                <apex:outputPanel >
+                                    <apex:pageBlock id="hidden" rendered="false"> </apex:pageBlock>
+                                    <apex:actionsupport action="{!selectcon}" event="onclick" reRender="hidden"> 
+                                        <input type="radio" name="Onlyone"/>                   
+                                        <apex:param name="conid" value="{!data1.Id}">
+                                        </apex:param>
+                                    </apex:actionsupport> 
+                                </apex:outputPanel> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">RecordType</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <!--<input type="radio" name="OnlyRecordType" />-->                 
+                                     <apex:param name="RecordType" value="{!data1.RecordTypeId}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.RecordTypeId}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Pref. Name</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td>
+                                <apex:outputPanel >
+                                    <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                        <input type="radio" name="OnlyPrefName"/>                   
+                                        <apex:param name="prefName" value="{!data1.Pref_Name__c}"/>
+                                    </apex:actionsupport>
+                                    <apex:outputField value="{!data1.Pref_Name__c}" />
+                                </apex:outputPanel> 
+                            </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Title</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td>
+                                <apex:outputPanel >
+                                    <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                        <input type="radio" name="OnlyTitle"/>                   
+                                        <apex:param name="title" value="{!data1.Title}"/>
+                                    </apex:actionsupport>
+                                    <apex:outputField value="{!data1.Title}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Status</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyStatus"/>                   
+                                    <apex:param name="status" value="{!data1.Rep_Status__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Rep_Status__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <apex:actionfunction name="callByRadio" action="{!SelectLQ}" rerender="hidden">
+                        <apex:param name="leadqualitydate" value="" />
+                    </apex:actionfunction>
+                    <tr>
+                        <th class="text-center">Lead Quality</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!SelectLQ}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyLeadQuality"/>                   
+                                    <apex:param name="leadquality" value="{!data1.Lead_Quality__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Lead_Quality__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <apex:actionfunction name="callByRadio" action="{!SelectLQDate}" rerender="hidden">
+                        <apex:param name="leadqualitydate" value="" />
+                    </apex:actionfunction>
+                    <tr>
+                        <th class="text-center">Lead Quality Date</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td>
+                                <apex:outputPanel >
+                                    <input type="radio" name="selectRadio" id="radio" onclick="callByRadio('{!data1.Lead_Quality_Date__c}')"/>
+                                    
+                                    <apex:outputField value="{!data1.Lead_Quality_Date__c}" />
+                                </apex:outputPanel> 
+                            </td>
+                                
+                                <!--<apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="Onlyleadqualitydate"/>
+                                    <apex:param name="leadqualitydate" value="{!data1.Lead_Quality_Date__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Lead_Quality_Date__c}" />
+                                </apex:outputPanel> </td> -->
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Email</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyEmail"/>                   
+                                    <apex:param name="email" value="{!data1.Email}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Email}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Discovery Email - Business Type</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryEmailBusinessType"/>                   
+                                    <apex:param name="discoveryEmailBusinessType" value="{!data1.Discovery_Email_Business_Type__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Discovery_Email_Business_Type__c}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Discovery Email - Business Type 2</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryEmailBusinessType2"/>                   
+                                    <apex:param name="discoveryEmailBusinessType2" value="{!data1.Discovery_Email_Business_Type_2__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Discovery_Email_Business_Type_2__c}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Discovery Email - Personal Type</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryEmailPersonalType"/>                   
+                                    <apex:param name="discoveryEmailPersonalType" value="{!data1.Discovery_Email_Personal_Type__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Discovery_Email_Personal_Type__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Enterprise Name</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyEnterpriseName"/>                   
+                                    <apex:param name="account" value="{!data1.AccountId}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.AccountId}"/>
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Phone</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyPhone"/>                   
+                                    <apex:param name="phone" value="{!data1.Phone}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Phone}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Mobile</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyMobile"/>                   
+                                    <apex:param name="mobilePhone" value="{!data1.MobilePhone}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.MobilePhone}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Home Phone</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyHomePhone"/>                   
+                                    <apex:param name="homePhone" value="{!data1.HomePhone}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.HomePhone}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Fax</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyFax"/>                   
+                                    <apex:param name="fax" value="{!data1.Fax}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Fax}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Discovery Home Phone</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryHomePhone"/>                   
+                                    <apex:param name="discoveryHomePhone" value="{!data1.Discovery_Home_Phone__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Discovery_Home_Phone__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Discovery Contact Phone</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryContactPhone"/>                   
+                                    <apex:param name="discoveryContactPhone" value="{!data1.Discovery_Contact_Phone__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Discovery_Contact_Phone__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">CRD Number</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyCRDNumber"/>                   
+                                    <apex:param name="crdNumber" value="{!data1.CRD_Number__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.CRD_Number__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Discovery Data Rep CRD</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDiscoveryDataRepCRD"/>                   
+                                    <apex:param name="discoveryDataRepCRD" value="{!data1.Data_Link2__DDL_RepID__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Data_Link2__DDL_RepID__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Owner</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyOwner"/>                   
+                                    <apex:param name="ownerId" value="{!data1.OwnerId}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.OwnerId}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                     <tr>
+                        <th class="text-center">Prospect Comments</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyProspectComments"/>                   
+                                    <apex:param name="prospectComments" value="{!data1.Prospect_Comments__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Prospect_Comments__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Website</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyWebsite"/>                   
+                                    <apex:param name="website" value="{!data1.Website__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Website__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                   
+                    <tr>
+                        <th class="text-center">Smart List Segment</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyLeadScore"/>                   
+                                    <apex:param name="leadScore" value="{!data1.Smart_List_Segment__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Lead_Score__c}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Marketing Email Opt Out</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyMarketingEmailOptOut"/>                   
+                                    <apex:param name="Marketing Email Opt Out" value="{!data1.ELQ_Marketing_Email_Opt_Out__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.ELQ_Marketing_Email_Opt_Out__c}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                    <tr>
+                        <th class="text-center">Prospect Status</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyProspectStatus"/>                   
+                                    <apex:param name="Prospect Status" value="{!data1.Inactive_Reason__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Inactive_Reason__c}" />
+                                </apex:outputPanel>  </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Prospect Status</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyProspectStatus"/>                   
+                                    <apex:param name="prospectStatus" value="{!data1.Prospect_Status__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Prospect_Status__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Lead source</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyLeadSource" />                   
+                                    <apex:param name="Leadsource" value="{!data1.Lead_Source__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Lead_Source__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Date Became a Rep</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyDateBecameARep"/>                   
+                                    <apex:param name="dateBecameARep" value="{!data1.Date_Became_a_Rep__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Date_Became_a_Rep__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    <tr>
+                        <th class="text-center">Current Firm Hire Date</th>
+                        <apex:repeat value="{!SelectedContacts}" var="data1">
+                            <td><apex:outputPanel >
+                                <apex:actionsupport action="{!Selectemail}" event="onclick" reRender="hidden"> 
+                                    <input type="radio" name="OnlyCurrentFirmHireDate"/>                   
+                                    <apex:param name="currentFirmHireDate" value="{!data1.Current_Firm_Hire_Date__c}"/>
+                                </apex:actionsupport>
+                                <apex:outputField value="{!data1.Current_Firm_Hire_Date__c}" />
+                                </apex:outputPanel> </td>
+                        </apex:repeat>
+                    </tr>
+                    
+                 </table>
+            </div>
+           
+            <div align="Right">
+                <apex:commandButton value="Previous" action="{!Previous}"/>
+                <apex:commandButton value="Merge" action="{!Save}" status="spinnerStatus" rerender="showerrormsg"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

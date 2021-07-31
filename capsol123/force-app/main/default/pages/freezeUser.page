@@ -1,0 +1,63 @@
+<apex:page controller="freezeUserController" Tabstyle="User">
+<apex:form id="theForm" >
+<apex:pageMessage summary="It is recommended to select maximum 1 user at a time" severity="Info" strength="3" />
+
+    <apex:pageBlock Title="User to be Freezed" id="theBlock">
+            <apex:pageBlockSection Title="Search User">                
+                <apex:inputText id="searchBox" value="{!searchValue}" />    
+                <br/>       
+                <apex:commandButton id="submit" value="Search User" action="{!getusers}" rerender="Available_Users"/>              
+            </apex:pageBlockSection>    
+            <apex:pageBlockSection Title="List of Available Users" id="Available_Users">
+                <apex:pageBlockTable value="{!userList}"  var="a">
+                <apex:column >
+                <apex:facet name="header"> <apex:inputCheckbox >
+                    <!--  <apex:actionSupport event="onclick" action="{!GetSelected}" onsubmit="checkAll(this)" rerender="Selected_PBS"/>-->
+                </apex:inputCheckbox></apex:facet>
+                <apex:inputCheckbox value="{!a.selected}" id="checkedone">
+                    <apex:actionSupport event="onclick" action="{!GetSelected}" rerender="Selected_PBS,showmsg"/>
+                </apex:inputCheckbox></apex:column>
+                <apex:column headervalue="User Name" value="{!a.acc.Name}" />   
+                <apex:column headervalue="User Role" value="{!a.acc.UserRole.Name}" />      
+                <apex:column headervalue="Last Login" value="{!a.acc.LastLoginDate}" />             
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>           
+                            
+                <apex:pageBlockSection Title="Selected Users" id="Selected_PBS">
+                     <apex:pageBlockTable value="{!Selectedusers}"  var="s" id="selecteduser">
+                        <apex:column headervalue="User Name" value="{!s.Name}" id="theRadio" />
+                        <apex:column headervalue="User Role" value="{!s.UserRole.Name}" />      
+                        <apex:column headervalue="Last Login" value="{!s.LastLoginDate}" /> 
+                    </apex:pageBlockTable>    
+                    <br/><br/> 
+                    <apex:commandButton disabled="{!isFreezeButtonDisabled}" value="Freeze User" onclick="return confirmFreeze();" />
+                </apex:pageBlockSection>        
+            <apex:actionFunction action="{!freeze}" name="freeze" rerender="showmsg" status="LoadingStatus"/>
+            <apex:pageMessages id="showmsg"></apex:pageMessages>
+    </apex:pageBlock>
+</apex:form>
+<script>
+
+function checkAll(cb)
+{
+    var inputElem = document.getElementsByTagName("input");
+    for(var i=0; i<inputElem.length; i++)
+    {
+        if(inputElem[i].id.indexOf("checkedone")!=-1)
+        inputElem[i].checked = cb.checked;
+    }
+}  
+
+function confirmFreeze() {
+
+                                
+     if(confirm('Are you sure that selected user to be freezed? ')) {
+        freeze();
+        return false;
+    }
+    return false;
+   
+}
+
+</script>
+</apex:page>

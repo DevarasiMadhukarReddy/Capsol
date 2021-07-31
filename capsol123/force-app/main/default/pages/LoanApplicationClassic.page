@@ -1,0 +1,147 @@
+<apex:page standardController="Loan_Application__c" sidebar="false" extensions="LoanApplicationExtension">
+    <!--Commented below line By Amol 08/28/2020 to display Repayable Loans with OOB View in CLassic -->
+    <!--<apex:stylesheet value="{!$Resource.ProposalCSS}" />-->
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <style>
+        div.slds-accordion__content {
+            padding-left: 2em!important;
+        }
+
+        .slds-scope .slds-accordion__summary {
+            display: block!important;
+        }
+
+        td.dataCell {
+            text-align: left;
+        }
+
+        td.pbButton {
+            text-align: left;
+        }
+
+        td.pbTitle h3 {
+            text-align: left;
+        }
+
+        .slds-scope td {
+            text-align: center;
+        }
+
+        col {
+            width: 210px;
+        }
+
+        article.slds-card {
+            text-align: initial;
+            border: none;
+        }
+
+        tr>td>button {
+            margin: 1em!important;
+        }
+
+        #overlay {
+            background: #ffffff;
+            color: #666666;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            z-index: 5000;
+            top: 0;
+            left: 0;
+            float: left;
+            text-align: center;
+            padding-top: 25%;
+            opacity: .80;
+        }
+
+        .spinner {
+            margin: 0 auto;
+            height: 64px;
+            width: 64px;
+            animation: rotate 0.8s infinite linear;
+            border: 5px solid firebrick;
+            border-right-color: transparent;
+            border-radius: 50%;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <div id="LcDisplayId"></div>
+    <div id="VFPage" style="display:none">
+        <apex:detail rendered="{!show}" />
+    </div>
+    <div class="relatedview">
+        <!-- Added Rendered Condition to show related list for Loan Apps with Custom UI - Start Changes -->
+        <apex:relatedList list="OpenActivities" rendered="{!showRepayable}" />
+        <apex:relatedList list="Borrowers__r" rendered="{!showRepayable}" />
+        <apex:relatedList list="Proposals_Offers__r" rendered="{!showRepayable}" />
+        <apex:relatedList list="CombinedAttachments" rendered="{!showRepayable}" />
+        <apex:relatedList list="Histories" rendered="{!showRepayable}" />
+        <!-- End Changes-->
+    </div>
+
+    <body>
+
+        <script>
+
+            var pagerecorId = "{! Loan_Application__c.Id }";
+            var PageRecordType = "{! Loan_Application__c.RecordType.Name }";
+            //alert(pagerecorId);
+            $Lightning.use("c:AuraLoanApplication", function () {
+                if (PageRecordType == 'Transition Assistance') {
+
+                    $Lightning.createComponent("c:AuraLoanApplicationTA", { "recordId": pagerecorId, "classic": true }, "LcDisplayId",
+                        function (cmp) {
+
+                            console.log('Component created, do something cool here');
+                        });
+                } else if (PageRecordType == 'Working Capital') {
+                    $Lightning.createComponent("c:AuraLoanApplicationWC", { "recordId": pagerecorId }, "LcDisplayId",
+                        function (cmp) {
+
+                            console.log('Component created, do something cool here');
+                        });
+
+                } else if (PageRecordType == 'Retention Loan') {
+                    $Lightning.createComponent("c:AuraLoanApplicationRetention", { "recordId": pagerecorId }, "LcDisplayId",
+                        function (cmp) {
+
+                            console.log('Component created, do something cool here');
+                        });
+
+                } else if (PageRecordType == 'Monetization') {
+                    $Lightning.createComponent("c:AuraLoanApplicationMon", { "recordId": pagerecorId }, "LcDisplayId",
+                        function (cmp) {
+
+                            console.log('Component created, do something cool here');
+                        });
+                } else {
+                    //callOOBRepayables();
+                    document.getElementById('VFPage').style.display = 'block';
+                }
+
+            });
+
+            /*  function callOOBRepayables() {
+
+                  if (PageRecordType == 'Growth Loan' || PageRecordType == 'Acquisition Loan' || PageRecordType == 'Line of Credit' || PageRecordType == 'Refinance Loan' || PageRecordType == 'Backend TA') {
+                      if (UITheme.getUITheme() === 'Theme4d' || UITheme.getUITheme() === 'Theme4u') {
+
+                          sforce.one.navigateToSObject(pagerecorId, view)
+                      } else {
+                          document.getElementById('VFPage').style.display = 'block';
+                      }
+                  }
+              }*/
+        </script>
+    </body>
+    <apex:includeLightning />
+</apex:page>

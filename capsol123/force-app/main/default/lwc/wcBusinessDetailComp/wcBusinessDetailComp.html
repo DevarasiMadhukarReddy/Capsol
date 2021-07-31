@@ -1,0 +1,203 @@
+<template>
+    <lightning-card>
+        <!-- <h2 if:true={showHeader} class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Business Details</h2> -->
+        <template if:true={quickAction}>
+            <div class="appcss">
+                <template if:true={editRecord}>
+
+                    <template if:true={wcRecord}>
+                        <div class="slds-form-element appdcss" style="width:23%">
+                            <label class="slds-form-element__label">Parent Loan Application</label>
+                            <div class="slds-form-element__control">
+                                <c-lookup-comp object-name="Loan_Application__c"
+                                    selected-record={businessData.ParentLoan} data-id="ParentLoan" display-name=""
+                                    onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+                            </div>
+                        </div>
+                    </template>
+
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Business Name/DBA</label>
+                        <div class="slds-form-element__control">
+                            <input value={businessData.BussinessName} maxlength="255" type="text" class="slds-input"
+                                name="businessLegalNameDBA" onchange={BusinessNameChange} />
+                        </div>
+                    </div>
+
+
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Number of Advisors</label>
+                        <div class="slds-form-element__control">
+                            <input value={businessData.AdvisorNo} type="number" onkeypress={checkNumberlength}
+                                class="slds-input" name="noOfAdvisors" onchange={AdvisorChange} />
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element appdcss">
+
+                        <div class="slds-form-element__control">
+                            <lightning-combobox value={businessData.Entity} name="legalEntity" label="Legal Entity Type"
+                                options={legalEntityValues} onchange={EntityChange}></lightning-combobox>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element appdcss">
+
+                        <div class="slds-form-element__control">
+                            <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                            <lightning-combobox value={businessData.Registration} label="Current Firm Type"
+                                name="currentRegistration" options={currentRegistrationValues}
+                                onchange={RegistrationChange}></lightning-combobox>
+                            <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                        </div>
+                    </div>
+
+                    <!--<lightning-combobox value={businessData.Entity} class="appdcss" name="legalEntity"  label="Legal Entity Type" options={legalEntityValues} onchange={EntityChange}></lightning-combobox>
+                    <lightning-combobox value={businessData.Registration} class="appdcss" 
+                            name="currentRegistration" label="Current Registration" options={currentRegistrationValues} onchange={RegistrationChange} ></lightning-combobox>
+                      
+                       -->
+                    <div class="slds-form-element appdcss">
+                        <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                        <label class="slds-form-element__label">Current Firm Name</label>
+                        <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                        <div class="slds-form-element__control">
+                            <input type="text" value={businessData.Custodian} name="currentCustodian" class="slds-input"
+                                maxlength="255" onchange={CustodianChange} />
+                        </div>
+                    </div>
+
+
+                </template>
+                <template if:false={editRecord}>
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Parent Loan Application</label>
+                        <div class="slds-form-element__control">
+                            <template if:true={businessData.ParentLoan}>
+                                <label class="slds-input lblInput">{businessData.ParentLoan.Name}</label>
+                            </template>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Business Name/DBA</label>
+                        <div class="slds-form-element__control">
+                            <label style="word-break: break-word;"
+                                class="slds-input lblInput">{businessData.BussinessName}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Number of Advisors</label>
+                        <div class="slds-form-element__control">
+                            <!---Modified By Bhanu 7/20/2020 changes Start--> <label style="word-break: break-word;"
+                                class="slds-input lblInput">{businessData.AdvisorNo}</label>
+                            <!---Ends-->
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Legal Entity Type</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{businessData.Entity}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                        <label class="slds-form-element__label">Current Firm Type</label>
+                        <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{businessData.Registration}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                        <label class="slds-form-element__label">Current Firm Name</label>
+                        <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                        <div class="slds-form-element__control">
+                            <!---Modified By Bhanu 7/20/2020 changes Start--> <label style="word-break: break-word;"
+                                class="slds-input lblInput">{businessData.Custodian}</label>
+                            <!---Ends-->
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+        </template>
+
+        <template if:false={quickAction}>
+
+
+            <div class="slds-m-around_medium slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Parent Loan Application</label>
+                        <div class="slds-form-element__control">
+                            <c-lookup-comp object-name="Loan_Application__c" selected-record={businessData.ParentLoan}
+                                data-id="ParentLoan" display-name="" onhandlelookupdata={handlelookupdata}>
+                            </c-lookup-comp>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-m-around_medium slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Business Name/DBA</label>
+                        <div class="slds-form-element__control">
+                            <input value={businessData.BussinessName} type="text" maxlength="255" class="slds-input"
+                                name="businessLegalNameDBA" onchange={BusinessNameChange} />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">Number of Advisors</label>
+                        <div class="slds-form-element__control">
+                            <input value={businessData.AdvisorNo} type="number" onkeypress={checkNumberlength}
+                                class="slds-input" name="noOfAdvisors" onchange={AdvisorChange} />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-combobox value={businessData.Entity} name="legalEntity" label="Legal Entity Type"
+                        options={legalEntityValues} onchange={EntityChange}></lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-m-around_medium slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12">
+                    <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                    <lightning-combobox value={businessData.Registration} name="currentRegistration"
+                        label="Current Firm Type" options={currentRegistrationValues} onchange={RegistrationChange}>
+                    </lightning-combobox>
+                    <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                </div>
+                <div class="slds-col slds-size_6-of-12">
+                    <div class="slds-form-element">
+                        <!--CS-2522 Modified by Amol 11_09_2020 Start-->
+                        <label class="slds-form-element__label">Current Firm Name</label>
+                        <!--CS-2522 Modified by Amol 11_09_2020 End-->
+                        <div class="slds-form-element__control">
+                            <input type="text" value={businessData.Custodian} maxlength="255" name="currentCustodian"
+                                class="slds-input" onchange={CustodianChange} />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div> </div> -->
+            </div>
+        </template>
+    </lightning-card>
+
+</template>

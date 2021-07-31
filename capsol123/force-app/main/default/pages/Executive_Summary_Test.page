@@ -1,0 +1,21 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Executive Summary Test</h1>
+<br>36% increase in total meetings YoY </br>
+ 
+44% increase in meeting with existing recruits YoY 
+ 
+YTD Wirehouse advisors are the leading source representing 27% of the FAs and 37% of the GDC.  By comparison, YTD 2011 Wirehouse advisors represented 28% of FAs and 33% of GDC.
+ 
+24% YoY increase in Recruited GDC
+ 
+Recruited GDC of $15.3mm in June vs. goal of $22.9mm 
+ 
+RIA recruiting of $6.5mm in June vs. goal of $6.7mm
+ 
+YTD Recruiting of $114.0mm vs. goal of $137.5
+ 
+YTD RIA Recruiting of $42.6mm vs. goal of $40.0mm 
+
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

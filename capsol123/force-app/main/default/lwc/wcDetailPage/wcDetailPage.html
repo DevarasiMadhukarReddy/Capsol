@@ -1,0 +1,37 @@
+<template>
+    <!--<button onclick={zz}>Edit</button>-->
+    <lightning-accordion allow-multiple-sections-open="true" active-section-name={activeSection}>
+        <lightning-accordion-section name="Application_Info" label="Application Information" class="slds-accordion__summary">
+           <c-wc-application-comp application-info={Data.ApplicationInfo} record-id={recordId} classic={classic}></c-wc-application-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Bussiness_Info" label="Bussiness Details" class="slds-accordion__summary">
+            <c-wc-business-detail-comp quick-action={quickAction} wc-record={wcRecord} edit-record={editRecord}   business-data={Data.BusinessInfo}  onhandlebusinessdata={handlebusinessdata}></c-wc-business-detail-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Financial_Info" label="Financial Details" class="slds-accordion__summary">
+            <c-wc-financial-detail-comp edit-record={editRecord} financial-data={Data.FinancialInfo} display={F5display} onhandlefinancialdata={handlefinancialdata}></c-wc-financial-detail-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Borrower_Info" label="Borrower Details" class="slds-accordion__summary">
+             <!--Start Bhanu 8/13/2020 CS-1811 - Custom UI enhancement - Loan Split %-->  
+            <c-wc-borrower-comp  working-capitl={workingCapitl} ta-record={taRecord} hide-wizard={hideWizard}  edit-record={editRecord} bow-arr={Data.BorrowerInfo} onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+        <!--End-->  
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Proposal_Info" label="Proposal Details" class="slds-accordion__summary">
+            <c-wc-proposal-comp classic={classic}  edit-record={editRecord} proposal-info={Data.ProposalInfo} onhandleproposaldata={handleproposaldata}></c-wc-proposal-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Additional_Info" label="Additional Comments" class="slds-accordion__summary">
+            <c-wc-additional-comments-comp additional-comments={Data.AdditionalComments} edit-record={editRecord} onhandleadditionalcomments={handleadditionalcomments}></c-wc-additional-comments-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="Additional_Contacts" label="Additional Contacts" class="slds-accordion__summary">
+           <c-wc-additional-contacts-comp additional-contacts={Data.AdditionalContacts} onhandleadditionalcomments={handleadditionalcomments}></c-wc-additional-contacts-comp>
+        </lightning-accordion-section>
+        <lightning-accordion-section name="System_Info" label="System Information" class="slds-accordion__summary">
+            <c-wc-system-comp system-info={Data.SystemInfo}></c-wc-system-comp>
+        </lightning-accordion-section>
+    </lightning-accordion>
+    <template if:true={loading}>
+        <div class="loader">
+            <lightning-spinner size="medium" variant="brand" alternative-text="loading"></lightning-spinner>
+        </div>
+    </template>
+
+</template>

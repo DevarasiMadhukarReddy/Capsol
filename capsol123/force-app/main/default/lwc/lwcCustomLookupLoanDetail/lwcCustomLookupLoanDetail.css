@@ -1,0 +1,19 @@
+.slds-input{
+    padding-left: 1.75rem !important;
+}
+.slds-input-has-icon .slds-input__icon {
+    top: 56% !important;
+}
+
+.slds-input-has-icon.borrower-input-no-label .slds-input__icon {
+    top: 33% !important;
+}
+
+.slds-icon_small, .slds-icon--small {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 2;
+}
+.borrower-delete {
+    padding-bottom: 12px;
+}

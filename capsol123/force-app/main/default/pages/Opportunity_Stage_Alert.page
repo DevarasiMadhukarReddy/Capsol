@@ -1,0 +1,61 @@
+<apex:page standardController="Opportunity" showChat="false" sidebar="false" showHeader="false" standardStylesheets="false">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"/>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.10&sensor=false"/>
+    <script src="/soap/ajax/26.0/connection.js" type="text/javascript"/>
+    <script src="/soap/ajax/26.0/apex.js" type="text/javascript"/>
+    
+    <script>
+        var Opportunity= {};
+        function authorize(){
+            sforce.connection.sessionId = '{!GETSESSIONID()}';
+            
+        }
+        
+        function getAccountID(){
+            Opportunity.ID = '{!Opportunity.id}';
+            
+            
+        }
+        
+        function fetchAccountRecord(){
+        
+        
+      // var recType = sforce.connection.query("SELECT ID,Stagename FROM Opportunity WHERE ID='{!Opportunity.Id}'"); 
+        //records= recType.getArray("records"); 
+        //var rname= records[0].Stagename; 
+       
+        
+        if('{!Opportunity.Stagename}' == '4 - Registration/Formation Service' && '{!Opportunity.Stage4_Alert__c}' == 'false'){
+        
+        alert('The RIA Client will move to Stage 4 if they have engaged the RIA Team for Registration/Formation Services');
+        var Opportunityobj = new sforce.SObject("Opportunity"); 
+        Opportunityobj.Id = '{!Opportunity.Id}'; 
+        //Opportunityobj.name= 'true'; 
+        Opportunityobj.Stage4_Alert__c = true; 
+        var result = sforce.connection.update([Opportunityobj]); 
+        //alert(result);       
+        
+        
+        }else if('{!Opportunity.Stagename}' == '5 - Ongoing/Audit Risk Service' && '{!Opportunity.Stage5_Alert__c}' == 'false'){
+        alert('The RIA Client will move to Stage 5 if they have engaged the RIA Team solely for Ongoing Compliance Support Service or Audit Risk Assessment Service.');
+        var Opportunityobj = new sforce.SObject("Opportunity"); 
+        Opportunityobj.Id = '{!Opportunity.Id}'; 
+        //Opportunityobj.name= 'true'; 
+        Opportunityobj.Stage5_Alert__c = true;
+        var result = sforce.connection.update([Opportunityobj]); 
+        
+        }
+               
+            }
+        
+        
+        
+        $(document).ready(function(){
+            authorize();
+            getAccountID();
+            fetchAccountRecord();
+            
+        });
+    </script>
+    
+</apex:page>

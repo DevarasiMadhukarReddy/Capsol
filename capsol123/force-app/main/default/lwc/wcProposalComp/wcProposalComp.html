@@ -1,0 +1,164 @@
+<template>
+    <h2 if:true={showHeader} class="slds-text-heading_medium" style="text-align:center;font-weight:bolder;Margin-top:22px;" >Proposal Information</h2>
+  
+                <template if:true={editRecord}>
+				
+				
+                    <template if:true={quickaction}>
+                        <template if:true={classic}>
+						
+						   <div class="appcss">
+						    <div   class="slds-form-element appdcss" style="min-width:112px;s">
+											<label class="slds-form-element__label" >Requested Loan Amount</label>
+											<div style="margin-top:-0.8em" class="slds-form-element__control">
+												     <lightning-input onchange={handleLoanAmount}  onkeypress={checkNumberlength}  value={proposalInfo.RequestedLoanAmount}  type="number" min="0" formatter="currency" step="0.01" label="" class="slds-m-bottom_x-small"></lightning-input>
+											</div>
+										   </div>
+										   
+										     <div class="slds-form-element appdcss" style="min-width:112px;">
+											<label class="slds-form-element__label" >Requested Term Length</label>
+											<div style="margin-top:-0.8em" class="slds-form-element__control">
+												    <lightning-combobox onchange={handleTermLength}   value={proposalInfo.RequestedTermLength}  name=""   options={YearPicklistValues} ></lightning-combobox>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" style="min-width:126px;">
+											<label class="slds-form-element__label" >Interest Rate</label>
+											<div class="slds-form-element__control">
+												<input value = "Prime+2%" type="text"  disabled class="slds-input" name="Primeplus"   />
+												
+											</div>
+										   </div>
+						   
+						   </div>
+                       
+                        </template>
+                        <template if:false={classic}>
+						
+						  <div class="appcss">
+						    <div   class="slds-form-element appdcss" style="min-width:112px;">
+											<label class="slds-form-element__label" >Requested Loan Amount</label>
+											<div style="margin-top:-0.8em" class="slds-form-element__control">
+												   <lightning-input onchange={handleLoanAmount}  onkeypress={checkNumberlength}  value={proposalInfo.RequestedLoanAmount}  type="number" min="0" formatter="currency" step="0.01" label="" class="slds-m-bottom_x-small"></lightning-input>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" style="min-width:112px;">
+											<label class="slds-form-element__label" >Requested Term Length</label>
+											<div style="margin-top:-0.8em" class="slds-form-element__control">
+												    <lightning-combobox onchange={handleTermLength}   value={proposalInfo.RequestedTermLength}  name=""   options={YearPicklistValues} ></lightning-combobox>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" style="min-width:126px;">
+											<label class="slds-form-element__label" >Interest Rate</label>
+											<div class="slds-form-element__control">
+												<input value = "Prime+2%" type="text"  disabled class="slds-input" name="Primeplus" style="margin-top:.6em;"   />
+											</div>
+										   </div>
+						   
+						   </div>
+						
+						
+						
+                        </template>
+                        
+                    </template>
+
+                    <template if:false={quickaction}>
+					
+					  <div class="appcss">
+						    <div   class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Requested Loan Amount</label>
+											<div style="margin-top:-1.1em" class="slds-form-element__control">
+												  <lightning-input onchange={handleLoanAmount}  onkeypress={checkNumberlength}  value={proposalInfo.RequestedLoanAmount} type="number" min="0" formatter="currency" step="0.01" label="" class="slds-m-bottom_x-small"></lightning-input>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Requested Term Length</label>
+											<div style="margin-top:-1.1em" class="slds-form-element__control">
+												     <lightning-combobox onchange={handleTermLength}   value={proposalInfo.RequestedTermLength}  name="" placeholder="" label="" options={YearPicklistValues} ></lightning-combobox>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Interest Rate</label>
+											<div class="slds-form-element__control">
+												 <label class="slds-input lblInput" style="margin-top:.1em">  Prime+2%</label>
+											</div>
+                                           </div>
+                                           
+                                           <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+						   
+						   </div>
+					
+					
+                    </template>
+
+                 
+
+
+
+                </template>
+                
+                
+                <template if:false={editRecord}>
+				
+				  <div class="appcss">
+						    <div   class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Requested Loan Amount</label>
+											<div class="slds-form-element__control">
+												 <label class="slds-input lblInput">   $ {proposalInfo.RequestedLoanAmount}</label>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Requested Term Length</label>
+											<div class="slds-form-element__control">
+												    	 <label class="slds-input lblInput"> {proposalInfo.RequestedTermLength}</label>
+											</div>
+										   </div>
+										     <div class="slds-form-element appdcss" >
+											<label class="slds-form-element__label" >Interest Rate</label>
+											<div class="slds-form-element__control">
+												 <label class="slds-input lblInput">  Prime+2%</label>
+											</div>
+                                           </div>
+                                           <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element appdcss">
+                                            <label class="slds-form-element__label"></label>
+                                            <div class="slds-form-element__control">
+                                                <label class="slds-input lblInput"> </label>
+                                            </div>
+                                        </div>
+						   
+						   </div>
+				
+				
+                
+                </template>
+         
+</template>

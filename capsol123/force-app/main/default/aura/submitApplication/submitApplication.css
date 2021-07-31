@@ -1,0 +1,26 @@
+.THIS.field-title {
+  font-weight:bold;
+    
+}
+.THIS {
+   box-sizing:none;
+    
+}
+
+/*.THIS.field-fixed {
+   position: relative; 
+   width: 643px;
+   left:-20px;
+   
+}
+*/
+.THIS.limitVert{
+    height: 300px;
+}
+.THIS .outer-div {
+    position: relative;
+}
+
+.THIS .spinner2 {
+   position: absolute;
+}

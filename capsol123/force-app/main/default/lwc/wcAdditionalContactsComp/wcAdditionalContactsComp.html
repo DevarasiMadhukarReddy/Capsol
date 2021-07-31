@@ -1,0 +1,162 @@
+<template>
+    <lightning-card>
+        
+            <div class="appcss">
+                <div class="slds-form-element appdcss" if:false={ea}>
+                    <label class="slds-form-element__label" >Assigned Recruiter</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> 
+                            <template if:true={additionalContacts.AssignedRecruiter}>
+                                <a href={additionalContacts.AssignedRecruiterLink}>{additionalContacts.AssignedRecruiter.Name}</a>
+                            </template>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element appdcss" if:false={ea}>
+                    <label class="slds-form-element__label" >Internal Recruiter(RD)</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> 
+                            <template if:true={additionalContacts.InternalRecruiter}>
+                                <a href={additionalContacts.InternalRecruiterLink}>{additionalContacts.InternalRecruiter.Name}</a>
+                            </template>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element appdcss" >
+                    <template if:false={ea}>
+                        <label class="slds-form-element__label" if:false={ea} >Business Development</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> 
+                                <template if:true={additionalContacts.BusinessDevelopment}>
+                                    <a href={additionalContacts.BusinessDevelopmentLink}>{additionalContacts.BusinessDevelopment.Name}</a>
+                                </template>
+                            </label>
+                        </div>
+                    </template>
+                    
+                    <template if:true={ea}>
+                        <template if:true={eamon}>
+                            <label class="slds-form-element__label" if:true={ea} >Case Owner</label>
+                            <div class="slds-form-element__control">
+                                <label class="slds-input lblInput"> 
+                                    <template if:true={additionalContacts.CaseOwnerName}>
+                                        <a href={additionalContacts.CaseOwnerLink}>{additionalContacts.CaseOwnerName}</a>
+                                    </template>
+                                </label>
+                            </div>
+                        </template>
+                        <template if:false={eamon}>
+                            <label class="slds-form-element__label" if:true={ea} >Business Consultant</label>
+                            <div class="slds-form-element__control">
+                                <label class="slds-input lblInput"> 
+                                    <template if:true={additionalContacts.BusinessDevelopment}>
+                                        <a href={additionalContacts.BusinessDevelopmentLink}>{additionalContacts.BusinessDevelopment.Name}</a>
+                                    </template>
+                                </label>
+                            </div>
+                        </template>
+                       
+                    </template>
+                    
+                </div>
+
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Preparer Name</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> {additionalContacts.PreparerName}</label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Servicer Name</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> {additionalContacts.ServicerName}</label>
+                    </div>
+                </div>
+                <!---Modified By Bhanu 7/20/2020 changes Start-->    <div class="slds-form-element appdcss" if:false={ea}>
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div>
+                </div>   
+                
+                <div class="slds-form-element appdcss" if:true={ea}>
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div>
+                </div> 
+                <div class="slds-form-element appdcss" if:true={ea}>
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div>
+                </div> 
+                <div class="slds-form-element appdcss" if:true={ea}>
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div>
+                </div> 
+                <!---Ends--> 
+
+            </div>
+        
+        <!--<table>
+            <thead if:false={ea} >
+                
+                <th style="text-align:left;font-weight:normal;">Assigned Recruiter</th>
+                <th style="text-align:left;font-weight:normal;">Internal Recruiter(RD)</th>
+                <th style="text-align:left;font-weight:normal;">Business Development</th>
+                <th style="text-align:left;font-weight:normal;">Preparer Name</th>
+                <th style="text-align:left;font-weight:normal;">Servicer Name</th>
+                <th style="text-align:left;font-weight:normal"></th>
+            </thead>
+            <thead if:true={ea} >
+                <th style="text-align:left;font-weight:normal;">Business Consultant</th>
+                <th style="text-align:left;font-weight:normal;">Preparer Name</th>
+                <th style="text-align:left;font-weight:normal;">Servicer Name</th>
+                <th style="text-align:left;font-weight:normal"></th>
+            </thead>
+            <tbody if:false={ea}>
+                <tr>
+                    <td style="text-align:left;font-weight:normal">
+                        <template if:true={additionalContacts.AssignedRecruiter}>
+                            <a href={additionalContacts.AssignedRecruiterLink}>{additionalContacts.AssignedRecruiter.Name}</a>
+                        </template>
+                    </td>
+                    <td style="text-align:left;font-weight:normal">
+                        <template if:true={additionalContacts.InternalRecruiter}>
+                            <a href={additionalContacts.InternalRecruiterLink}>{additionalContacts.InternalRecruiter.Name}</a>
+                        </template>
+                    </td>
+                    <td style="text-align:left;font-weight:normal">
+                        <template if:true={additionalContacts.BusinessDevelopment}>
+                            <a href={additionalContacts.BusinessDevelopmentLink}>{additionalContacts.BusinessDevelopment.Name}</a>
+                        </template>
+                    </td>
+                    <td style="text-align:left;font-weight:normal">{additionalContacts.PreparerName}</td>
+                    <td style="text-align:left;font-weight:normal">{additionalContacts.ServicerName}</td >
+                    <td></td>
+                </tr>
+
+            </tbody>
+            <tbody if:true={ea}>
+                <tr>
+                    <td style="text-align:left;font-weight:normal">
+                        <template if:true={additionalContacts.BusinessDevelopment}>
+                            <a href={additionalContacts.BusinessDevelopmentLink}>{additionalContacts.BusinessDevelopment.Name}</a>
+                        </template>
+                    </td>
+                    <td style="text-align:left;font-weight:normal">{additionalContacts.PreparerName}</td>
+                    <td style="text-align:left;font-weight:normal">{additionalContacts.ServicerName}</td >
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>-->
+
+    </lightning-card>
+</template>

@@ -1,0 +1,333 @@
+<template>
+    <lightning-card>
+        <lightning-accordion allow-multiple-sections-open="true" active-section-name={activeSection}>
+            <lightning-accordion-section name="Application_Info" if:true={lData} label="Application Information"
+                class="slds-accordion__summary">
+                <div class="appcss">
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Business Name/DBA </label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">
+                                <template if:true={lData.zz.BSW.BusinessLegalNameDBA}>
+                                    <!--<a href={lData.zz.ACW.BusinessConsultant_Link}>{lData.zz.ACW.BusinessConsultantName}</a>-->
+                                    <!---Modified By Bhanu 7/20/2020 changes Start--> <label
+                                        style="word-break: break-word;"
+                                        class="slds-input lblInput">{lData.zz.BSW.BusinessLegalNameDBA}</label>
+                                    <!---Ends-->
+
+                                </template>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Application Number</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> <a
+                                    onclick={recordlink}>{lData.zz.AW.ApplicationNumber}</a></label>
+                            <!--   <label class="slds-input lblInput"> <a href={applicationInfo.ApplicationLink}>{lData.zz.AW.ApplicationNumber}</a></label>-->
+
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Date</label>
+                        <div class="slds-form-element__control">
+                            <!--<label class="slds-input lblInput">{lData.zz.AW.Datee}</label>-->
+                            <label class="slds-input lblInput">{forgivable.Datee}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"> Expiration</label>
+                        <div class="slds-form-element__control">
+                            <!--<label class="slds-input lblInput">{lData.zz.AW.Expiration}</label>-->
+                            <label class="slds-input lblInput">{forgivable.Expiration}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"> Verified AUM</label>
+                        <div class="slds-form-element__control">
+                            <!--<label class="slds-input lblInput">{lData.zz.AW.VerifiedAssets}</label>-->
+                            <label class="slds-input lblInput">{forgivable.VerifiedAssets}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Approved T12 GDC</label>
+                        <div class="slds-form-element__control">
+                            <!--<label class="slds-input lblInput">{lData.zz.AW.ApprovedT12}</label>-->
+                            <label class="slds-input lblInput">{forgivable.ApprovedT12}</label>
+                        </div>
+                    </div>
+
+                </div>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Repayable" label={RepayableSection}>
+                <!-- Interest:-->
+                <label
+                    style="    margin-left: 1.3em;font-weight: bold;font-size: 15px;text-align: left;letter-spacing: 0px;color: #000000;opacity: 1;"
+                    if:true={forgivable}>{forgivable.Clause}</label>
+                <div>
+
+                    <table style="width:fit-content">
+                        <colgroup>
+                            <col style="background-color:none">
+                            <template if:true={forgivable}>
+                                <col data-id={forgivable.OfferId} style="background-color:none">
+                            </template>
+                            <template if:false={forgivable}>
+                                <col style="background-color:none">
+                            </template>
+                        </colgroup>
+                        <tr>
+                            <td class="tbhead tdleft">Approved Loan Amount</td>
+                            <template if:true={forgivable}>
+                                <template if:true={forgivable.LoanAmount}>
+                                    <td>
+                                        <lightning-formatted-number format-style="currency" maximum-fraction-digits="2"
+                                        data-id="ApprovedLoanAmount" value={forgivable.LoanAmount}>
+                                        </lightning-formatted-number>
+                                    </td>
+                                </template>
+                                <template if:false={forgivable.LoanAmount}>
+                                    <td></td>
+                                </template>
+
+                                <td></td>
+                            </template>
+                            <template if:false={forgivable}>
+                                <td></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <!--Bhanu Start 9-9-2020  CS-1999-->
+                        <tr>
+                            <td class="tbhead tdleft">Accepted Loan
+                                Amount</td>
+
+                            <template if:true={forgivable}>
+                                <td class="">
+                                    <template if:false={disabledRepayable}>
+                                        <lightning-input style="margin-bottom:1em;" data-id="AcceptedLoanAmount"
+                                            name="AcceptedLoanAmount" type="number"
+                                            value={forgivable.AcceptedLoanAmount1}>
+                                        </lightning-input>
+                                    </template>
+                                    <!--Bhanu ChangesS start --> <template if:true={ShowAcceptedLoanAmount}>
+                                        <label style="margin-top:4px;">
+                                            <lightning-formatted-number format-style="currency"
+                                                maximum-fraction-digits="2" value={forgivable.AcceptedLoanAmount}>
+                                            </lightning-formatted-number>
+                                        </label>
+
+                                    </template>
+                                    <template if:true={disabled}>
+                                        <label style="margin-top:4px;">
+                                            <lightning-formatted-number format-style="currency"
+                                                maximum-fraction-digits="2" value={forgivable.AcceptedLoanAmount}>
+                                            </lightning-formatted-number>
+                                        </label>
+
+                                    </template>
+                                </td>
+                            </template>
+                            <template if:false={forgivable}>
+                                <td></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <!--Ends-->
+
+                        <tr>
+                            <td class="tbhead tdleft">Term</td>
+                            <template if:true={forgivable}>
+
+                                <template if:true={forgivable.Term}>
+                                    <td>{forgivable.Term} Years</td>
+                                </template>
+                                <template if:false={forgivable.Term}>
+                                    <td></td>
+                                </template>
+                                <td></td>
+                            </template>
+                            <template if:false={forgivable}>
+                                <td></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="tbhead tdleft">Intrest Rate</td>
+                            <template if:true={forgivable}>
+                                <template if:true={forgivable.IntrestRate}>
+                                    <td>{forgivable.IntrestRate}%</td>
+                                </template>
+                                <template if:false={forgivable.IntrestRate}>
+                                    <td></td>
+                                </template>
+                                <td></td>
+                            </template>
+                            <template if:false={forgivable}>
+                                <td></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="tbhead tdleft">Note</td>
+                            <template if:true={forgivable}>
+                                <td class="">
+                                    <div>
+                                        <a onclick={shwRNoteListWindow}
+                                            id={forgivable.NoteListId}>{forgivable.NoteLength} Note</a> <br />
+                                        <button class="slds-button slds-button_neutral"
+                                            style="border:1px solid #0F6CD2;color:#0F6CD2" id={forgivable.NoteButtonId}
+                                            disabled={disabled} onclick={showNoteWindowforgivable}>Add Note</button>
+                                    </div>
+
+                                    <!--<div>
+                                     <label onclick={shwRNoteListWindow} id={forgivable.NoteListId} ></label> <br/>
+                                     <button class="slds-button slds-button_neutral" id={forgivable.NoteButtonId}  disabled={disabled} onclick={showNoteWindowforgivable}></button>
+                                 </div>-->
+                                </td>
+                            </template>
+                            <template if:false={forgivable}>
+                                <td class="tbhead"></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <!-- the below template commented to removed selected button-->
+                            <template if:true={forgivable}>
+                                <template if:false={disabled}>
+                                    <td><button style="background:#0F6CD2" id={forgivable.SelectButtonId}
+                                            onclick={onselectOffer} class="slds-button slds-button_brand">Select
+                                            OFFER</button></td>
+                                </template>
+                                <template if:true={disabled}>
+                                    <template if:true={forgivable.OfferSelected}>
+                                        <td><label>OFFER SELECTED</label></td>
+                                    </template>
+                                    <template if:false={forgivable.OfferSelected}>
+                                        <td></td>
+                                    </template>
+                                </template>
+
+                            </template>
+                            <template if:false={forgivable}>
+                                <td></td>
+                            </template>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </lightning-card>
+    <template if:true={showConfirm}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty">
+
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"
+                    style="text-align:center;padding-top: 2em;padding-top: 2em;padding-top: 2em;padding-top: 10em;padding-bottom: 10em;">
+                    <!--<p>Do you want to save the Offer?</p>-->
+                    <p style="color: #0F6CD2;font-size:2em">Please Confirm your offer selection.</p>
+                    <!--Bhanu Start 9-9-2020  CS-1999-->
+                    <template if:true={forgivableMsg}>
+                        <p style="font-size:1em;margin-top:20px;color:red;">Please enter Accepted Loan Amount</p>
+                    </template>	 
+                  <!--Bhanu CS-2517 Start-->    <template if:true={ApprovedAmntMsg}> <p style="font-size:1em;margin-top:20px;color:red;">The Accepted Loan Amount cannot be greater than the Maximum Amount Approved for this loan</p>
+                    </template>	<!--Bhanu CS-2517 Ends-->
+                    <template if:true={forgivableMsg1}> <p style="font-size:1em;margin-top:20px;">Please click on Cancel if you want to update the Accepted Loan Amount, otherwise click on Confirm</p>
+                    </template>
+                    <!--ends-->
+                </div>
+                <footer class="slds-modal__footer" style="text-align:center">
+                    <button class="slds-button slds-button_neutral" style="border:1px solid #0F6CD2;color:#0F6CD2"
+                        onclick={closeWindow}>Cancel</button>
+                    <button class="slds-button slds-button_brand" style="background:#0F6CD2"
+                        onclick={confirmWindow}>Confirm</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showNote}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty"
+                    style="border-bottom:1px solid rgb(176, 173, 171);">
+                    <center>
+                        <h1 style="font-weight: 800;font-size: 2em;padding: .5em 0em .5em 0em;">Offer 1</h1>
+                    </center>
+                </header>
+               <!-- madhu commented cs-3154 <div class="slds-modal__content slds-p-around_medium">
+
+                    <label style="font-weight:bold;color:#0F6CD2">Add Note</label>
+                    <textarea data-id="note" class="slds-textarea" style="height:150px"></textarea>
+                </div>-->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <label style="font-weight:bold;color:#0F6CD2">Add Note</label>
+                    <lightning-textarea name="Notes" data-id="note" label=""
+                         onchange={handleChange} class="Addnote" style="height:100px"></lightning-textarea>
+                </div>
+                <footer class="slds-modal__footer" style="text-align:center">
+                    <button class="slds-button slds-button_neutral" style="border:1px solid #0F6CD2;color:#0F6CD2"
+                        onclick={closeNoteWindow1}>cancel</button>
+                    <button class="slds-button slds-button_neutral" style="background:#0F6CD2;color:#fff"
+                        onclick={closeNoteWindow}>Add</button>
+
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={showNoteList}>
+        <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-modal__header_empty">
+
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <ul>
+                        <template for:each={Nlist} for:item="ss">
+                            <li key={ss.Id}>{ss.Body}---{ss.CreatedBy.Name}--{ss.CreatedDate}</li>
+                        </template>
+                    </ul>
+                </div>
+                <footer class="slds-modal__footer">
+
+                    <button class="slds-button slds-button_brand" onclick={closmNoteListWindow}>ok</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <template if:true={loading}>
+        <div class="loader">
+            <lightning-spinner size="medium" variant="brand" alternative-text="loading"></lightning-spinner>
+        </div>
+    </template>
+
+</template>

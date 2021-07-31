@@ -1,0 +1,112 @@
+<template>
+    <lightning-card>
+        <template if:false={eamon}>
+            <div class="appcss">
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Application Number</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> <a onclick={loadApplication} >{applicationInfo.ApplicationNo}</a></label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Status</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.Status}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Loan Purpose</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.LoanPurpose}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Loan Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.LoanType}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Application Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.Type}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Record Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.RecordTypeName}</label>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!---Modified By Bhanu 7/20/2020 changes Start-->  <template if:true={eamon}>
+            <div class="appcss">
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Application Number</label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> <a onclick={loadApplication}>{applicationInfo.ApplicationNo}</a></label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Status</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.Status}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Loan Purpose</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.LoanPurpose}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Loan Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.LoanType}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div> </div>  <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label" ></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div> </div>
+            </div>
+            <div class="appcss">
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Application Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.Type}</label>
+                    </div>
+                </div>
+                <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" >Record Type</label>
+                    <div class="slds-form-element__control">
+                        <label style="font-weight: bold;color:#666666" class="slds-input lblInput">{applicationInfo.RecordTypeName}</label>
+                    </div>
+                </div> <div class="slds-form-element appdcss">
+                    <label class="slds-form-element__label" ></label>
+                    <div class="slds-form-element__control">
+                        <label class="slds-input lblInput"> </label>
+                    </div> </div>  <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label" ></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div> </div> <div class="slds-form-element appdcss">
+                            <label class="slds-form-element__label" ></label>
+                            <div class="slds-form-element__control">
+                                <label class="slds-input lblInput"> </label>
+                            </div> </div>  <div class="slds-form-element appdcss">
+                                <label class="slds-form-element__label" ></label>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-input lblInput"> </label>
+                                </div> </div>   
+            </div>
+        </template> <!---End--> 
+
+    </lightning-card>
+</template>

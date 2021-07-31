@@ -1,0 +1,64 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide various options to create EA Loan Application.
+    Story 			: CS-1322(Sprint13)
+
+    Modified by Amol - CS- 1812 - Defect: Retention Loan application functions - 8/20/2020 - Ch01
+    Madhu  Commented NNA reord type for CS-1984 defect
+-->
+<template>
+
+    <template if:true={wizard}>
+        <section class="">
+            <div class="loanapp-home">
+                <header class="slds-modal__header" style="width: -webkit-fill-available;padding-bottom: 3em;">
+                    <h2 class="slds-modal__title slds-hyphenate" style="font-weight: bolder;">SELECT LOAN TYPE</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium modelcss" style="height:350px;overflow-y:scroll;">
+                    <!--PAGE 0-->
+                    <div class="slds-align_absolute-center" style="display:block">
+                        <div>
+                            <button title="Retention Loan" onclick={loanRetention_Type}
+                                class="slds-m-left_x-small slds-button slds-button_brand"
+                                style="background-color: #0F6CD2; width:200px;">Retention Loan</button>
+                        </div>
+                        <!--Removed the monetization button for UAT testing-->
+                         <!--<div style="margin-top:1em; margin-bottom:1em">
+                            <button title="Monetization Loan" onclick={loanMonetization_Type}
+                                class="slds-m-left_x-small slds-button slds-button_brand"
+                                style="background-color: #0F6CD2; width:200px;">Monetization Loan</button>
+                        </div>
+                         start Madhu commented below code for CS-1984 defect-->
+                        <!--<div>
+                            <button title="NNA" onclick={loanNNA_Type}
+                                class="slds-m-left_x-small slds-button slds-button_brand"
+                                style="background-color: #0F6CD2; width:200px;">NNA</button>
+                        </div> -->
+                        <!--Ended CS-1984-->
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer slds-align_absolute-center">
+                <button title="zz" onclick={CloseQA} class="slds-m-left_x-small slds-button slds-button_neutral"
+                    style="border-color:#0F6CD2;color:#0F6CD2">Cancel</button>
+            </footer>
+        </section>
+    </template>
+    <template if:false={wizard}>
+        <template if:true={RetentionWizard}>
+            <!--Start Ch01-->
+            <c-ea-retention-module casedetail={casedetail} record-id={recordId} classic={classic}
+                onparentdata={parentClick}></c-ea-retention-module>
+            <!--End Ch01-->
+        </template>
+        <template if:true={MonetizationWizard}>
+            <c-ea-monetization-module casedetail={casedetail} record-id={recordId} classic={classic}
+                onparentdata={parentClick}></c-ea-monetization-module>
+        </template>
+        <template if:true={NNAWizard}>
+            <!--NNA COMP-->
+        </template>
+
+    </template>
+</template>

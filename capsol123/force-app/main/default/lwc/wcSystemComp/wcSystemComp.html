@@ -1,0 +1,53 @@
+<template>
+    <lightning-card>
+        <div class="appcss">
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label">Created By</label>
+                <div class="slds-form-element__control">
+                    <label if:true={systemInfo.CreatedBy} class="slds-input lblInput">
+                        <a href={systemInfo.CreatedByLink}>{systemInfo.CreatedBy.Name}</a>&nbsp;
+                        <lightning-formatted-date-time value={systemInfo.CreatedDate} year="numeric" month="numeric"
+                            day="numeric" hour="numeric" weekday="long"></lightning-formatted-date-time>
+                    </label>
+                </div>
+            </div>
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label">Last Modified By</label>
+                <div class="slds-form-element__control">
+                    <label if:true={systemInfo.LastModifiedBy} class="slds-input lblInput">
+                        <a href={systemInfo.LastModifiedByLink}>{systemInfo.LastModifiedBy.Name}</a>&nbsp;
+                        <lightning-formatted-date-time value={systemInfo.LastModifiedDate} year="numeric"
+                            month="numeric" day="numeric" hour="numeric" weekday="long"></lightning-formatted-date-time>
+                    </label>
+                </div>
+            </div>
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label"> CLO Application Id</label>
+                <div class="slds-form-element__control">
+                    <label class="slds-input lblInput">{systemInfo.CLOApplicationId}</label>
+                </div>
+            </div>
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label">CLO Customer Group Id</label>
+                <div class="slds-form-element__control">
+                    <label class="slds-input lblInput">{systemInfo.CLOCustomerGroup}</label>
+                </div>
+            </div>
+            <!---Modified By Bhanu 7/20/2020 changes Start-->
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label"></label>
+                <div class="slds-form-element__control">
+                    <label class="slds-input lblInput"> </label>
+                </div>
+            </div>
+            <div class="slds-form-element appdcss">
+                <label class="slds-form-element__label"></label>
+                <div class="slds-form-element__control">
+                    <label class="slds-input lblInput"> </label>
+                </div>
+            </div>
+            <!---Ends-->
+
+        </div>
+    </lightning-card>
+</template>

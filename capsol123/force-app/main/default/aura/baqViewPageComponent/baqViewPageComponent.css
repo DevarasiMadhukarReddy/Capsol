@@ -1,0 +1,62 @@
+.THIS .backgroundcolor{
+   /* background-color: #c26b96; */
+    background-color: rgb(206, 207, 208);
+}
+.THIS .bold{
+    font-weight: bold;
+}
+
+.THIS .slds-accordion .slds-accordion__summary{
+   /* background: #c26b96; */
+     background-color: rgb(206, 207, 208);
+    padding: 0.5rem;
+    color: white;
+}
+
+.THIS .slds-accordion__summary-action-icon{
+    fill:#FFFFFF;
+}
+
+.THIS .slds-accordion__list-item{
+    border:none!important;
+}
+
+
+.THIS .requiredBlock{
+    background-color: #c00;
+    position: absolute;
+    left: 4px;
+    width: 3px;
+    top: 5px;
+    bottom: 5px;
+}
+
+.THIS .requiredExampleOuter {
+    margin: 0 .2em 0 .3em;
+    padding: 1px 0;
+}
+.THIS .slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+
+.THIS .requiredLegend {
+    padding: 0 2px;
+    background-color: #fff;
+    font-weight: normal;
+    color: #000}
+
+.THIS .custom_edit{
+    padding:10px;color:white
+}
+
+.THIS .custom_delete{
+    padding:10px;
+}
+.THIS input[type=number]::-webkit-inner-spin-button, 
+.THIS input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}

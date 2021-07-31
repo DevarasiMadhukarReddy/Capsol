@@ -1,0 +1,336 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide option to Enter the Borrower information.
+    Story 			: CS-1324,CS-1326(Sprint13)
+-->
+<template>
+	<lightning-card>
+		<template if:true={quickAction}>
+			<template if:false={lastPage}>
+
+				<template iterator:brw={bowArr}>
+					<template if:true={editRecord}>
+
+						<div key={brw.value.Uname} class="appcss" style="padding-left:6em;padding-right:6em;">
+							<div class="slds-form-element appdcss" style="min-width:99px;width:55%;">
+								<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+								<div class="slds-form-element__control">
+									<c-lookup-comp -l-a={LA} id={brw.value.Uname} onchange={handleBorrowers}
+										selected-record={brw.value.Contact} object-name="Contact" display-name=""
+										onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+								</div>
+							</div>
+							<div class="slds-form-element appdcss" style="width:38%;">
+								<label if:true={brw.first} class="slds-form-element__label"
+									style="padding:10px;"></label>
+								<div class="slds-form-element__control">
+									<input type="radio" id={brw.value.Uname} onchange={handlePrimary}
+										name="PrimaryContact" checked={brw.value.primary} /> Primary Contact
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="width:7%;">
+								<label if:true={brw.first} class="slds-form-element__label"
+									style="padding:10px;"></label>
+								<div class="slds-form-element__control">
+									<lightning-button-icon if:true={brw.value.avail} variant="bare"
+										icon-name="utility:delete" alternative-text="Delete" id={brw.value.Uname}
+										onclick={rmBow}></lightning-button-icon>
+								</div>
+							</div>
+
+
+						</div>
+
+
+
+					</template>
+				</template>
+
+			</template>
+			<template if:true={lastPage}>
+				<h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder">Borrower Information
+				</h2>
+				<template iterator:brw={bowArr}>
+					<template if:true={editRecord}>
+						<div key={brw.value.Uname} class="appcss">
+							<div class="slds-form-element appdcss" style="min-width:99px;">
+								<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+								<div class="slds-form-element__control">
+									<c-lookup-comp -l-a={LA} id={brw.value.Uname} onchange={handleBorrowers}
+										selected-record={brw.value.Contact} object-name="Contact" display-name=""
+										onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">Modified R Type</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.MasterRType}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">Master Rep ID</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.MasterRepId}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">YTD GDC</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.YTDGDC}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">Prior Year GDC</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.PYGDC}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">GP ROA</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.GPROA}</label>
+								</div>
+							</div>
+
+							<div if:true={hideWizard} class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label">Sub Loan Split %</label>
+								<div class="slds-form-element__control">
+
+									<lightning-input id={brw.value.Uname} onchange={handleLoanSplitSum}
+										onfocus={checkData} step=".01" type="number" variant="label-hidden"
+										class="slds-m-bottom_small" name="loanSplit" value={brw.value.loanSplit}>
+									</lightning-input>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label"></label>
+								<div class="slds-form-element__control">
+
+									<input style="margin-left:12px" type="radio" id={brw.value.Uname}
+										onchange={handlePrimary} name="PrimaryContact" checked={brw.value.primary} />
+									Primary Contact
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="width:3%;">
+								<label if:true={brw.first} class="slds-form-element__label"
+									style="padding:10px;"></label>
+								<div class="slds-form-element__control">
+
+									<lightning-button-icon if:true={brw.value.avail} variant="bare"
+										icon-name="utility:delete" alternative-text="Delete" id={brw.value.Uname}
+										onclick={rmBow} class="slds-m-left_xx-small"></lightning-button-icon>
+								</div>
+							</div>
+
+
+
+
+
+
+
+						</div>
+
+
+
+					</template>
+				</template>
+			</template>
+		</template>
+
+		<template if:false={quickAction}>
+			<template if:true={editRecord}>
+				<template iterator:brw={bowArr}>
+					<template if:true={editRecord}>
+
+						<div key={brw.value.Uname} class="appcss">
+							<div class="slds-form-element appdcss" style="min-width:99px;">
+								<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+								<div class="slds-form-element__control">
+									<c-lookup-comp -l-a={LA} id={brw.value.Uname} onchange={handleBorrowers}
+										selected-record={brw.value.Contact} object-name="Contact" display-name=""
+										onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:100px">
+								<label if:true={brw.first} class="slds-form-element__label">Modified R Type</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.MasterRType}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:92px">
+								<label if:true={brw.first} class="slds-form-element__label">Master Rep ID</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.MasterRepId}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:61px">
+								<label if:true={brw.first} class="slds-form-element__label">YTD GDC</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.YTDGDC}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:96px">
+								<label if:true={brw.first} class="slds-form-element__label">Prior Year GDC</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.PYGDC}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:55px">
+								<label if:true={brw.first} class="slds-form-element__label">GP ROA</label>
+								<div class="slds-form-element__control">
+
+									<label class="slds-input lblInput"> {brw.value.GPROA}</label>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="min-width:108px">
+								<label if:true={brw.first} class="slds-form-element__label">Sub Loan Split %</label>
+								<div class="slds-form-element__control">
+
+									<lightning-input id={brw.value.Uname} onchange={handleLoanSplitSum}
+										onfocus={checkData} step=".01" type="number" variant="label-hidden"
+										name="loanSplit" value={brw.value.loanSplit}> </lightning-input>
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss">
+								<label if:true={brw.first} class="slds-form-element__label"
+									style="padding:13px;"></label>
+								<div class="slds-form-element__control">
+
+									<input type="radio" id={brw.value.Uname} onchange={handlePrimary}
+										name="PrimaryContact" checked={brw.value.primary} /> Primary Contact
+								</div>
+							</div>
+
+							<div class="slds-form-element appdcss" style="width:3%;">
+								<label if:true={brw.first} class="slds-form-element__label"
+									style="padding:10px;"></label>
+								<div class="slds-form-element__control">
+
+									<lightning-button-icon if:true={brw.value.avail} variant="bare"
+										icon-name="utility:delete" alternative-text="Delete" id={brw.value.Uname}
+										onclick={rmBow} class="slds-m-left_xx-small"></lightning-button-icon>
+								</div>
+							</div>
+
+
+
+
+
+
+
+						</div>
+
+
+					</template>
+				</template>
+			</template>
+			<template if:false={editRecord}>
+				<template iterator:brw={bowArr}>
+					<div key={brw.value.Uname} class="appcss">
+						<div class="slds-form-element appdcss" style="min-width:99px;">
+							<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.Contact.Name}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">Modified R Type</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.MasterRType}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">Master Rep ID</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.MasterRepId}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">YTD GDC</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.YTDGDC}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">Prior Year GDC</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.PYGDC}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">GP ROA</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.GPROA}</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss">
+							<label if:true={brw.first} class="slds-form-element__label">Sub Loan Split %</label>
+							<div class="slds-form-element__control">
+
+								<label class="slds-input lblInput"> {brw.value.loanSplit} %</label>
+							</div>
+						</div>
+
+						<div class="slds-form-element appdcss" style="padding-top:15px;">
+							<label if:true={brw.first} class="slds-form-element__label"></label>
+							<div class="slds-form-element__control" if:true={brw.value.primary}>
+
+								<img src={imgdata}></img>Primary Contact
+							</div>
+						</div>
+
+
+					</div>
+
+
+				</template>
+			</template>
+		</template>
+
+
+		<template if:true={editRecord}>
+			<div style="text-align:center;margin-top:1.8em">
+				<lightning-button variant="brand" label="ADD BORROWER" title="ADD BORROWER" onclick={addNewBow}
+					class="slds-m-left_x-small"></lightning-button>
+			</div>
+		</template>
+	</lightning-card>
+
+</template>

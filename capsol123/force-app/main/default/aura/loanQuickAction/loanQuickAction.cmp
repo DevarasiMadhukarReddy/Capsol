@@ -1,0 +1,53 @@
+<!--Bhanu CS-2072 Start-->
+<aura:component controller="cls_LPL_checkLoggedInUserAccess" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global">
+    <aura:attribute name="classic" type="boolean" default="false"/>
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<!--Bhanu CS-2072 ends-->
+    <aura:html tag="style">
+        .slds-textarea{
+        	height:150px!important;
+        }
+        button[title="SAVE"]{
+        	    border-color: #0F6CD2!important;
+        }
+        div.modal-body.scrollable.slds-modal__content.slds-p-around--medium{
+        background:transparent!important;
+        border:none!important;
+        overflow-y:hidden!important;
+        }
+        .lab{
+            color:#003B71!important;
+            margin-bottom:4px!important;
+        }
+        .slds-form-element__label{
+         	color:#003B71!important;
+            margin-bottom:4px!important;
+        }
+        td>span{
+         	color:#003B71!important;
+            margin-bottom:4px!important;
+        }
+        .slds-form-element__label.slds-no-flex {
+        /*color: rgb(8, 7, 7)!important;*/
+    		font-family: "Salesforce Sans";
+        	color:#003B71!important;
+            margin-bottom:4px!important;
+        }
+        .slds-modal__container{
+            width: 80% !important;
+            max-width: 80% !important;
+        }       
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        } 
+        
+        /* Firefox */
+        input[type=number] {
+          -moz-appearance:textfield;
+        }
+    </aura:html>
+    <c:loanComp recordId="{!v.recordId}" classic="{!v.classic}" oncloseqa="{!c.closeQA}"/>
+</aura:component>

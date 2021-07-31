@@ -1,0 +1,22 @@
+<aura:component controller="CLSApplicationCreatorFromCaseLght"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="showMainModel" type="boolean" default="false" />
+    <aura:attribute name="case1" type="Case"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="loadingMsg" type="String"/>
+    
+     <aura:if isTrue="{!v.showMainModel}" >
+            
+                <aura:if isTrue="{!v.case1.Application__c != null}" >
+                    <ui:message title="Warning" severity="warning" aura:id="Hidemsg">
+                        There is an application already associated with this Case! Do you still want to create new application?
+                    </ui:message>
+                    
+                    <div class="slds-align_absolute-center" role="group">
+                        <lightning:button aura:id="createBtn" class="slds-button slds-button--brand" disabled="false" onclick="{!c.createApplicationHandler}">Create Application</lightning:button>
+                    </div>
+            	</aura:if>
+            {!v.loadingMsg}
+	</aura:if>
+</aura:component>

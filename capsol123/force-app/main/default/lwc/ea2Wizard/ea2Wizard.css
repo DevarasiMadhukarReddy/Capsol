@@ -1,0 +1,23 @@
+.loanapp-home *:not(h2) {
+    font-family: "Salesforce Sans" !important;
+    font-size: 12px;
+}
+
+.modelcss{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slds-modal__container{
+	width: 80% !important;
+	max-width: 80% !important;
+}
+.subheading{
+    font-size: 10px;
+    top: 10px;
+    position: relative;
+    /* word-break: initial; */
+    font-weight: bolder;
+    white-space: nowrap;
+    padding: 5px;
+}

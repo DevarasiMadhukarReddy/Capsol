@@ -1,0 +1,60 @@
+<!-- BFR005   Contacts qualification process to create opportunity  -->
+<aura:component controller= "OpportunityRecordtypeController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    
+      <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="lstOfRecordType" type="String[]"  default = "IAS Business Development"/>
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    <aura:attribute name="validationErr" type="String"/>
+    <aura:attribute name="externalFieldValidationErr" type="String"/>
+    
+    <aura:attribute name="record" type="Object"
+                    description="The record object to be displayed"/>
+    <aura:attribute name="con" type="Object"
+                    description="A simplified view record object to be displayed"/>
+    <aura:attribute name="recordError" type="String"
+                    description="An error message bound to force:recordData"/>
+
+    
+    
+  <div class="slds-m-around--x-large">
+      <aura:if isTrue="{!not(empty(v.validationErr))}" >
+          <ui:message title="Error" severity="error">
+              {!v.validationErr}
+          </ui:message>
+      </aura:if>
+      <aura:if isTrue="{!not(empty(v.externalFieldValidationErr))}" >
+          <ui:message title="Error" severity="error">
+              {!v.externalFieldValidationErr}
+          </ui:message>
+      </aura:if>
+    <!-- <span style="color:red;">{!v.validationErr}</span>-->
+  
+  </div>    
+   <!-- Model Box Start -->    
+    <aura:if isTrue="{!v.isOpen}">
+        
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                <div class="slds-align--absolute-center">Select a Record Type</div>                            
+            </div>
+            <div class="slds-size--1-of-2 slds-large-size--1-of-2">
+                <ui:inputSelect aura:id="selectid">
+                    <aura:iteration items="{!v.lstOfRecordType}" var="Opportunity">  
+                        
+                        <ui:inputSelectOption text="{!Opportunity}" label="{!Opportunity}"  />
+<aura:if isTrue="{Opportunity.Name == 'IAS Business Development'}">
+                        </aura:if>
+                        
+                    </aura:iteration>
+                </ui:inputSelect>
+            </div>&nbsp; &nbsp;
+        </div>
+        
+        <div class="slds-button-group slds-float_right" role="group">
+            <lightning:button class="slds-button slds-button_neutral" onclick="{!c.closeModal}">Cancel</lightning:button>&nbsp;&nbsp;
+            <lightning:button class="slds-button slds-button--brand" onclick="{!c.createRecord}">Next</lightning:button>
+        </div>
+    </aura:if >                     
+</aura:component>

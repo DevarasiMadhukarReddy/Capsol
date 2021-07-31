@@ -1,0 +1,75 @@
+<template>
+
+    <div>
+
+        <template if:true={isLoading}>
+            <div class="slds-p-around_x-large">
+                <lightning-spinner alternative-text="Loading" size="large" variant="brand"></lightning-spinner>
+            </div>
+        </template>
+        <template if:false={noRecordsFound}>
+            <div style="color:red;font-weight:bold;font-size: 20px;text-align:center">No loan information was found for
+                this advisor</div>
+        </template>
+
+        <!--<c-capsol-acbs-loan-accordian-tab-details acbs-value={acbsArr}></c-capsol-acbs-loan-accordian-tab-details>-->
+        <!--Start CS-3380 added by Bhanu-->
+        <template if:false={showMuleError}>
+            <template if:true={noRecordsFound}>
+                <!-- End -->
+                <template for:each={acbsArr} for:item="acbs">
+                    <div key={acbs.internalReferenceIdentifier}>
+                        <c-capsol-acbs-loan-accordian-tab-details acbs-loan-identifier={acbs.acbsLoanIdentifier}
+                            creation-date={acbs.creationDate} original-amount={acbs.originalAmount}
+                            interest-rate-type={acbs.interestRateType} loan-type={acbs.loanType}
+                            loan-payoff-date={acbs.loanPayoffDate} -y-t-d-total={acbs.YTDTotal}
+                            loan-status={acbs.loanStatus} outstanding-loan-balance={acbs.outstandingLoanBalance}
+                            -p-y-principle={acbs.PYPrinciple} premium-per-period={acbs.premiumperPeriod}
+                            -y-t-d-principle={acbs.YTDPrinciple} -p-y-interest={acbs.PYInterest}
+                            payment-frequency={acbs.paymentFrequency} -y-t-d-interest={acbs.YTDInterest}
+                            -p-y-total={acbs.PYTotal} loan-program={acbs.loanProgram} loan-rate={acbs.loanRate}>
+                        </c-capsol-acbs-loan-accordian-tab-details>
+                    </div>
+                </template>
+                <!--Start CS-3380 added by Bhanu-->
+            </template> </template> <!-- End -->
+    </div>
+
+    <!-- Below code is for Error Handling Message to be displayed when Middleware fails -->
+    <!--Start CS-3380 added by Bhanu-->
+    <template if:true={showMuleError}>
+
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header errorHeader">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 class="error">ERROR</h1>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <template if:false={submitError}>
+                            <h1 style="font-weight:bold;color:red;">Unable to retrieve loan information. Please contact
+                                Salesfore Admin </h1>
+
+                        </template>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- End -->
+
+</template>

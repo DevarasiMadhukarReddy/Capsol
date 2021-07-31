@@ -1,0 +1,14 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+	   <aura:html tag="style">
+        .slds-modal__container{
+        height : auto;
+        width: 70%;
+        max-width: 70rem;
+        }
+        .modal-body{
+        height : 500px;
+        max-height: 500px;
+        }
+    </aura:html> 
+    <c:capsolAcbsLoanComp  recordId="{!v.recordId}" />
+</aura:component>

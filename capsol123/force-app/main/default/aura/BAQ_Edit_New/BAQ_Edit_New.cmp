@@ -1,0 +1,448 @@
+<!--LCR019 Opportunity - BAQ VF page -->
+<!--#############################Change History####################
+  Requirement                                       Developer Name                   Date
+Ch-1	WO# REQ0035723 Add "Prior Firm Type" field		Vaibhav Jain				19 Feb 2019
+-->
+<aura:component  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,forceCommunity:availableForAllPageTypes" access="global" >
+    <!--profile start-->
+    <div class="slds-section slds-is-open" style="background-color: rgb(206, 207, 208);;border-radius: 3px;padding-left: 13px;">
+        <h3 class="slds-section__title">
+            <span class="slds-truncate" title="Section Title">Profile Information</span>
+        </h3>
+    </div>
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Use for TAT Verification Only</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Use_for_TAT_Verification_Only__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <abbr class="slds-required" title="required">*</abbr>
+                <label class="slds-form-element__label">Joining RIA or Corporate</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Joining_RIA_or_Corporate__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Status</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Status__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        
+        <!--Ch-1 start-->
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Prior Firm Type</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Prior_Firm_Type__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <!--Ch-1 end-->
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">BAQ Name</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Name" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Number of Advisors</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Number_of_Advisors__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Opportunity__c" variant = "label-hidde"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <abbr class="slds-required" title="required">*</abbr>
+                <label class="slds-form-element__label">Current Custodian</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Current_Custodian__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--profile end-->
+    <!--wealth start-->
+    <div class="slds-section slds-is-open" style="background-color: rgb(206, 207, 208);border-radius: 3px;padding-left: 13px;">
+        <h3 class="slds-section__title">
+            <span class="slds-truncate" title="Section Title">Wealth Management Production - Annual</span>
+        </h3>
+    </div>
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM Mutual Funds</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Mutual_Funds__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total Fee Based AUM</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Total_Fee_Based_AUM_Number_Field__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Percentage of Mutual Funds Held Direct</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Percentage_of_Mutual_Funds_Held_Direct__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total Avg Fee %</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Total_Avg_Fee_Number_Field__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM Variable Annuities</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Variable_Annuities__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total Advisory &amp; Brokerage AUM</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Total_Advisory_Brokerage_AUM__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM Fixed Annuities</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Fixed_Annuities__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM Equity</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Equity__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM Fixed Income</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Fixed_Income__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">AUM AI, UIT &amp; Cash</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="AUM_Other__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form_stacked slds-grid slds-wrap">
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">Total Transactional/Brokerage</label>
+                <div class="slds-form-element__control">
+                    <lightning:inputField fieldName="Total_Transactional_Brokerage_AUM__c" variant = "label-hidden"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label">&nbsp;</label>
+                <div class="slds-form-element__control">
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--wealth end-->
+    <!--comments start-->
+    <div id="display" class="slds-scrollable--x">
+        <div class="slds-section slds-is-open" style="background-color: rgb(206, 207, 208);border-radius: 3px;padding-left: 13px;">
+            <h3 class="slds-section__title">
+                <span class="slds-truncate" title="Section Title">Comments</span>
+            </h3>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1">
+                <div class="slds-form-element">
+                    
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Additional_Comments__c" variant = "label-hidden"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--comments end-->
+    <!--LPL USE ONLY start-->
+    <div id="display" class="slds-scrollable--x">
+        <div class="slds-section slds-is-open" style="background-color: rgb(206, 207, 208);border-radius: 3px;padding-left: 13px;">
+            <h3 class="slds-section__title">
+                <span class="slds-truncate" title="Section Title">LPL USE ONLY</span>
+            </h3>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Affiliation_1__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Branch_1__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="OSJ_LE_1__c"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Affiliation_2__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Branch_2__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="OSJ_LE_2__c"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Affiliation_3__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Branch_3__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="OSJ_LE_3__c"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label">Previous LPL Advisor</label>
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Previous_LPL_Advisor__c" variant = "label-hidden"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Level_Payout_Request__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-form_stacked slds-grid slds-wrap">
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <lightning:inputField fieldName="Request_for_Fee_Reduction__c"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-3">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--LPL USE ONLY end-->
+        
+    </div>
+</aura:component>

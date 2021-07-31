@@ -1,0 +1,64 @@
+<template>
+    <lightning-card>
+    <template for:each={rowsBrow} for:item="row" for:index="index">
+        <div class="slds-grid slds-gutters" key={row} >
+            <template if:true={EditRecord}>
+                <div class="slds-size_2-of-12 slds-p-left_medium">
+                        <c-lookup-comp id={row.Uname} selected-record={row.Contact} object-name="Contact" display-name=""
+                            onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+                </div>
+                <div class="slds-size_2-of-12 slds-p-left_medium slds-p-right_xx-large">
+                    <lightning-input id={row.Uname} type="number" min="0" max="100" variant="label-hidden" class="slds-m-bottom_small" value={row.pAUM} onblur={handleSplitOfAUM} name="SplitPercentage" placeholder="%">  
+                    </lightning-input>
+                </div>
+        </template>
+        <template if:false={EditRecord}>
+            <div class="slds-size_2-of-12 slds-p-left_medium" style="font-weight: bold;color:#666666;text-align:left;font-weight:normal">{row.Contact}</div>
+            <div class="slds-size_2-of-12 slds-p-left_medium" style="font-weight: bold;color:#666666;text-align:left;font-weight:normal">
+                <lightning-formatted-number data-id="SplitPercent" value={row.pAUM}></lightning-formatted-number>
+
+            </div>
+        </template>
+        <template if:true={EditRecord}>
+            <div class="slds-size_2-of-12 slds-p-left_medium" style="text-align:left;font-weight:normal">
+                &nbsp; <lightning-formatted-number  format-style="currency" maximum-fraction-digits="2" value={row.AUMATT}></lightning-formatted-number>
+            </div>
+        </template>
+        <template if:false={EditRecord}>
+            <div class="slds-size_2-of-12 slds-p-left_medium" style="font-weight: bold;color:#666666;text-align:left;font-weight:normal">
+                &nbsp; <lightning-formatted-number  format-style="currency" maximum-fraction-digits="2" value={row.AUMATT}></lightning-formatted-number>
+            </div>
+            </template>
+            <div class="slds-size_2-of-12 slds-p-top_x-small">
+                 {row.currentFirmName} 
+            </div>
+            <div class="slds-size_2-of-12 slds-p-top_x-small">
+                 {row.currentFirmType} 
+            </div>
+            <template if:true={EditRecord}>
+                <div class="slds-size_2-of-12 slds-p-top_x-small">
+                    <input type="radio" id={row.Uname} name="Primary Contact" value={row.primary} checked={row.primary} onchange={handleprimaryChange}> Primary Contact
+                </div>
+            </template>
+            <template if:false={EditRecord}>
+                <div class="slds-size_2-of-12 slds-p-top_x-small" style="text-align:left;font-weight:normal"><span id={row.Uname} if:true={row.primary}>
+                    <img src={imgdata}></img>Primary Contact</span>
+                </div>
+            </template>
+            <template if:true={EditRecord}>
+                <template if:true={showDelete}>
+                    <div class="slds-size_1-of-12 slds-p-top_x-small">
+                        <lightning-button-icon id={row.Uname} variant="bare" icon-name="utility:delete" alternative-text="Delete" onclick={handleDeleteBrow} class="slds-m-left_xx-small"></lightning-button-icon>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </template>
+    <template if:true={EditRecord}>
+        <div style="text-align:center">
+            <lightning-button variant="brand" label="ADD BORROWER" title="ADD BORROWER" onclick={handleClickBrow}
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+    </lightning-card>
+    </template>

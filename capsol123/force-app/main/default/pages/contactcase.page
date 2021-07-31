@@ -1,0 +1,144 @@
+<apex:page standardController="Contact">
+    <html>
+        <head>
+           <apex:stylesheet value="{!URLFOR($Resource.jqueryCSS, 'jquery-ui-1.8.18.custom.css')}"/>
+           <apex:includeScript value="{!URLFOR($Resource.jqueryJS, 'jquery-1.7.1.min.js')}"/>
+           <apex:includeScript value="{!URLFOR($Resource.jqueryJS, 'jquery-ui-1.8.18.custom.min.js')}"/>
+          <script>
+              $(document).ready(function() {
+                $("#tabs").tabs();
+              });
+          </script>
+          <style type="text/css">
+                body {
+                    background-color: #000;
+                }
+                .ACCT {
+                    color: #80FF80;
+                }
+                .FUNC {
+                    color: #80FFFF;
+                }
+                .LAST {
+                    color: #F00;
+                }
+                .DATETIME {
+                    color: #4DE6DE;
+                }
+                .ACCT {
+                    color: #FFF;
+                }
+                .NAMEADDRESS {
+                    color: #4DE6DE;
+                }
+                .LINES {
+                    color: #000;
+                }
+                .TWO {
+                    color: #FFF;
+                }
+                .LINES {
+                    color: #4DE6DE;
+                }
+                .IRIS {
+                    color: #4DE6DE;
+                }
+                .ONE {
+                    color: #FFF;
+                }
+                .OLD {
+                    color: #4DE6DE;
+                }
+                .column4 {
+                    color: #4DE6DE;
+                }
+                .FRM {
+                    color: #4DE6DE;
+                }
+                .FRM {
+                    color: #4DE6DE;
+                }
+                .TOD {
+                    color: #FFF;
+                }
+                .TAX {
+                    color: #4DE6DE;
+                }
+                .ADDR {
+                    color: #FFF;
+                }
+                .DATE {
+                    color: #4DE6DE;
+                }
+                .DATEWHITE {
+                    color: #FFF;
+                }
+                .W9 {
+                    color: #4DE6DE;
+                }
+                .C9WHITE {
+                    color: #FFF;
+                }
+                .INST {
+                    color: #4DE6DE;
+                }
+                .INSTWHITE {
+                    color: #FFF;
+                }
+                .MMF {
+                    color: #4DE6DE;
+                }
+                .MMFWHITE {
+                    color: #FFF;
+                }
+                .BROK {
+                    color: #4DE6DE;
+                }
+                .BROKWHITE {
+                    color: #FFF;
+                }
+                .KEY {
+                    color: #4DE6DE;
+                }
+                .TERMWHITE {
+                    color: #FFF;
+                }
+                .PHONE {
+                    color: #4DE6DE;
+                }
+                .PHONE {
+                    color: #000;
+                }
+                .PHON {
+                    color: #4DE6DE;
+                }
+                .KEY2WHITE {
+                    color: #FFF;
+                }
+                .WINSWHITE {
+                    color: #FFF;
+                }
+                .ARL {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            </style>
+
+        </head>
+        <body>  
+            <div id="tabs">
+                <ul>
+                    <li><a href="#fragment-1"><span>Cases</span></a></li>
+                    <li><a href="#fragment-2"><span>Activities</span></a></li>
+
+                    
+                </ul>
+                <div id="fragment-1">
+                    <apex:relatedList subject="{!contact.Id}" list="Cases" />
+                     <apex:relatedList subject="{!contact.Id}" list="ActivityHistories" />
+
+                </div>
+       
+     </div> 
+</body>
+</html>  
+</apex:page>

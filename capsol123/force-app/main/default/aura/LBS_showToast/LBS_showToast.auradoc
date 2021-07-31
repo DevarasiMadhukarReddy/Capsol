@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="showToast" ref="showToast" label="showToast">
+This component holds the implementation for invoking toast messages at validation
+This component is called from the "Convert Lead" quick action Button in Lead page
+History
+Date           Authors Name       Brief Description of Change
+============   ================   =======================================================================
+May-10-2021	   Karthick S		  LBSFNS-58 - Lead to Opportunity Conversion.  
+	</aura:example>
+</aura:documentation>

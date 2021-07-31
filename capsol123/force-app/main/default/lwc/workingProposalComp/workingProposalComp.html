@@ -1,0 +1,19 @@
+<template>
+    <table style="width: fit-content;">
+        <thead>
+            <th style="padding: 1em 0em .5em 2em;color: rgb(0, 59, 113); font-size: 12px;">Requested Loan Amount</th>
+            <th style="padding: 1em 0em .5em 2em;color: rgb(0, 59, 113); font-size: 12px;">Requested Term Length</th>
+            <th style="padding: 1em 0em .5em 2em;color: rgb(0, 59, 113); font-size: 12px;">Interest Rate</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><lightning-input data-id="RequestedLoanAmount" style="margin: 1em;" type="number" min="0" formatter="currency" step="0.01" label="" class="slds-m-bottom_x-small"></lightning-input></td>
+                <td><lightning-combobox data-id="RequestedTermLength" name="" placeholder="years" label="" options={YearPicklistValues} ></lightning-combobox></td>
+                <td><div style="font-weight: bolder;
+                    font-size: 16px;
+                    padding: 1.5em 1em 1em 1em;">Prime+2%</div><!--<lightning-input style="margin: 1em;" type="number" min="0" formatter="currency" step="0.01" label="" class="slds-m-bottom_x-small"></lightning-input--></td>
+            </tr>
+        </tbody>
+    </table>
+
+</template>

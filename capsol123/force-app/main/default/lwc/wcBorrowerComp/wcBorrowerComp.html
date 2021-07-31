@@ -1,0 +1,268 @@
+<template>
+	<lightning-card>
+		<h2 if:true={showHeader} class="slds-text-heading_medium"
+			style="text-align:center;color :#4F5861;font-weight: bold;margin-bottom: 1em;">Borrower Information</h2>
+		<!---Bhanu changes Start  <table  class="tblBorrow"  >    
+            <thead>
+                <th style="color:#003B71;font-size:12px;font-weight: normal;width:18%">Borrower Name</th>
+                <th style="color:#003B71;font-size:12px;font-weight: normal;width:17%">% Split of Sum AUM</th>
+            
+              <th if:true={hideWizard}  style="color:#003B71;font-size:12px;font-weight: normal;width:16%">Sub Loan Split %</th>
+                <th if:true={taRecord} style="color:#003B71;font-size:12px;font-weight: normal;width:17%">Backend Split % </th>
+                <th if:true={taRecord} style="color:#003B71;font-size:12px;font-weight: normal;width:10%">Repayable Split % </th>
+                 <th style="color:#003B71;font-size:12px;font-weight: normal;width:10%">AUM Attributable</th>
+                <th style="  margin: 1em;"></th>
+               
+            </thead>
+            <tbody>-->
+		<template iterator:brw={bowArr}>
+			<template if:true={editRecord}>
+				<div key={brw.value.Uname} class="appcss">
+					<!---Modified By Bhanu 9/9/2020 changes Start CS-1910-->
+					<div if:true={quickclassic} class="slds-form-element appdcss" style="min-width:99px;">
+						<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+						<div class="slds-form-element__control">
+							<c-lookup-comp -l-a={LA} id={brw.value.Uname} onchange={handleBorrowers}
+								selected-record={brw.value.Contact} object-name="Contact" display-name=""
+								onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+						</div>
+					</div>
+
+					<div if:false={quickclassic} class="slds-form-element appdcss" style="min-width:99px;">
+						<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+						<div class="slds-form-element__control">
+							<c-lookup-comp -l-a={LA} id={brw.value.Uname} onchange={handleBorrowers}
+								selected-record={brw.value.Contact} object-name="Contact" display-name=""
+								onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+						</div>
+					</div>
+					<!--Changes ends-->
+
+					<div class="slds-form-element appdcss" style="min-width:126px;">
+						<label if:true={brw.first} class="slds-form-element__label">% Split of Sum AUM</label>
+						<div class="slds-form-element__control">
+							<lightning-input id={brw.value.Uname} onchange={handleSplitSum} onfocus={checkData}
+								type="number" variant="label-hidden" name="SplitPercentage" step=".01"
+								value={brw.value.pAUM}> </lightning-input>
+						</div>
+					</div>
+
+					<div if:true={hideWizard} class="slds-form-element appdcss" style="min-width:106px;">
+						<label if:true={brw.first} class="slds-form-element__label">Sub Loan Split %</label>
+						<div class="slds-form-element__control">
+							<lightning-input id={brw.value.Uname} onchange={handleLoanSplitSum} onfocus={checkData}
+								step=".01" type="number" variant="label-hidden" class="slds-m-bottom_small"
+								name="loanSplit" value={brw.value.loanSplit}> </lightning-input>
+						</div>
+					</div>
+
+
+					<div if:true={taRecord} class="slds-form-element appdcss" style="min-width:103px;">
+						<label if:true={brw.first} class="slds-form-element__label">Backend Split % </label>
+						<div class="slds-form-element__control">
+							<lightning-input id={brw.value.Uname} onchange={handleBackendSplitSum} onfocus={checkData}
+								type="number" step=".01" variant="label-hidden" class="slds-m-bottom_small"
+								name="backendSplit" value={brw.value.backendSplit}> </lightning-input>
+						</div>
+					</div>
+
+					<div if:true={taRecord} class="slds-form-element appdcss" style="min-width:111px;">
+						<label if:true={brw.first} class="slds-form-element__label">Repayable Split % </label>
+						<div class="slds-form-element__control">
+							<lightning-input id={brw.value.Uname} onchange={handleRepayableSplitSum} type="number"
+								onfocus={checkData} variant="label-hidden" class="slds-m-bottom_small"
+								name="repayableSplit" step=".01" value={brw.value.repayableSplit}> </lightning-input>
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss" style="min-width:107px;">
+						<label if:true={brw.first} class="slds-form-element__label">AUM Attributable</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput">
+								<!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+								<!--{brw.value.AUMATT}-->
+								<lightning-formatted-number value={brw.value.AUMATT} format-style="currency"
+									currency-code="USD">
+								</lightning-formatted-number> (calculated)
+								<!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+							</label>
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label" style="padding:10px;"></label>
+						<div class="slds-form-element__control">
+							<input style="margin-bottom:22px;" type="radio" id={brw.value.Uname}
+								onchange={handlePrimary} name="PrimaryContact" checked={brw.value.primary} /> Primary
+							Contact
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss" style="width:3%;">
+						<label if:true={brw.first} class="slds-form-element__label" style="padding:10px;"></label>
+						<div class="slds-form-element__control">
+							<lightning-button-icon if:true={brw.value.avail} variant="bare" icon-name="utility:delete"
+								alternative-text="Delete" id={brw.value.Uname} onclick={rmBow}
+								class="slds-m-left_xx-small"></lightning-button-icon>
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+
+				<!--     <tr key={brw.Uname}>
+                            <td if:true={quickclassic} style=" margin: 1em;     padding: 0em 1em 1em 0em; text-align: left;    ">
+                                <c-lookup-comp -l-a={LA} id={brw.Uname} onchange={handleBorrowers} selected-record={brw.Contact}  object-name="Contact" display-name="" onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+                            </td>
+                            <td if:false={quickclassic} style=" padding-bottom:2em;padding-right:1em; margin: 1em; text-align: left;                       ">
+                                <c-lookup-comp -l-a={LA} id={brw.Uname} onchange={handleBorrowers} selected-record={brw.Contact}  object-name="Contact" display-name="" onhandlelookupdata={handlelookupdata}></c-lookup-comp>
+                            </td>
+                           
+                            <td style="   margin: 1em;     padding: 0em 1em 1em 0em; text-align: left; ">
+                                <lightning-input id={brw.Uname} onchange={handleSplitSum} onfocus={checkData}   type="number"  variant="label-hidden" class="slds-m-bottom_small"  name="SplitPercentage" step=".01"  value={brw.pAUM}>  </lightning-input>
+                            </td>
+
+                            <td if:true={hideWizard}  style="    margin: 1em;     padding: 0em 1em 1em 0em; text-align: left; ">
+                                <lightning-input id={brw.Uname} onchange={handleLoanSplitSum}  onfocus={checkData} step=".01"   type="number"  variant="label-hidden" class="slds-m-bottom_small"  name="loanSplit"   value={brw.loanSplit}>  </lightning-input>
+                            </td>
+                            <td if:true={taRecord} style="  margin: 1em;     padding: 0em 1em 1em 0em; text-align: left;">
+                                <lightning-input id={brw.Uname} onchange={handleBackendSplitSum}   onfocus={checkData}  type="number" step=".01"   variant="label-hidden" class="slds-m-bottom_small"  name="backendSplit"   value={brw.backendSplit}>  </lightning-input>
+                            </td>
+                            <td if:true={taRecord} style="  margin: 1em;     padding: 0em 1em 1em 0em; text-align: left;  ">
+                                <lightning-input id={brw.Uname} onchange={handleRepayableSplitSum}   type="number"  onfocus={checkData}  variant="label-hidden" class="slds-m-bottom_small"  name="repayableSplit" step=".01"   value={brw.repayableSplit}>  </lightning-input>
+                            </td>
+                           
+
+                            <td style="   margin: 1em; text-align: left;padding:0em 1em 1em 0em;min-width:150px;">
+                                {brw.AUMATT} (calculated)
+                            </td>
+                            <td style="    margin: 1em; text-align: left;white-space: nowrap;padding:0em 1em 1em 0em;">
+                                <input style="margin-bottom:22px;" type="radio" id={brw.Uname} onchange={handlePrimary}   name="PrimaryContact" checked={brw.primary}/> Primary Contact
+                            </td>
+                            <td style="    margin: 1em; text-align: left;padding:2em;">
+                                
+                                <lightning-button-icon if:true={brw.avail}   variant="bare" icon-name="utility:delete" alternative-text="Delete" id={brw.Uname} onclick={rmBow}  class="slds-m-left_xx-small"></lightning-button-icon>
+                            </td>
+                        </tr>-->
+			</template>
+			<template if:false={editRecord}>
+
+				<div key={brw.value.Uname} class="appcss">
+					<div if:true={brw.value.Contact} class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">Borrower Name</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput"> {brw.value.Contact.Name}</label>
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">% Split of Sum AUM</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput"> {brw.value.pAUM} %</label>
+						</div>
+					</div>
+
+					<div if:true={hideWizard} class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">Sub Loan Split %</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput"> {brw.value.loanSplit} %</label>
+						</div>
+					</div>
+
+					<div if:true={taRecord} class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">Backend Split %</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput"> {brw.value.backendSplit} %</label>
+						</div>
+					</div>
+
+					<div if:true={taRecord} class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">Repayable Split %</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput"> {brw.value.repayableSplit} %</label>
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss">
+						<label if:true={brw.first} class="slds-form-element__label">AUM Attributable</label>
+						<div class="slds-form-element__control">
+							<label class="slds-input lblInput">
+								<!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+								<!--{brw.value.AUMATT}-->
+								<lightning-formatted-number value={brw.value.AUMATT} format-style="currency"
+									currency-code="USD">
+								</lightning-formatted-number> (calculated)
+								<!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+							</label>
+						</div>
+					</div>
+
+					<div class="slds-form-element appdcss" style="padding-top:15px;">
+
+						<div if:true={brw.value.primary} class="slds-form-element__control">
+							<img src={imgdata}></img>Primary Contact
+						</div>
+					</div>
+
+
+				</div>
+
+
+				<!--
+					
+                        <tr key={brw.Uname}>
+                            <td style="  margin: 1em;     padding: 1em 1em 1em 0em; text-align: left;                        ">
+                                <template if:true={brw.Contact}>
+                                    {brw.Contact.Name}
+                                </template>
+                            </td>
+                            <td style="  margin: 1em;     padding: 1em 1em 1em 0em;   text-align: left;                     ">
+                                {brw.pAUM} %
+                               
+                            </td>
+
+                            <td if:true={hideWizard}  style="  margin: 1em;     padding: 1em 1em 1em 0em;   text-align: left;                     ">
+                                {brw.loanSplit} %
+                               
+                            </td>
+                            <td  if:true={taRecord}  style="  margin: 1em;     padding: 1em 1em 1em 0em;   text-align: left;                     ">
+                                {brw.backendSplit} %
+                               
+                            </td>
+                            <td  if:true={taRecord} style="  margin: 1em;     padding: 1em 1em 1em 0em;   text-align: left;                     ">
+                                {brw.repayableSplit} %
+                               
+                            </td>
+                            <td style="   margin: 1em;text-align: left;">
+                                {brw.AUMATT} (calculated)
+                            </td>
+                            <td style="    margin: 1em; text-align: left;">
+                                <span if:true={brw.primary} style="white-space: nowrap;">
+                                    <img src={imgdata}></img>Primary Contact
+                                </span>
+                            </td>
+                            <td style="    margin: 1em;">
+                                
+                            </td>
+                        </tr>-->
+			</template>
+		</template>
+		<!---Bhanu changes Ends-->
+		<!-- </tbody>
+        </table>-->
+		<template if:true={editRecord}>
+			<div style="text-align:center;margin-top:1em">
+				<lightning-button variant="brand" label="ADD BORROWER" title="ADD BORROWER" onclick={addNewBow}
+					class="slds-m-left_x-small"></lightning-button>
+			</div>
+		</template>
+	</lightning-card>
+
+
+
+
+</template>

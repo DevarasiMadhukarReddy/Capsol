@@ -1,0 +1,65 @@
+<apex:page standardController="Task"  extensions="TaskControllerExtension" sidebar="false" lightningstylesheets="true" name="SLDS_template" showHeader="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+ 
+    <apex:form >
+        <apex:pageBlock title="Edit Task" id="thePageBlock" mode="edit">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+            <div align="center">
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+             </div>                
+            </apex:pageBlockButtons>
+            <apex:actionRegion >
+                <apex:pageBlockSection title="Task Information" columns="2">
+                <apex:inputField value="{!Task.Ownerid}"/>
+                <apex:inputField value="{!Task.whatid}"/>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Subject"/>
+                            <apex:inputField value="{!Task.Subject}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputField value="{!Task.whoid}"/>
+                    <apex:inputField value="{!Task.CreatedDate}"/>
+                    <apex:inputField value="{!Task.ActivityDate}"/>
+                    
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Additional Information" columns="2">
+                <apex:inputField value="{!Task.Status}"/>  
+                <apex:inputField value="{!Task.Department__c}"/>                  
+                <apex:inputField value="{!Task.Description}"/>
+                
+                <apex:inputField value="{!Task.Activity_Type__c}"/>
+            
+                <apex:inputField value="{!Task.Dept_Contact__c}"/>
+                </apex:pageBlockSection>
+                
+              
+                
+                <apex:pageBlockSection title="Reminder" columns="2">
+                <apex:inputField value="{!Task.IsReminderSet}"/>  
+                <apex:inputField value="{!Task.ReminderDateTime}"/>  
+                 
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection title="Attachment" columns="2">
+     
+                <apex:outputLabel value="Attachment" for="Attachment"/>
+               
+                <apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file"/>
+                 <apex:commandButton value="Upload Attachment" action="{!uploadFile}"/>
+                 </apex:pageBlockSection>
+                 
+                
+                <apex:pageblockTable value="{!att}" var="a">
+                <apex:column headerValue="Download">
+                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, a.Id)}"  target="_blank">{!a.name}</apex:outputLink>
+                </apex:column>
+                <apex:column value="{!a.Name}" headerValue="File Name"/>
+                </apex:pageblockTable>
+                               
+            </apex:actionRegion>
+
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

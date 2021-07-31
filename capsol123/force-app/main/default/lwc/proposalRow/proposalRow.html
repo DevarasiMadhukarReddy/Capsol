@@ -1,0 +1,50 @@
+<template>
+    <!-- taken straight from SLDS -->
+    <th data-label="Name" scope="row">
+      <!--div class="slds-truncate" title={row.label}>{row.label}</div-->
+    </th>
+    
+    <td  class="slds-grid slds-grid_vertical-align-end slds-m-left_x-small">
+        <div class="slds-size_2-of-12 ">
+            <select class="slds-select slds-m-bottom_small" name = "platformPicklist" onblur={platformChange}>
+                <option value="Corporate">Corporate</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
+        </div>
+        <div class="slds-size_2-of-12 ">
+            <select class="slds-select slds-m-bottom_small" name = "branchPicklist" onblur={branchChnage}>
+                <option value="Branch/LE">Branch/LE</option>
+                <option value="HOS/New Branch">HOS/New Branch</option>
+            </select>
+        </div>
+        <div class="slds-size_2-of-12 slds-m-left_xx-small">
+            <lightning-input class="slds-m-bottom_small" value="" name="OSJLEName" onblur={OSJLENameChnage}>  
+            </lightning-input>
+        </div>
+        <div class="slds-size_2-of-12 slds-m-left_xx-small">
+            <select class="slds-select slds-m-bottom_small" name = "termLengthPicklist" onblur={termLengthChange}>
+                <option value="5 Years">5 Years</option>
+                <option value="7 Years">7 Years</option>
+            </select>
+        </div>
+        <div class="slds-size_2-of-12 slds-m-left_xx-small">
+            <select class="slds-select slds-m-bottom_small" name = "UWTypePicklist" onblur={UWTypePicklistChange}>
+                <option value="Standard">Standard</option>
+                <option value="Premium Model">Premium Model</option>
+                <option value="Simplified">Simplified</option>
+                <option value="Tier 1">Tier 1</option>
+                <option value="Custom">Custom</option>
+            </select>
+        </div>
+        <div class="slds-size_2-of-12 slds-m-left_xx-small">
+            <lightning-input class="slds-m-bottom_small" value="" name="CampaignName" onblur={campaignNameChnage}>  
+            </lightning-input>
+        </div>
+        <template if:true={show}>
+        <div class="slds-size_2-of-12 slds-p-bottom_small" >
+            <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" onclick={deleterow} class="slds-m-left_xx-small"></lightning-button-icon>
+        </div>
+    </template>
+    </td>
+    <!-- more tds .... -->
+  </template>

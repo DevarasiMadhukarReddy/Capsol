@@ -1,0 +1,408 @@
+<template>
+    <lightning-card>
+
+        <h2 if:true={showHeader} class="slds-text-heading_medium" style="text-align:center;font-weight:bolder">Financial
+            Details</h2>
+        <template if:true={display}>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2" style="padding: 1em 0em;border-right: 1px solid #DDDBDA;margin-top: 3em;">
+                    <h2 class="slds-text-heading_medium"
+                        style="width:200px;font-size: 18px;line-height: 14px;text-align:center;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">
+                        AUM/Product Mix</h2>
+                    <div>
+                        <h3 class="slds-text-heading_small" style="text-align:center;margin:2em 0em">MUTUAL FUNDS </h3>
+                        <div style="margin-bottom:1px solid black;padding:1em 2em;border-bottom:1px solid #DDDBDA">
+                            <table>
+                                <tr>
+                                    <td style="padding:1em 0em;width:40%;color:#003B71;text-align:left"><span>Mutual
+                                            Funds (Directly Held)</span></td>
+                                    <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                        <template if:false={editRecord}>
+                                            <lightning-formatted-number
+                                                style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                format-style="currency" maximum-significant-digits="16"
+                                                maximum-fraction-digits="2" value={financialData.mfdh}>
+                                            </lightning-formatted-number>
+                                        </template>
+                                        <template if:true={editRecord}>
+                                            <lightning-input onchange={handlemfdh} onfocus={checkData} step=".01"
+                                                onkeypress={checkNumberlength} value={financialData.mfdh} data-id="mfdh"
+                                                type="number" min="0" name="mfdh" formatter="currency" label=""
+                                                default="" class="slds-m-bottom_x-small" style="display:flex">
+                                            </lightning-input>
+                                        </template>
+                                    </td>
+                                    <td style="width:20%">
+                                        {financialData.pmfdh} %
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:1em 0em;width:40%;color:#003B71;text-align:left"><span>Mutual
+                                            Funds (Custodied)</span></td>
+                                    <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                        <template if:false={editRecord}>
+                                            <lightning-formatted-number
+                                                style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                format-style="currency" maximum-fraction-digits="2"
+                                                value={financialData.mfc}></lightning-formatted-number>
+                                        </template>
+                                        <template if:true={editRecord}>
+                                            <lightning-input onchange={handlemfc} onfocus={checkData} step=".01"
+                                                onkeypress={checkNumberlength} value={financialData.mfc} data-id="mfc"
+                                                type="number" min="0" name="mfc" formatter="currency" label=""
+                                                class="slds-m-bottom_x-small" style="display:flex"></lightning-input>
+                                        </template>
+                                    </td>
+                                    <td style="width:20%">{financialData.pmfc} %</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h3 class="slds-text-heading_small" style="text-align:center;margin:2em 0em">BROKERAGE FUNDS
+                            </h3>
+                            <div style="margin-bottom:1px solid black;padding:1em 2em;">
+                                <table>
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Total Mutual
+                                                Funds</span></td>
+                                        <td style="padding-left: 2.9em;width:40%;text-align:left">
+                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                            <lightning-formatted-number value={financialData.totMFC}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>&nbsp; (calculated)
+                                            <!--$ &nbsp; {financialData.totMFC} &nbsp; (calculated)-->
+                                        </td>
+                                        <td style="width:20%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:1em 0em;text-align:left"><span>Variable Annuities</span></td>
+                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.va}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handleva} step=".01" onfocus={checkData}
+                                                    onkeypress={checkNumberlength} value={financialData.va} data-id="va"
+                                                    type="number" min="0" name="va" formatter="currency" label=""
+                                                    class="slds-m-bottom_x-small" style="display:flex">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%">{financialData.pva} %</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Fixed
+                                                Annuities</span></td>
+                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.fa}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handlefa} step=".01" onfocus={checkData}
+                                                    onkeypress={checkNumberlength} value={financialData.fa} data-id="fa"
+                                                    type="number" min="0" name="fa" formatter="currency" label=""
+                                                    class="slds-m-bottom_x-small" style="display:flex">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%">{financialData.pfa} %</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Equity</span></td>
+                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.eq}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handleeq} step=".01" onfocus={checkData}
+                                                    onkeypress={checkNumberlength} value={financialData.eq} data-id="eq"
+                                                    min="0" type="number" name="eq" formatter="currency"
+                                                    style="display:flex" label="" class="slds-m-bottom_x-small">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%">{financialData.peq} %</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Fixed Income</span>
+                                        </td>
+                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.fi}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handlefi} step=".01" onfocus={checkData}
+                                                    onkeypress={checkNumberlength} value={financialData.fi} data-id="fi"
+                                                    type="number" min="0" name="fi" formatter="currency" label=""
+                                                    class="slds-m-bottom_x-small" style="display:flex">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%">{financialData.pfi} %</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>AI, UIT &
+                                                Cash</span></td>
+                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.aiuitCash}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handleaiuitCash} step=".01"
+                                                    onfocus={checkData} onkeypress={checkNumberlength}
+                                                    value={financialData.aiuitCash} data-id="aiuitCash" type="number"
+                                                    min="0" name="aiuitCash" formatter="currency" label=""
+                                                    style="display:flex" class="slds-m-bottom_x-small">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%">{financialData.paiuitCash} %</td>
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                            <div style="padding: 1em 2em;">
+                                <table>
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Total Brokerage
+                                                Funds</span></td>
+                                        <td style="padding-left: 2.9em;width:40%;text-align:left">
+                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                            <lightning-formatted-number value={financialData.totBAUM}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>&nbsp; (calculated)
+                                            <!--$ &nbsp; {financialData.totBAUM} &nbsp; (calculated)-->
+                                        </td>
+                                        <td style="width:20%">{financialData.ptotBAUM} %</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Total Advisory
+                                                AUM</span></td>
+                                        <td style="padding-left: 2em;padding-right: 2em;;width:40%;text-align:left">
+                                            <template if:false={editRecord}>
+                                                <lightning-formatted-number
+                                                    style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                                    format-style="currency" maximum-fraction-digits="2"
+                                                    value={financialData.totAdvAum}></lightning-formatted-number>
+                                            </template>
+                                            <template if:true={editRecord}>
+                                                <lightning-input onchange={handletotAdvAum} step=".01"
+                                                    onfocus={checkData} onkeypress={checkNumberlength}
+                                                    value={financialData.totAdvAum} type="number" min="0"
+                                                    data-id="totAdvAum" name="totAdvAum" formatter="currency" label=""
+                                                    style="display:flex" class="slds-m-bottom_x-small">
+                                                </lightning-input>
+                                            </template>
+                                        </td>
+                                        <td style="width:20%"> {financialData.ptotAdvAum} %</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:1em 0em;width:40%;text-align:left"><span>Total AUM</span>
+                                        </td>
+                                        <td style="padding-left: 2.9em;width:40%; color:#666666;text-align:left">
+                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                            <lightning-formatted-number value={financialData.totAUM}
+                                                format-style="currency" currency-code="USD">
+                                            </lightning-formatted-number>&nbsp; (calculated)
+                                            <!--$ &nbsp; {financialData.totAUM} &nbsp; (calculated)-->
+
+                                        </td>
+                                        <td style="width:20%"> {financialData.ptotAUM} %</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="slds-size_1-of-2" style="padding:1em 2em;margin-top: 3em;">
+                    <h2 class="slds-text-heading_medium"
+                        style="text-align:left;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">Production GDC
+                    </h2>
+                    <div style="margin:2em 0em">
+                        <table>
+                            <tr>
+                                <td style="padding:1em 0em;width:40%;text-align:left"><span>Advisory GDC</span></td>
+                                <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                    <template if:false={editRecord}>
+                                        <lightning-formatted-number
+                                            style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                            format-style="currency" maximum-fraction-digits="2"
+                                            value={financialData.advRev}></lightning-formatted-number>
+                                    </template>
+
+                                    <template if:true={editRecord}>
+                                        <lightning-input onchange={handleadvRev} onfocus={checkData} step=".01"
+                                            onkeypress={checkNumberlength} value={financialData.advRev} data-id="advRev"
+                                            type="number" min="0" formatter="currency" name="advRev" label=""
+                                            style="display:flex" class="slds-m-bottom_x-small"></lightning-input>
+                                    </template>
+                                </td>
+                                <td style="width:20%"></td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:1em 0em;width:40%;text-align:left"><span>Brokerage GDC</span></td>
+                                <td style="padding-left: 2em;padding-right: 2em;width:40%;text-align:left">
+                                    <template if:false={editRecord}>
+                                        <lightning-formatted-number
+                                            style="font-weight: bold;color:#666666;padding: 1em;" data-id="mfdh"
+                                            format-style="currency" maximum-fraction-digits="2"
+                                            value={financialData.broRev}></lightning-formatted-number>
+                                    </template>
+                                    <template if:true={editRecord}>
+                                        <lightning-input onchange={handlebroRev} step=".01" onfocus={checkData}
+                                            onkeypress={checkNumberlength} value={financialData.broRev} data-id="broRev"
+                                            type="number" min="0" formatter="currency" name="broRev" label=""
+                                            style="display:flex" class="slds-m-bottom_x-small"></lightning-input>
+                                    </template>
+                                </td>
+                                <td style="width:20%"></td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:1em 0em;width:40%;text-align:left"><span>Total GDC</span></td>
+                                <td style="padding-left: 2.9em;width:45%; color:#666666;text-align:left">
+                                    <lightning-formatted-number value={financialData.totProduction}
+                                        format-style="currency" currency-code="USD">
+                                    </lightning-formatted-number>&nbsp; (calculated)
+                                    <!--$ &nbsp; {financialData.totProduction}-->
+                                </td>
+                                <td style="width:20%"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:1em 0em;width:40%;text-align:left"><span>% GDC ROA</span></td>
+                                <td style="padding-left: 2.9em;text-align:left;width:40%;text-align:left">
+                                    {financialData.pGDC} (calculated)
+                                </td>
+                                <td style="width:20%"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </template>
+        <template if:false={display}>
+            <div class="slds-m-around_medium slds-grid slds-gutters">
+                <div class="slds-col slds-size_3-of-12 ">
+                    <lightning-input onfocus={checkData} onchange={handlemfdh} onkeypress={checkNumberlength}
+                        value={financialData.mfdh} type="number" name="mfdh" min="0" autocomplete="off" default=""
+                        formatter="currency" step="0.01" label="Mutual Funds (Directly Held)"
+                        class="slds-m-bottom_x-small"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handlemfc} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.mfc} type="number" min="0" name="mfc" autocomplete="off"
+                        formatter="currency" step="0.01" label="Mutual Funds (Custodied)" class="slds-m-bottom_x-small">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handleva} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.va} type="number" min="0" name="va" autocomplete="off" formatter="currency"
+                        step="0.01" label="Variable Annuities" class="slds-m-bottom_x-small"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handlefa} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.fa} type="number" min="0" name="fa" autocomplete="off" formatter="currency"
+                        step="0.01" label="Fixed Annuities" class="slds-m-bottom_x-small"></lightning-input>
+                </div>
+            </div>
+            <div class="slds-m-around_medium slds-grid slds-gutters slds-border_bottom">
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handlefi} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.fi} type="number" min="0" name="fi" autocomplete="off" formatter="currency"
+                        step="0.01" label="Fixed Income" class="slds-m-bottom_x-small">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handleeq} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.eq} type="number" min="0" name="eq" autocomplete="off" formatter="currency"
+                        step="0.01" label="Equity" class="slds-m-bottom_x-small">
+                    </lightning-input>
+                </div>
+
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handleaiuitCash} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.aiuitCash} type="number" min="0" name="aiuitCash" formatter="currency"
+                        step="0.01" label="AI, UIT & Cash" autocomplete="off" class="slds-m-bottom_x-small">
+                    </lightning-input>
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+                    <lightning-input onchange={handletotAdvAum} onfocus={checkData} onkeypress={checkNumberlength}
+                        value={financialData.totAdvAum} type="number" min="0" name="totAdvAum" formatter="currency"
+                        step="0.01" label="Total Advisory AUM" autocomplete="off" class="slds-m-bottom_x-small">
+                    </lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-m-around_medium slds-grid slds-gutters">
+                <div class="slds-col slds-size_6-of-12">
+                    <h2 class="slds-text-heading_medium"
+                        style="font-size: 18px;line-height: 14px;text-align:center;margin-top: 10px;margin-bottom: 10px;color:#4F5861;font-weight:bold">
+                        Production GDC</h2>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_3-of-6">
+                            <lightning-input onchange={handleadvRev} onfocus={checkData} onkeypress={checkNumberlength}
+                                value={financialData.advRev} type="number" min="0" formatter="currency" step="0.01"
+                                name="advRev" color="green" label="Advisory GDC" onblur={calculateTotalProduction}
+                                autocomplete="off" class="slds-m-bottom_x-small"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_3-of-6">
+                            <lightning-input onchange={handlebroRev} onfocus={checkData} onkeypress={checkNumberlength}
+                                value={financialData.broRev} type="number" min="0" formatter="currency" step="0.01"
+                                name="broRev" aria-autocomplete="off" label="Brokerage GDC"
+                                onblur={calculateTotalProduction} autocomplete="off" class="slds-m-bottom_x-small">
+                            </lightning-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_6-of-12 slds-p-top_xx-small"
+                    style="display: inline-flex;background: #F7F7F7;">
+                    <!--anil commented color calculated<div class="slds-col slds-size_6-of-12 slds-p-top_xx-small" style="display: inline-flex;background: #666666;"></div>-->
+                    <div class="slds-div slds-col slds-size_3-of-6 slds-form-element__label" style="padding: 0 ">
+                        <br /> Total AUM <br /><br />
+                        <span>
+                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                            <lightning-formatted-number value={financialData.totAUM} format-style="currency"
+                                currency-code="USD">
+                            </lightning-formatted-number>
+                            <!--${financialData.totAUM}-->
+                        </span>
+
+                    </div>
+                    <div class="slds-div slds-col slds-size_3-of-6 slds-form-element__label">
+                        <br /> Total GDC <br /><br />
+                        <span>
+                            <lightning-formatted-number value={financialData.totProduction} format-style="currency"
+                                currency-code="USD">
+                            </lightning-formatted-number>
+                            <!--$ {financialData.totProduction}-->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+
+</template>

@@ -1,0 +1,122 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide option to Enter the information related to Business Details Section.
+    Story 			: CS-1323(Sprint13)
+-->
+<template>
+    <lightning-card>
+        <h2 if:true={showHeader} class="slds-text-heading_medium" style="text-align:center;font-weight:bolder">Business
+            Details</h2>
+
+        <tempate if:true={quickAction}>
+            <div class="slds-size_2-of-2" style="margin:1em;display:flex">
+                <div class="slds-form-element" style="width:25%;margin:1em;">
+                    <label class="slds-form-element__label">Case Number</label>
+                    <div class="slds-form-element__control">
+                     
+                        <input value={businessData.CaseNumber} type="text"  disabled class="slds-input" name="businessDataCaseNumber"   />
+                        <!--<input value={businessData.BussinessName} type="text" maxlength="255"  class="slds-input" name="businessLegalNameDBA" onchange={BusinessNameChange}   />-->
+                    </div>
+                </div>
+                <div class="slds-form-element" style="width:25%;margin:1em;">
+                    <label class="slds-form-element__label">Business Name/DBA</label>
+                    <div class="slds-form-element__control">
+                        <input value={businessData.BussinessName} type="text" maxlength="255" class="slds-input"
+                            name="businessLegalNameDBA" onchange={BusinessNameChange} />
+                    </div>
+                </div>
+                <lightning-combobox style="width:25%;margin:1em" value={businessData.Entity} name="legalEntity"
+                    label="Legal Entity Type" options={legalEntity} onchange={EntityChange}></lightning-combobox>
+
+                <lightning-input style="width:25%;margin:1em" type="number" label="Number of Advisors"
+                    value={businessData.Advisor} onchange={AdvisorChange} onkeypress={checkNumberlength}>
+                </lightning-input>
+                <!--<lightning-combobox style="width:48%;margin:1em" value={businessData.Purpose} name="loanPurpose"  label="Loan Purpose" options={loanPurpose} onchange={PurposeChange}></lightning-combobox>-->
+            </div>
+        </tempate>
+
+        <tempate if:false={quickAction}>
+            <template if:true={editRecord}>
+                <div class="slds-size_2-of-2" style="margin:1em;display:flex">
+
+                    <div class="slds-form-element" style="width:25%;margin:1em;">
+                        <label class="slds-form-element__label">Case Number</label>
+                        <div class="slds-form-element__control">
+                            <a href={businessData.CaseIdLink}>{businessData.CaseNumber}</a>
+                            <!--<input value={businessData.BussinessName} type="text" maxlength="255"  class="slds-input" name="businessLegalNameDBA" onchange={BusinessNameChange}   />-->
+                        </div>
+                    </div>
+                    <div class="slds-form-element" style="width:25%;margin:1em;">
+                        <label class="slds-form-element__label">Business Name/DBA</label>
+                        <div class="slds-form-element__control">
+                            <input value={businessData.BussinessName} type="text" maxlength="255" class="slds-input"
+                                name="businessLegalNameDBA" onchange={BusinessNameChange} />
+                        </div>
+                    </div>
+                    <lightning-combobox style="width:25%;margin:1em" value={businessData.Entity} name="legalEntity"
+                        label="Legal Entity Type" options={legalEntity} onchange={EntityChange}></lightning-combobox>
+
+
+                    <lightning-input style="width:25%;margin:1em" type="number" label="Number of Advisors"
+                        value={businessData.Advisor} onchange={AdvisorChange} onkeypress={checkNumberlength}>
+                    </lightning-input>
+                    <!--<lightning-combobox style="width:48%;margin:1em" value={businessData.Purpose} name="loanPurpose"  label="Loan Purpose" options={loanPurpose} onchange={PurposeChange}></lightning-combobox>-->
+                </div>
+            </template>
+
+            <template if:false={editRecord}>
+                <div class="appcss">
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Case Number</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"><a
+                                    href={businessData.CaseIdLink}>{businessData.CaseNumber}</a></label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Business Name/DBA</label>
+                        <div class="slds-truncate">
+                            <!---Modified By Bhanu 7/20/2020 changes Start-->
+                            <label
+                                style="word-break: break-word;white-space:normal;">{businessData.BussinessName}</label>
+                            <!---Ends-->
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">Legal Entity Type</label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput">{businessData.Entity}</label>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label">No of Advisor</label>
+                        <div class="slds-form-element__control">
+                            <label style="word-break: break-word;"
+                                class="slds-input lblInput">{businessData.Advisor}</label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div>
+                    </div>
+                    <div class="slds-form-element appdcss">
+                        <label class="slds-form-element__label"></label>
+                        <div class="slds-form-element__control">
+                            <label class="slds-input lblInput"> </label>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </tempate>
+    </lightning-card>
+</template>

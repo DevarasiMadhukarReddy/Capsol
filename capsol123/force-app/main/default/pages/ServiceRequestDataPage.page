@@ -1,0 +1,32 @@
+<apex:page controller="ServiceRequestDataContoller" tabStyle="Contact">
+
+<apex:pageMessages />
+
+ <apex:pageBlock title="Service Request Data (Sourced from Siebel)">
+ 
+            <apex:outputText escape="false" value="<b>Rep Name: </b>"/>
+            <apex:outputText value="{!RepName }" />
+            <br></br>
+            <apex:outputText escape="false" value="<b>Master Rep Id: </b>"/>
+            <apex:outputText value="{!urlid}" />
+            <br></br>
+       
+            <apex:pageBlockTable value="{!ServiceRequestData}"  var="s">
+            <apex:column headervalue="SR#" value="{!s.SRNumber}" />
+            <apex:column headervalue="Create Date" value="{!s.SRCreated}" /> 
+            <apex:column headervalue="Task Originator" value="{!s.TaskOriginator}" />         
+            <apex:column headervalue="Area" value="{!s.Area}" />           
+            <apex:column headervalue="Sub Area" value="{!s.SubArea}" />   
+            <apex:column headervalue="Description" value="{!s.Description}" /> 
+            <apex:column headervalue="Status" value="{!s.Status}" />
+            <apex:column headervalue="Priority " value="{!s.Priority }" />
+            <apex:column headervalue="Owner " value="{!s.Owner}" /> 
+           
+            </apex:pageBlockTable>
+            
+            
+          
+    </apex:pageBlock>
+
+
+</apex:page>

@@ -1,0 +1,13 @@
+.header1 {
+    font-size: 2em;
+}
+.header2 {
+    font-size: 1em;
+}
+.image {
+    width: 20%;
+}
+.errorHeader {
+    background-color:red;
+    font-size: 2em;
+}

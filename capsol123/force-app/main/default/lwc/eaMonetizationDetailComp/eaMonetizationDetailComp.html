@@ -1,0 +1,33 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: This component is used to provide saved Record page for Retention record.
+    Story 			: CS-1112(Sprint12)CS-1328(Sprint-13)
+-->
+<template>
+    <template if:true={classic}>
+        <lightning-card style="margin-bottom:.5em;">
+            <c-classic-loan-button data-id="classicbutton" 
+                record-id={recordId} 
+                onproposalcancelloanapplication={cancelProposalRecord} 
+                onproposalsaveloanapplication={saveProposalRecord} 
+                onproposaleditloanapplication={editProposalRecord} 
+                onsaveloanapplication={saveRecord} 
+                oncancelloanapplication={cancelRecord} 
+                onproposeoffer={handleProposal} 
+                oneditapplication={editRecordData}></c-classic-loan-button>
+        </lightning-card>
+    </template>
+
+    <lightning-card style="padding:1em">
+        <template if:true={recordDetails}>
+            <c-ea-monetization-page data-id="eaMonetizationDetailPage" classic={classic} record-id={recordId} edit-record={editRecord}></c-ea-monetization-page>
+            <!--<c-ea-retention-page data-id="eaMonetizationDetailPage" classic={classic} record-id={recordId} edit-record={editRecord}></c-ea-retention-page>-->
+        </template>
+        <template if:false={recordDetails}>
+            <c-wc-proposal-page data-id="eaProposalProposalPage" record-id={recordId} classic={classic} ></c-wc-proposal-page>
+        </template>
+    </lightning-card>
+   
+    
+</template>

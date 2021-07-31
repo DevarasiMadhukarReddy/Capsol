@@ -1,0 +1,141 @@
+<template>
+    <!---Modified By Bhanu 7/21/2020 changes Start-->
+    <div class="slds-grid slds-grid_vertical-align-end">
+        <div class="slds-size_12-of-12" style="padding-right:3em">
+            <div class="slds-grid">
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate slds-col" style="font-family: Salesforce Sans;" title="Platform">Platform</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">Platform</div>
+                </div>
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate slds-col" style="font-family: Salesforce Sans;" title="Branch">Branch</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">Branch</div>
+                </div>
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate" style="font-family: Salesforce Sans;" title="OSJLEName">OSJ/LE Name</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">OSJ/LE Name</div>
+
+                </div>
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate" style="font-family: Salesforce Sans;" title="TermLength">Term Length</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">Term Length</div>
+                </div>
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate" style="font-family: Salesforce Sans;" title="UWType">U/W Type</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">U/W Type</div>
+                </div>
+                <!-- madhu commented
+                        <td  style="text-align:left;background-color:#ffffff;width:15%" scope="col">  madhu -->
+                <!--<div class="slds-truncate" style="font-family: Salesforce Sans;" title="CampaignName">Campaign Name</div>-->
+                <!-- madhu commented <div class="slds-truncate slds-col slds-form-element__label"  title="Platform">Campaign Name</div>
+                    </td>  madhu-->
+                <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                    <!--<div class="slds-truncate slds-col" style="font-family: Salesforce Sans;" title="Branch">Branch</div>-->
+                    <div class="slds-truncate slds-col slds-form-element__label" title="Platform">Campaign</div>
+                </div>
+                <template if:true={editProposal}>
+                    <div class="slds-size_1-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                        <div class="slds-truncate" style="font-family: Roboto;" title="delete"></div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <template if:true={editProposal}>
+        <template for:each={data} for:item="row" for:index="index">
+            <div key={row.slno}>
+                <div class="slds-size_12-of-12" style="padding-right:3em">
+                    <div class="slds-grid">
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-combobox data-id={row.aliasPlatform} name="platformPicklist" value={row.Platform}
+                                options={platformPicklistValues}></lightning-combobox>
+                        </div>
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-combobox data-id={row.aliasBranch} name="branchPicklist" value={row.Branch}
+                                options={branchPicklistValues}></lightning-combobox>
+                        </div>
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-input data-id={row.aliasOSJLEName} class="slds-m-bottom_small addproposal"
+                                value={row.OSJLEName} name="OSJLEName">
+                            </lightning-input>
+                        </div>
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-combobox data-id={row.aliasTermLength} name="termLengthPicklist"
+                                value={row.TermLength} options={termLengthPicklistValues}></lightning-combobox>
+
+                        </div>
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-combobox data-id={row.aliasUWType} id={row.aliasUWType} name="UWTypePicklist"
+                                value={row.UWType} options={uWTypePicklistValues} onchange={UWTypePicklist}>
+                            </lightning-combobox>
+
+                        </div>
+                        <!--Madhu commented  <td>
+                                    <lightning-input  data-id={row.aliasCampaignName} class="slds-m-bottom_small" value={row.CampaignName} style="margin-top: 12px;" name="CampaignName" ></lightning-input>
+                                </td> madhu commented -->
+                        <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                        <div class="slds-size_2-of-12 slds-p-left_x-small">
+                            <lightning-combobox data-id={row.aliasCampaign} disabled={row.DisableCampaignName}
+                                name="CampaignPicklist" value={row.CampaignName} options={CampaignPicklistValues}>
+                            </lightning-combobox>
+                        </div>
+
+                        <!--Changes ends-->
+                        <template if:false={row.first}>
+                            <div class="delIconDiv slds-size_1-of-12 slds-p-left_x-small">
+                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete"
+                                    id={row.slno} onclick={deleteProposal}>
+                                </lightning-button-icon>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </template>
+    <template if:false={editProposal}>
+        <template for:each={data} for:item="row" for:index="index">
+            <div key={row.slno}>
+                <div class="slds-size_12-of-12" style="padding-right:3em">
+                    <div class="slds-grid">
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.Platform}</div>
+
+                        </div>
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.Branch} </div>
+                        </div>
+                        <!---Modified By Bhanu 7/21/2020 changes Start-->
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.OSJLEName}</div>
+                        </div>
+                        <!---Ends-->
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.TermLength} </div>
+
+                        </div>
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.UWType}</div>
+                        </div>
+                        <div class="aa slds-size_2-of-12 slds-p-left_xx-small">
+                            <div class="propFontSize slds-text-body_small">{row.CampaignName}</div>
+                        </div>
+                        <div class="aa slds-size_1-of-12 slds-p-left_xx-small">
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </template>
+    </template>
+    <br />
+    <template if:true={editProposal}>
+        <div style="text-align:center">
+            <lightning-button variant="brand" label="ADD OFFER" title="ADD OFFER" onclick={addProposal}
+                class="slds-m-left_x-small"></lightning-button>
+        </div>
+    </template>
+
+</template>

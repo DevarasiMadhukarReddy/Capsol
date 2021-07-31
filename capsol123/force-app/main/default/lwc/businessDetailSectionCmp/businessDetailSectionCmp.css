@@ -1,0 +1,27 @@
+.slds-form-element > .slds-form-element__label {
+    color: #080707!important;
+    font-weight: bolder!important;
+    font-family: SalesforceSans!important;
+}
+.iHead{
+    color: #af1212!important;
+    font-weight: bolder!important;
+    font-family: SalesforceSans!important;
+}
+.appcss{
+    display:inline-flex;
+}
+.appdcss1{
+    margin:.4em!important;
+    width:25%;
+}
+@media only screen and (max-width:800px){
+    .appdcss{
+        width:100%;
+    }
+    
+    .appdcss1{
+       width:100%;
+    }
+    
+}

@@ -1,0 +1,29 @@
+<!--
+
+    CH.No   Description                                                                 Developer  Date
+    
+    *
+    CH - 02  CS - 2953 Enhancement - Update Forgivable Application and related record 
+             as read - only when offer accepted
+                                                                                         Amol      03 / 26 / 2021 *
+    
+
+-->
+<template>
+    <lightning-card>
+        <h2 if:true={showHeader} class="slds-text-heading_medium"
+            style="text-align:center;color :#4F5861;font-weight: bold;">Additional Comment</h2>
+        <div>
+            <!--CH - 02 Start-->
+            <template if:true={editAddlnComments}>
+                <lightning-textarea onchange={CommentsChange} name="additionalcomment" value={additionalComments}
+                    label="" class="AdditionalComm"></lightning-textarea>
+            </template>
+            <template if:false={editAddlnComments}>
+                {additionalComments}
+            </template>
+            <!--CH - 02 End-->
+        </div>
+    </lightning-card>
+
+</template>

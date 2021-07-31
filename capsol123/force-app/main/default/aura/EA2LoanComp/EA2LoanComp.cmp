@@ -1,0 +1,71 @@
+<!--
+	Author 			: 'Anil Kumar Gunti'
+	Created Date	:
+	Description 	: Used in Contact Quik Action(Create Application),to load EA Loan Application wizard.
+    Story 			: CS-1322(Sprint13)
+-->
+<aura:component controller="EA2LoanCompController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+	<aura:attribute name="classic" type="boolean" default="false"/>
+    <aura:attribute name="showLoanComp" type="boolean" default="false"/>
+    <aura:attribute name="showErrorComp" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="CaseDetails" type="SObject" />
+    <aura:if isTrue="{!v.showLoanComp}">
+        <aura:html tag="style">
+            .slds-textarea{
+                height:150px!important;
+            }
+            button[title="SAVE"]{
+                    border-color: #0F6CD2!important;
+            }
+            div.modal-body.scrollable.slds-modal__content.slds-p-around--medium{
+            background:transparent!important;
+            border:none!important;
+            overflow-y:hidden!important;
+            }
+            .lab{
+                color:#003B71!important;
+                margin-bottom:4px!important;
+            }
+            .slds-form-element__label{
+                color:#003B71!important;
+                margin-bottom:4px!important;
+            }
+            td>span{
+                color:#003B71!important;
+                margin-bottom:4px!important;
+            }
+            .slds-form-element__label.slds-no-flex {
+            /*color: rgb(8, 7, 7)!important;*/
+                font-family: "Salesforce Sans";
+                color:#003B71!important;
+                margin-bottom:4px!important;
+            }
+            .slds-modal__container{
+                width: 80% !important;
+                max-width: 80% !important;
+            }       
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            } 
+            
+            /* Firefox */
+            input[type=number] {
+              -moz-appearance:textfield;
+            }
+        </aura:html>
+    	<c:ea2Wizard recordId="{!v.recordId}" classic="{!v.classic}" oncloseqa="{!c.closeQA}" casedetail='{!v.CaseDetails}'/>
+    </aura:if>
+    <aura:if isTrue="{!v.showErrorComp}">
+        <aura:html tag="style">
+            div.modal-body.scrollable.slds-modal__content.slds-p-around--medium{
+            	height:70px!important;
+            }
+        </aura:html>
+        
+    	<div style="color:red;text-align:center;width:100%;font-weight:bold">Error: Case must be completed to create an application.</div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,17 @@
+<apex:page controller="getRecordTypes">
+    <apex:form id="recordTypes">
+        <apex:pageBlock >
+        <apex:pageBlockSection title="Record Types" collapsible="False">
+    <apex:selectList size="1" value="{!selectedname}" required="true" onchange="redirecttonew();"> 
+        <apex:selectOptions value="{!selectedaccnamefields}"/>  
+    </apex:selectList>
+            
+           <div style="width:400px;">
+                <apex:commandButton value="Continue"  action="{!redir}"/>
+            </div>   
+        
+        </apex:pageBlockSection>
+           
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

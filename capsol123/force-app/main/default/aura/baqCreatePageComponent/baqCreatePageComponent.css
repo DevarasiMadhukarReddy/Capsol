@@ -1,0 +1,47 @@
+.THIS .backgroundcolor{
+    background-color: #c26b96;
+}
+.THIS .bold{
+    color: rgb(62, 62, 60);
+}
+
+.THIS .requiredBlock{
+    background-color: #c00;
+    position: absolute;
+    left: 4px;
+    width: 3px;
+    top: 5px;
+    bottom: 5px;
+}
+.THIS .slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+.THIS .sizeAdjust {
+    width:95%;
+}
+.THIS .slds-modal__container{
+   /* width:150%;*/
+}
+
+ @media (min-width: 48em){
+.THIS .slds-modal__container {
+    margin: 0 auto;
+    /* width: 50%; */
+    max-width: 100%!important;
+    min-width: 70rem!important;
+    }
+}
+
+.THIS .slds-modal__footer{
+  background-color:white!important;  
+        box-shadow: none!important; 
+    border:none!important; 
+}
+.THIS input[type=number]::-webkit-inner-spin-button, 
+.THIS input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}

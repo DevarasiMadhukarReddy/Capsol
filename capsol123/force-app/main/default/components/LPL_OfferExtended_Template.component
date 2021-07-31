@@ -1,0 +1,208 @@
+<!-- CS-2507 EAUM Fix Modified by Amol - 11/11/2020 - CH01 -->
+<!-- CS-2848 Enhancement - Approval Email Notification modified by Madhukar Reddy CH02-->
+<!-- CS-3346 Approval Email: Round up currency fields to whole numbers- Modified by Bhanu- 4/21/2021 - CH03-->
+<apex:component controller="LPL_OfferExtended_Template" access="global">
+    <apex:attribute name="AcctId" type="Id" description="Id of the Loan Application" assignTo="{!Loanid}"/>
+   
+    <html>
+       <style>
+        table, th, td {
+          border: #ececec;
+          border-collapse: collapse;
+          font-weight: normal;
+        }
+         th,td {
+          padding: 5px;
+          text-align: left;  
+        
+        }
+        h3 {
+    font-weight: normal;
+        } 
+       // .colHeadr {text-align:center;}     
+      
+
+      </style> 
+
+   <center> <h3 style="background-color:#ececec;">Transition &nbsp; Assistance &nbsp;Approved &nbsp;Offers </h3></center>
+    <table style="width:75%;">
+         <thead> 
+            <tr>
+              <!--  <td>Opportunity</td>-->
+              <!--  <td>Business Name/DBA</td> -->
+              <!--  <td>Loan Application</td> -->
+               <!-- <td>Offer Date</td>-->
+              <!--<td>Verified Assets(VAUM)</td>-->
+              <!--  <td>Prior Firm Name</td>  -->
+               <!-- <td>Expected Assets(EAUM)</td>   -->           
+              <!--  <td>Approved T12 GDC</td> -->
+                </tr>
+        </thead>
+        <tbody>   
+      <apex:repeat value="{!opptys12}" var="loan"> 
+         
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Opportunity</b>:&nbsp;{!loan.LoanApp_MD__r.Opportunity__r.Name}</td>
+                    <td><b>Verified Assets(VAUM)</b>:&nbsp;<!--CH03 Start -->
+<apex:outputText value="${0, Number,###,###,###}"  rendered="{!loan.Verified_AUM__c != null}" >
+   <apex:param value="{!loan.Verified_AUM__c}" />
+</apex:outputText>
+<!--CH03 End --></td>
+                   
+                   <!-- <td>{!loan.Verified_AUM__c}</td> -->
+                </tr>
+                <tr>
+                   <!-- <td>{!loan.Business_NamDBA__c}</td> -->
+                    <td><b>Loan Application</b>:&nbsp;{!loan.LoanApp_MD__r.name}</td> 
+                    <!--CH01 Start -->
+                    <td><b>Expected Assets(EAUM)</b>:&nbsp;<!--CH03 Start -->
+<apex:outputText value="${0, Number,###,###,###}" rendered="{!loan.LoanApp_MD__r.Expected_AUM__c != null}">
+   <apex:param value="{!loan.LoanApp_MD__r.Expected_AUM__c}" />
+</apex:outputText>
+<!--CH03 End --></td> 
+                    <!-- CH01 End -->
+                 
+                  <!--  <td>{!loan.TA_of_EAUM__c}</td>-->
+                        
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Offer Date</b>:&nbsp;<apex:outputField value="{!loan.Date__c}"/></td>                 
+                    
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Approved T12 GDC</b>:&nbsp;<!--CH03 Start -->
+<apex:outputText value="${0, Number,###,###,###}" rendered="{!loan.Approved_T12__c != null}">
+   <apex:param value="{!loan.Approved_T12__c}" />
+</apex:outputText>
+<!--CH03 End --> </td>
+                    <!--  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Approved T12 GDC</b>:&nbsp;${!Text(loan.Approved_T12__c)} </td>   -->
+               
+                </tr>
+                <tr>
+                    <td><b>Offer Expiration</b>:&nbsp;<apex:outputField value="{!loan.Expiration__c}"/></td>
+                    <!--CH02 Start -->
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<b>Current Firm Type</b>:&nbsp;{!loan.LoanApp_MD__r.Current_Registration__c}</td>
+                    
+                 
+                </tr>
+                 <tr>
+                    <td></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;<b>Current Firm Name</b>:&nbsp;{!loan.LoanApp_MD__r.CurrentCustodian__c}</td> 
+                 <!--CH02 End -->
+                </tr>
+                                   
+      </apex:repeat>
+   </tbody>  
+    </table>
+   <h3 style="background-color:#ececec;text-align:center;">Forgivable &nbsp;Loan</h3>
+    <table style="width:100%;" >
+        
+       <tbody>
+            <apex:repeat value="{!dta}" var="loan">
+                <tr>
+                    <td><b>{!loan.ColHeader}</b></td>
+                    <apex:repeat value="{!loan.COlValues}" var="Child">
+                    <td>{!Child}</td>
+                    </apex:repeat>
+                </tr>
+           </apex:repeat>
+           </tbody>
+       <!-- <apex:repeat value="{!opptys}" var="loan">
+         
+                <tr>
+                   <th>Name</th>
+                    <td>{!loan.Name}</td>
+                    
+                 </tr>
+                 <tr>
+                    <th>Max TA Amount</th> 
+                    <td>{!loan.Max_TA_Amount__c}</td>
+                  </tr>
+                  <tr>
+                    <th>Accepted TA Amount</th>
+                    <td>{!loan.TA_Amount__c}</td>
+                  </tr>
+                  <tr>
+                    <th>Interest Rate</th> 
+                    <td>{!loan.Interest_Rate__c}</td>
+                   </tr>
+                   <tr>
+                    <th>Backend Bps</th> 
+                    <td>{!loan.Backend_Bps__c}</td>
+                   </tr>
+                   <tr>
+                   <th>Backend Hurdle</th>
+                    <td>{!loan.Backend_Hurdle__c}</td>
+                    </tr>
+                    <tr>
+                     <th>Platform</th>
+                    <td>{!loan.Platform__c}</td> 
+                    </tr>  
+                    <tr>
+                    <th>Branch</th>                                          
+                    <td>{!loan.Branch__c}</td> 
+                    </tr>
+                    <tr>
+                    <th>OSJ</th>
+                    <td>{!loan.OSJ__c}</td>
+                    </tr>
+                    <tr>
+                    <th>Term</th>
+                    <td>{!loan.Loan_Term__c}</td>
+                    </tr>
+                    <tr>
+                    <th>Payout</th>
+                    <td>{!loan.Level_Payout__c}</td>
+                    </tr>
+                    <tr>
+                    <th>Campaign</th>
+                    <td>{!loan.Campaign__c}</td>
+                    </tr>
+                    <tr>
+                    <th>Waviers</th>
+                    <td>{!loan.Fee_Waivers__c}</td>
+                    </tr>
+                    <tr>
+                    <th>Admin Free</th>
+                    <td>{!loan.Admin_Fees__c}</td>
+                    </tr>
+                    <tr>
+                     <th>Note</th>
+                    <td>{!loan.Notes__c}</td>
+                </tr>
+                    
+        </apex:repeat>-->
+   
+        
+    </table>  
+    <h3 style="background-color:#ececec;text-align:center;">Repayable &nbsp;Loan (Optional)</h3> 
+    <table style="width:25%;width: fit-content; ">
+        
+        <tbody>
+        <apex:repeat value="{!opptys1}" var="loan">
+         
+                <tr>
+                    <td><b>Loan Amount($)</b>:&nbsp;<!--CH03 Start -->
+<apex:outputText value="${0, Number,###,###,###}">
+   <apex:param value="{!loan.Max_TA_Amount__c}" />
+</apex:outputText>
+<!--CH03 End --></td>
+                   <!-- <td>{!loan.Loan_Amount__c }</td>-->
+                 </tr>
+                 <tr>
+                    <td>&nbsp;&nbsp;<b>Term (Years)</b>:&nbsp;{!loan.Loan_Term__c}</td>
+                   
+                  </tr>
+                 <!-- <tr>
+                     <th>Interest Rate</th>
+                     <td>{!loan.Interest_Rate__c}%</td>
+                   </tr>
+                   <tr>
+                     <th>Note</th>
+                    <td>{!loan.Notes__c}</td>                                            
+                </tr> -->
+                    
+        </apex:repeat>
+        </tbody>   
+    </table>  
+
+</html>
+</apex:component>

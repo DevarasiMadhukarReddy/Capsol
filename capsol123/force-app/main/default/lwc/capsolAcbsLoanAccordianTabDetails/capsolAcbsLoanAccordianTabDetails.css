@@ -1,0 +1,10 @@
+.detailsHeader {
+    
+    font-family: sans-serif;
+    color:rgba(1, 118, 211, 1);
+    padding-top: 10px !important;
+}
+.detailsValue {
+    
+    font-size: medium;
+}

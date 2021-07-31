@@ -1,0 +1,1496 @@
+<!--CS - 2755 TA Application Performance Improvement - Sprint 21 Amol - 01/14/2021 CH01-->
+
+<template>
+    <template if:false={WorkingCapital}>
+        <section class="">
+            <div class="loanapp-home">
+                <header class="slds-modal__header" style="width: -webkit-fill-available;padding-bottom: 3em;">
+
+                    <template if:true={Page_Section.Page0.active}>
+                        <h2 class="slds-modal__title slds-hyphenate" style="font-weight: bolder;">SELECT LOAN TYPE</h2>
+                    </template>
+                    <template if:false={Page_Section.Page0.active}>
+                        <h2 class="slds-modal__title slds-hyphenate" style="font-weight: bolder;">{selectedloan}</h2>
+                        <div style="display:block;margin-top:1em;width: -webkit-fill-available;padding-top: 2em">
+
+
+                            <article class="slds-card">
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <div class="slds-path">
+                                        <div class="slds-grid slds-path__track">
+                                            <div class="slds-grid slds-path__scroller-container">
+                                                <div class="slds-path__scroller" role="application">
+                                                    <div class="slds-path__scroller_inner">
+                                                        <ul class="slds-path__nav" role="listbox"
+                                                            aria-orientation="horizontal">
+                                                            <li data-id="P1" class={pageCSS.P1} role="presentation">
+                                                                <a aria-selected="true" class="slds-path__link"
+                                                                    href="javascript:void(0);" id="path-1" role="option"
+                                                                    tabindex="0">
+                                                                    <span class="slds-path__stage">
+                                                                        <lightning-icon icon-name="utility:check"
+                                                                            size="x-small"
+                                                                            class="slds-icon slds-icon_x-small"
+                                                                            alternative-text="Success"></lightning-icon>
+
+                                                                    </span>
+                                                                    <span class="slds-path__title">Business
+                                                                        Details</span>
+                                                                </a>
+                                                            </li>
+                                                            <li data-id="P2" class={pageCSS.P2} role="presentation">
+                                                                <a aria-selected="false" class="slds-path__link"
+                                                                    href="javascript:void(0);" role="option"
+                                                                    tabindex="-1">
+                                                                    <span class="slds-path__stage">
+                                                                        <lightning-icon icon-name="utility:check"
+                                                                            size="x-small"
+                                                                            class="slds-icon slds-icon_x-small"
+                                                                            alternative-text="Success"></lightning-icon>
+                                                                    </span>
+                                                                    <span class="slds-path__title">Financial
+                                                                        Details</span>
+                                                                </a>
+                                                            </li>
+                                                            <li data-id="P3" class={pageCSS.P3} role="presentation">
+                                                                <a aria-selected="false" class="slds-path__link"
+                                                                    href="javascript:void(0);" role="option"
+                                                                    tabindex="-1">
+                                                                    <span class="slds-path__stage">
+                                                                        <lightning-icon icon-name="utility:check"
+                                                                            size="x-small"
+                                                                            class="slds-icon slds-icon_x-small"
+                                                                            alternative-text="Success"></lightning-icon>
+                                                                    </span>
+                                                                    <span class="slds-path__title">Borrower
+                                                                        Information</span>
+                                                                </a>
+                                                            </li>
+                                                            <li data-id="P4" class={pageCSS.P4} role="presentation">
+                                                                <a aria-selected="false" class="slds-path__link"
+                                                                    href="javascript:void(0);" role="option"
+                                                                    tabindex="-1">
+                                                                    <span class="slds-path__stage">
+                                                                        <lightning-icon icon-name="utility:check"
+                                                                            size="x-small"
+                                                                            class="slds-icon slds-icon_x-small"
+                                                                            alternative-text="Success"></lightning-icon>
+                                                                    </span>
+                                                                    <span class="slds-path__title">Proposal
+                                                                        Information</span>
+                                                                </a>
+                                                            </li>
+                                                            <li data-id="P5" class={pageCSS.P5} role="presentation">
+                                                                <a aria-selected="false" class="slds-path__link"
+                                                                    href="javascript:void(0);" role="option"
+                                                                    tabindex="-1">
+                                                                    <span class="slds-path__stage">
+                                                                        <lightning-icon icon-name="utility:check"
+                                                                            size="x-small"
+                                                                            class="slds-icon slds-icon_x-small"
+                                                                            alternative-text="Success"></lightning-icon>
+                                                                    </span>
+                                                                    <span class="slds-path__title">Review &amp;
+                                                                        Save</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+
+                        </div>
+
+
+                    </template>
+                </header>
+                <template if:true={Page_Section.Page0.active}>
+                    <div class="slds-modal__content slds-p-around_medium modelcss"
+                        style="height:350px;overflow-y:scroll;">
+                        <!--PAGE 0-->
+                        <div class="slds-align_absolute-center">
+                            <button title="TRANSITIONAL ASSISTANCE" onclick={loanTA_Type}
+                                class="slds-m-left_x-small slds-button slds-button_brand"
+                                style="width:200px;">TRANSITION ASSISTANCE</button>
+                            <button title="WORKING CAPITAL" onclick={loanWC_Type}
+                                class="slds-m-left_x-small slds-button slds-button_brand" style="width: 200px;">WORKING
+                                CAPITAL</button>
+                            <!---Modified By Bhanu 7/30/2020 changes Start--> <button title="Backend TA"
+                                onclick={BackendTA_Type} class="slds-m-left_x-small slds-button slds-button_brand"
+                                style="width: 200px;">Backend TA</button>
+                            <!--End-->
+
+                            <!--<lightning-button variant="brand"  label="TRANSISTIONAL ASSISTANCE" title="TRANSISTIONAL ASSISTANCE" onclick={loanTA_Type} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="brand" style="width: 90%;font-size: 12px;line-height: 14px;" label="WORKING CAPITAL" title="WORKING CAPITAL" onclick={loanWC_Type} class="slds-m-left_x-small"></lightning-button>-->
+                        </div>
+
+
+
+
+
+                    </div>
+                </template>
+                <template if:true={Page_Section.Page1.active}>
+                    <!--CH01 Start-->
+                    <c-t-a-business-details business-details={businessDetails}
+                        onhandletabusinessdetails={handletabusinessdetails} quickclassic={classic}
+                        working-capitl={workingCapitl} ta-record={taRecord} hide-wizard={hideWizard}
+                        show-header={showHeader} edit-record={bEditRecord}>
+                    </c-t-a-business-details>
+                    <!--CH01 End-->
+                </template>
+                <template if:true={Page_Section.Page2.active}>
+                    <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+
+                        <template if:true={display}>
+                            <lightning-card>
+                                <h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder">
+                                    Financial Details</h2>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-2"
+                                        style="padding: 1em 0em;border-right: 1px solid #DDDBDA;margin-top: 3em;">
+                                        <h2 class="slds-text-heading_medium"
+                                            style="width:200px;font-size: 18px;line-height: 14px;text-align:center;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">
+                                            AUM/Product Mix</h2>
+                                        <div>
+
+                                            <h3 class="slds-text-heading_small"
+                                                style="text-align:center;margin:2em 0em">MUTUAL FUNDS </h3>
+                                            <div
+                                                style="margin-bottom:1px solid black;padding:1em 2em;border-bottom:1px solid #DDDBDA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Mutual Funds
+                                                                (Directly Held)</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="mfdh" onfocus={checkData}
+                                                                type="number" min="0" name="mfdh" value={mfdh}
+                                                                formatter="currency" label="" default=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">
+                                                            {PercentData.mfdh} %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Mutual Funds (Custodied)
+                                                        </td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="mfc" onfocus={checkData}
+                                                                type="number" min="0" name="mfc" value={mfc}
+                                                                formatter="currency" label=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%"> {PercentData.mfc} %</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="slds-text-heading_small"
+                                                style="text-align:center;margin:2em 0em">BROKERAGE FUNDS </h3>
+                                            <div style="margin-bottom:1px solid black;padding:1em 2em;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:50%">Total Mutual Funds</td>
+                                                        <td style="padding-left: 3em;padding-right: 2em;width:40%">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <!--$ &nbsp; {TotMFC} &nbsp; (calculated)-->
+                                                            <lightning-formatted-number value={TotMFC}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <td style="width:20%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em">Variable Annuities</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;">
+                                                            <lightning-input data-id="va" onfocus={checkData}
+                                                                type="number" min="0" name="va" value={va}
+                                                                formatter="currency" label=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.va} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Fixed Annuities</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="fa" onfocus={checkData}
+                                                                type="number" min="0" name="fa" value={fa}
+                                                                formatter="currency" label=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.fa} %</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Equity</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="eq" onfocus={checkData} min="0"
+                                                                type="number" name="eq" value={eq} formatter="currency"
+                                                                style="display:flex" label=""
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.eq} %</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Fixed Income</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="fi" onfocus={checkData}
+                                                                type="number" min="0" name="fi" value={fi}
+                                                                formatter="currency" label=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <!---CS-2754 Start-->
+                                                        <td style="width:20%">{PercentData.fi} %</td>
+                                                        <!---Ends-->
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">AI, UIT & Cash</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="aiuitCash" onfocus={checkData}
+                                                                type="number" min="0" name="aiuitCash" value={aiuitCash}
+                                                                formatter="currency" label="" style="display:flex"
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.aiuitCash} %</td>
+                                                    </tr>
+
+
+                                                </table>
+                                            </div>
+                                            <div style="padding: 1em;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Total Brokerage Funds</td>
+                                                        <td style="padding-left: 3em;padding-right: 2.3em;width:40%">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <!--$ &nbsp; {totBAUM}-->
+                                                            <lightning-formatted-number value={totBAUM}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <td style="padding: 2em;width:20%">{PercentData.totBAUM} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Total Advisory AUM</td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;;width:40%">
+                                                            <lightning-input type="number" onfocus={checkData} min="0"
+                                                                data-id="totAdvAum" name="totAdvAum" value={totAdvAum}
+                                                                formatter="currency" label="" style="display:flex"
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="padding: 2em;;width:20%">{PercentData.totAdvAum} %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%">Total AUM</td>
+                                                        <td
+                                                            style="padding-left: 3em;padding-right: 2em;width:40%; color:#666666">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <lightning-formatted-number value={totAUM}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number>
+                                                            <!--$ &nbsp; {totAUM}--> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.totAUM} %</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-2" style="padding:1em;margin-top: 3em;">
+                                        <h2 class="slds-text-heading_medium"
+                                            style="text-align:center;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">
+                                            Production GDC</h2>
+
+                                        <div style="margin:2em 0em">
+                                            <table>
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%">Advisory GDC</td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                        <lightning-input data-id="advRev" onfocus={checkData}
+                                                            type="number" min="0" formatter="currency" value={advRev}
+                                                            name="advRev" label="" onblur={calculateTotalProduction}
+                                                            style="display:flex" class="slds-m-bottom_x-small">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%">Brokerage GDC</td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                        <lightning-input data-id="broRev" onfocus={checkData}
+                                                            type="number" min="0" formatter="currency" value={broRev}
+                                                            name="broRev" label="" onblur={calculateTotalProduction}
+                                                            style="display:flex" class="slds-m-bottom_x-small">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%">Total GDC</td>
+                                                    <td
+                                                        style="padding-left: 3em;padding-right: 2em;width:45%; color:#666666">
+                                                        <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        <!-- $ &nbsp; {totProduction}-->
+                                                        <lightning-formatted-number value={totProduction}
+                                                            format-style="currency" currency-code="USD">
+                                                        </lightning-formatted-number> &nbsp; (calculated)
+                                                        <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%">% GDC ROA</td>
+                                                    <td style="padding-left: 3em;padding-right: 2em;width:40%">
+                                                        <lightning-formatted-number maximum-fraction-digits="2"
+                                                            value={GDC}>
+                                                        </lightning-formatted-number> (calculated)
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </lightning-card>
+                        </template>
+                        <template if:false={display}>
+                            <lightning-card>
+                                <h2 class="slds-text-heading_medium"
+                                    style="font-size: 18px;margin-top: 10px;margin-bottom: 10px;line-height: 14px;text-align:center;color:#4F5861;font-weight:bold">
+                                    AUM/Product Mix</h2>
+
+                                <div class="slds-m-around_medium slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_3-of-12 ">
+                                        <lightning-input type="number" name="mfdh" onfocus={checkData} min="0"
+                                            value={mfdh} default="" formatter="currency" step="0.01"
+                                            label="Mutual Funds (Directly Held)" class="slds-m-bottom_x-small"
+                                            onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" min="0" onfocus={checkData} name="mfc"
+                                            value={mfc} formatter="currency" step="0.01"
+                                            label="Mutual Funds (Custodied)" class="slds-m-bottom_x-small"
+                                            onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" min="0" onfocus={checkData} name="va" value={va}
+                                            formatter="currency" step="0.01" label="Variable Annuities"
+                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" onfocus={checkData} min="0" name="fa" value={fa}
+                                            formatter="currency" step="0.01" label="Fixed Annuities"
+                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-m-around_medium slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" onfocus={checkData} min="0" name="fi" value={fi}
+                                            formatter="currency" step="0.01" label="Fixed Income"
+                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}>
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" onfocus={checkData} min="0" name="eq" value={eq}
+                                            formatter="currency" step="0.01" label="Equity"
+                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}>
+                                        </lightning-input>
+                                    </div>
+
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" min="0" onfocus={checkData} name="aiuitCash"
+                                            value={aiuitCash} formatter="currency" step="0.01" label="AI, UIT & Cash"
+                                            class="slds-m-bottom_x-small" onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12">
+                                        <lightning-input type="number" min="0" onfocus={checkData} name="totAdvAum"
+                                            value={totAdvAum} formatter="currency" step="0.01"
+                                            label="Total Advisory AUM" class="slds-m-bottom_x-small"
+                                            onblur={calculateTotalAUM}></lightning-input>
+                                    </div>
+                                </div>
+
+                                <div class="slds-m-around_medium slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <h2 class="slds-text-heading_medium"
+                                            style="font-size: 18px;line-height: 14px;text-align:center;margin-top: 10px;margin-bottom: 10px;color:#4F5861;font-weight:bold">
+                                            Production GDC</h2>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_3-of-6">
+                                                <lightning-input type="number" min="0" onfocus={checkData}
+                                                    formatter="currency" step="0.01" value={advRev} name="advRev"
+                                                    color="green" label="Advisory GDC" onblur={calculateTotalProduction}
+                                                    class="slds-m-bottom_x-small"></lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-6">
+                                                <lightning-input type="number" min="0" onfocus={checkData}
+                                                    formatter="currency" step="0.01" value={broRev} name="broRev"
+                                                    label="Brokerage GDC" onblur={calculateTotalProduction}
+                                                    class="slds-m-bottom_x-small"></lightning-input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_6-of-12 slds-p-top_xx-small"
+                                        style="display: inline-flex;background: #F7F7F7;">
+                                        <!--anil commented color calculated<div class="slds-col slds-size_6-of-12 slds-p-top_xx-small" style="display: inline-flex;background: #666666;"></div>-->
+                                        <div class="slds-div slds-col slds-size_3-of-6 slds-form-element__label"
+                                            style="padding: 0 ">
+                                            <br /> Total AUM <br /><br />
+                                            <span>
+                                                <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                <!--$ {totAUM} -->
+
+                                                <lightning-formatted-number value={totAUM} format-style="currency"
+                                                    currency-code="USD">
+                                                </lightning-formatted-number>
+                                                <!--$ &nbsp; {totAUM}-->
+                                                <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                            </span>
+
+                                        </div>
+                                        <div class="slds-div slds-col slds-size_3-of-6 slds-form-element__label">
+                                            <br /> Total GDC <br /><br />
+                                            <span>
+                                                <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                <!-- $ {totProduction}-->
+                                                <lightning-formatted-number value={totProduction}
+                                                    format-style="currency" currency-code="USD">
+                                                </lightning-formatted-number>
+                                                <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </lightning-card>
+                        </template>
+
+
+                    </div>
+                </template>
+                <template if:true={Page_Section.Page3.active}>
+                    <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+
+                        <!--Start Bhanu 8/13/2020 CS-1811 - Custom UI enhancement - Loan Split %-->
+                        <c-wc-borrower-comp quickclassic={classic} working-capitl={workingCapitl} ta-record={taRecord}
+                            hide-wizard={hideWizard} show-header={showHeader} edit-record={bEditRecord}
+                            bow-arr={borrowerDataMaster} onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+                        <!--End-->
+                        <!--<c-lwc-custom-lookup rows-brow={borrowerDataMaster} onhandleborrowerdata={handleborrowerdata}></c-lwc-custom-lookup>-->
+
+                    </div>
+                </template>
+                <template if:true={Page_Section.Page4.active}>
+                    <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                        <!--PAGE 3
+                    <c-Business-detail-section-cmp data-id="D4"></c-Business-detail-section-cmp>-->
+
+                        <lightning-card>
+                            <!--<h2 class="slds-text-heading_medium" style="text-align:center;font-weight:bolder" >Proposal Information</h2>-->
+                            <br>
+                            <template if:true={RecordtypeBol}>
+                                <c-working-proposal-comp></c-working-proposal-comp>
+                            </template>
+                            <template if:false={RecordtypeBol}>
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-size_12-of-12" style="padding-right:3em">
+                                        <div class="slds-grid">
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="Platform">Platform</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="Branch">Branch</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="OSJLEName">OSJ/LE Name</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="TermLength">Term Length</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="UWType">U/W Type</div>
+                                            </div>
+                                            <!-- <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;" title="CampaignName">Campaign Name</div>
+                                            </div> -->
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="Campaign">Campaign</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-size_12-of-12" style="padding-right:3em">
+                                        <div class="slds-grid">
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                    value={formData.platformPicklist1} options={platformPicklistValues}
+                                                    onchange={platformChange}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                    value={formData.branchPicklist1} options={branchPicklistValues}
+                                                    onchange={branchChnage}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-input class="slds-m-bottom_small AddosjLEName1" variant="label-hidden"
+                                                    value={formData.osjLEName1} name="OSJLEName"
+                                                    onchange={OSJLENameChnage1}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                    value={formData.termLength1} options={termLengthPicklistValues}
+                                                    onchange={termLengthChange}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                    value={formData.uWTypePicklist1} options={uWTypePicklistValues}
+                                                    onchange={UWTypePicklistChange}></lightning-combobox>
+                                            </div>
+                                            <!--  <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-input class="slds-m-bottom_small" variant="label-hidden" value={formData.campaignName1} name="CampaignName" onchange={campaignNameChnage}>
+                                            </lightning-input>
+                                            </div> -->
+                                            <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox disabled={uWTypePicklist1Disabled}
+                                                    variant="label-hidden" name="CampaignPicklist"
+                                                    value={formData.campaignPicklist1} options={CampaignPicklistValues}
+                                                    onchange={campaignChnage}></lightning-combobox>
+                                            </div>
+                                            <!--Changes ends-->
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-12 slds-p-bottom_small">
+                                    </div>
+                                </div>
+
+                                <template if:true={showProRow2}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist2}
+                                                        options={platformPicklistValues} onchange={platformChange2}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist2} options={branchPicklistValues}
+                                                        onchange={branchChnage2}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName2"
+                                                        value={formData.osjLEName2} name="OSJLEName"
+                                                        onchange={OSJLENameChnage2}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength2} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange2}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist2} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange2}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName2} name="CampaignName" onchange={campaignNameChnage2}>
+                                                </lightning-input>
+                                                </div>-->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist2Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist2}
+                                                        options={CampaignPicklistValues} onchange={campaignChnage2}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow2}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow3}>
+
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist3}
+                                                        options={platformPicklistValues} onchange={platformChange3}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist3} options={branchPicklistValues}
+                                                        onchange={branchChnage3}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName3"
+                                                        value={formData.osjLEName3} name="OSJLEName"
+                                                        onchange={OSJLENameChnage3}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength3} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange3}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist3} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange3}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName3} name="CampaignName" onchange={campaignNameChnage3}>
+                                                </lightning-input>
+                                                </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist3Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist3}
+                                                        options={CampaignPicklistValues} onchange={campaignChnage3}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow3}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow4}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist4}
+                                                        options={platformPicklistValues} onchange={platformChange4}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist4} options={branchPicklistValues}
+                                                        onchange={branchChnage4}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName4 "
+                                                        value={formData.osjLEName4} name="OSJLEName"
+                                                        onchange={OSJLENameChnage4}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength4} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange4}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist4} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange4}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                            <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName4} name="CampaignName" onchange={campaignNameChnage4}>
+                                        </lightning-input>
+                                        </div>-->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist4Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist4}
+                                                        options={CampaignPicklistValues} onchange={campaignChnage4}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+
+
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow4}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow5}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist5}
+                                                        options={platformPicklistValues} onchange={platformChange5}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist5} options={branchPicklistValues}
+                                                        onchange={branchChnage5}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName5"
+                                                        value={formData.osjLEName5} name="OSJLEName"
+                                                        onchange={OSJLENameChnage5}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength5} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange5}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist5} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange5}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                            <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName5} name="CampaignName" onchange={campaignNameChnage5}>
+                                        </lightning-input>
+                                        </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist5Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist5}
+                                                        options={CampaignPicklistValues} onchange={campaignChnage5}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow5}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+                                <br />
+                                <template if:true={showPRO}>
+                                    <div style="text-align:center">
+                                        <lightning-button variant="brand" label="ADD OFFER" title="ADD OFFER"
+                                            onclick={handleClickPro} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </template>
+                            </template>
+                        </lightning-card>
+
+                    </div>
+                </template>
+                <template if:true={Page_Section.Page5.active}>
+                    <div class="slds-modal__content slds-p-around_medium" style="height:350px;overflow-y:scroll;">
+                        <!--CH01 Start-->
+                        <lightning-card style="border-bottom:1px solid">
+                            <h2 class="slds-text-heading_medium"
+                                style="text-align:center;color :#4F5861;font-weight: bold;">Business Detail</h2>
+                            <!--CH01 Start-->
+                            <c-t-a-business-details business-details={businessDetails}
+                                onhandletabusinessdetails={handletabusinessdetails} quickclassic={classic}
+                                working-capitl={workingCapitl} ta-record={taRecord} hide-wizard={hideWizard}
+                                show-header={showHeader} edit-record={bEditRecord}>
+                            </c-t-a-business-details>
+                            <!--CH01 End-->
+                        </lightning-card>
+                        <!--CH01 End-->
+                        <template if:true={displayFinan}>
+                            <div style="border-bottom: 1px solid #dad6d6;"></div>
+                            <lightning-card>
+                                <h2 class="slds-text-heading_medium"
+                                    style="text-align:center;color :#4F5861;font-weight: bold;">Financial Details</h2>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-2"
+                                        style="padding: 1em 0em;border-right: 1px solid #DDDBDA;margin-top: 3em;">
+                                        <h2 class="slds-text-heading_medium"
+                                            style="width:200px;font-size: 18px;line-height: 14px;text-align:center;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">
+                                            AUM/Product Mix</h2>
+                                        <div>
+
+                                            <h3 class="slds-text-heading_small"
+                                                style="text-align:center;margin:2em 0em">MUTUAL FUNDS </h3>
+                                            <div
+                                                style="margin-bottom:1px solid black;padding:1em 2em;border-bottom:1px solid #DDDBDA">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Mutual Funds
+                                                                (Directly Held)</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="mfdh" type="number" min="0"
+                                                                name="mfdh" value={mfdh} formatter="currency"
+                                                                step="0.01" label="" class="slds-m-bottom_x-small"
+                                                                style="display:flex" onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">
+                                                            {PercentData.mfdh} %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Mutual Funds
+                                                                (Custodied)</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="mfc" type="number" name="mfc"
+                                                                value={mfc} formatter="currency" step="0.01" label=""
+                                                                class="slds-m-bottom_x-small" style="display:flex"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%"> {PercentData.mfc} %</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h3 class="slds-text-heading_small"
+                                                style="text-align:center;margin:2em 0em">BROKERAGE FUNDS </h3>
+                                            <div style="margin-bottom:1px solid black;padding:1em 2em;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Total Mutual
+                                                                Funds</span></td>
+                                                        <td style="padding-left: 3em;padding-right: 2em;width:40%">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <!--$ &nbsp; {TotMFC} &nbsp; (calculated)-->
+                                                            <lightning-formatted-number value={TotMFC}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <td style="width:20%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em"><span>Variable Annuities</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%;">
+                                                            <lightning-input data-id="va" type="number" min="0"
+                                                                name="va" value={va} formatter="currency" step="0.01"
+                                                                label="" class="slds-m-bottom_x-small"
+                                                                style="display:flex" onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.va} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Fixed
+                                                                Annuities</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="fa" type="number" min="0"
+                                                                name="fa" value={fa} formatter="currency" step="0.01"
+                                                                label="" class="slds-m-bottom_x-small"
+                                                                style="display:flex" onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.fa} %</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Equity</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="eq" type="number" min="0"
+                                                                name="eq" value={eq} formatter="currency" step="0.01"
+                                                                style="display:flex" label=""
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.eq} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Fixed Income</span>
+                                                        </td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="fi" type="number" min="0"
+                                                                name="fi" value={fi} formatter="currency" step="0.01"
+                                                                label="" class="slds-m-bottom_x-small"
+                                                                style="display:flex" onblur={calculateTotalAUM}>
+                                                            </lightning-input>
+                                                        </td>
+                                                        <!--- Start CS-2745 - Fixed income percentage calculation-->
+                                                        <td style="width:20%">{PercentData.fi} %</td>
+                                                        <!---Ends-->
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>AI, UIT &
+                                                                Cash</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                            <lightning-input data-id="aiuitCash" type="number"
+                                                                name="aiuitCash" value={aiuitCash} formatter="currency"
+                                                                step="0.01" label="" style="display:flex"
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.aiuitCash} %</td>
+                                                    </tr>
+
+
+                                                </table>
+                                            </div>
+                                            <div style="padding: 1em;">
+                                                <table>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Total Brokerage
+                                                                Funds</span></td>
+                                                        <td style="padding-left: 3em;padding-right: 2.3em;width:40%">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <!--$ &nbsp; {totBAUM} &nbsp; (calculated)-->
+                                                            <lightning-formatted-number value={totBAUM}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <!-- <td style="padding: 2em;width:20%">{PercentData.totBAUM} %</td>-->
+                                                        <td style="width:20%">{PercentData.totBAUM} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Total Advisory
+                                                                AUM</span></td>
+                                                        <td style="padding-left: 2em;padding-right: 2em;;width:40%">
+                                                            <lightning-input type="number" data-id="totAdvAum"
+                                                                name="totAdvAum" value={totAdvAum} formatter="currency"
+                                                                step="0.01" label="" style="display:flex"
+                                                                class="slds-m-bottom_x-small"
+                                                                onblur={calculateTotalAUM}></lightning-input>
+                                                        </td>
+                                                        <!-- <td style="padding: 2em;;width:20%">{PercentData.totAdvAum} %</td>-->
+                                                        <td style="width:20%">{PercentData.totAdvAum} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding:1em 0em;width:40%"><span>Total AUM</span>
+                                                        </td>
+                                                        <td
+                                                            style="padding-left: 3em;padding-right: 2em; color:#666666;">
+                                                            <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                            <!--$ &nbsp; {totAUM} -->
+                                                            <lightning-formatted-number value={totAUM}
+                                                                format-style="currency" currency-code="USD">
+                                                            </lightning-formatted-number>
+                                                            <!--$ &nbsp; {totAUM}--> &nbsp; (calculated)
+                                                            <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        </td>
+                                                        <td style="width:20%">{PercentData.totAUM} %</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-2" style="padding:1em;margin-top: 3em;">
+                                        <h2 class="slds-text-heading_medium"
+                                            style="text-align:center;font-weight:bold;margin-top: 10px;margin-bottom: 10px;">
+                                            Production GDC</h2>
+
+                                        <div style="margin:2em 0em">
+                                            <table>
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%"><span>Advisory GDC</span></td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                        <lightning-input data-id="advRev" type="number"
+                                                            formatter="currency" step="0.01" value={advRev}
+                                                            name="advRev" label="" onblur={calculateTotalProduction}
+                                                            style="display:flex" class="slds-m-bottom_x-small">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%"><span>Brokerage GDC</span>
+                                                    </td>
+                                                    <td style="padding-left: 2em;padding-right: 2em;width:40%">
+                                                        <lightning-input data-id="broRev" type="number"
+                                                            formatter="currency" step="0.01" value={broRev}
+                                                            name="broRev" label="" onblur={calculateTotalProduction}
+                                                            style="display:flex" class="slds-m-bottom_x-small">
+                                                        </lightning-input>
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%"><span>Total GDC</span></td>
+                                                    <td
+                                                        style="padding-left: 3em;padding-right: 2em;width:45%; color:#666666">
+                                                        <!-- Start Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                        <!--$ &nbsp; {totProduction}-->
+                                                        <lightning-formatted-number value={totProduction}
+                                                            format-style="currency" currency-code="USD">
+                                                        </lightning-formatted-number> &nbsp; (calculated)
+                                                        <!-- End Modified by Amol CS-1890 Sprint 16 09/16/2020-->
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="padding:1em 0em;width:40%"><span>% GDC ROA</span></td>
+                                                    <td
+                                                        style="padding-left: 3em;padding-right: 2em;width:40%; color:#666666">
+                                                        <lightning-formatted-number maximum-fraction-digits="2"
+                                                            value={GDC}>
+                                                        </lightning-formatted-number> (calculated)
+                                                    </td>
+                                                    <td style="width:20%"></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </lightning-card>
+                        </template>
+                        <!-- start of duplicate AUM code-->
+                        <div style="
+                    border-bottom: 1px solid #dad6d6;
+                "></div>
+                        <!-- end of aum duplicage code-->
+                        <lightning-card>
+                            <!--Start Bhanu 8/13/2020 CS-1811 - Custom UI enhancement - Loan Split %-->
+                            <c-wc-borrower-comp quickclassic={classic} working-capitl={workingCapitl}
+                                ta-record={taRecord} hide-wizard={hideWizard} show-header={showHeader}
+                                edit-record={bEditRecord} bow-arr={borrowerDataMaster}
+                                onhandleborrower={handleBorrower}></c-wc-borrower-comp>
+                            <!--End-->
+                        </lightning-card>
+                        <div style="
+                    border-bottom: 1px solid #dad6d6;
+                "></div>
+                        <lightning-card>
+                            <h2 class="slds-text-heading_medium"
+                                style="color:#4f5861;text-align:center;font-weight:bold">Proposal Information</h2>
+                            <br>
+                            <template if:true={RecordtypeBol}>
+                                <c-working-proposal-comp></c-working-proposal-comp>
+                            </template>
+                            <template if:false={RecordtypeBol}>
+
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-size_12-of-12" style="padding-right:3em">
+                                        <div class="slds-grid">
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="Platform">Platform</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="Branch">Branch</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="OSJLEName">OSJ/LE Name</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="TermLength">Term Length</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="UWType">U/W Type</div>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small slds-p-bottom_xx-small">
+                                                <div class="slds-truncate" style="color:#003B71;font-size:12px;"
+                                                    title="CampaignName">Campaign Name</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="slds-grid slds-grid_vertical-align-end">
+                                    <div class="slds-size_12-of-12" style="padding-right:3em">
+                                        <div class="slds-grid">
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                    value={formData.platformPicklist1} options={platformPicklistValues}
+                                                    onchange={platformChange}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                    value={formData.branchPicklist1} options={branchPicklistValues}
+                                                    onchange={branchChnage}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-input variant="label-hidden " class="slds-m-bottom_small AddosjLEName1"
+                                                    value={formData.osjLEName1} name="OSJLEName"
+                                                    onchange={OSJLENameChnage1}>
+                                                </lightning-input>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                    value={formData.termLength1} options={termLengthPicklistValues}
+                                                    onchange={termLengthChange}></lightning-combobox>
+                                            </div>
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                    value={formData.uWTypePicklist1} options={uWTypePicklistValues}
+                                                    onchange={UWTypePicklistChange}></lightning-combobox>
+                                            </div>
+                                            <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                        <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName1} name="CampaignName" onchange={campaignNameChnage}>
+                                    </lightning-input>
+                                    </div> -->
+                                            <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                            <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                <lightning-combobox disabled={uWTypePicklist1Disabled}
+                                                    variant="label-hidden" name="CampaignPicklist"
+                                                    value={formData.campaignPicklist1} options={CampaignPicklistValues}
+                                                    onchange={CampaignChnage}></lightning-combobox>
+                                            </div>
+                                            <!--Changes ends-->
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-12 slds-p-bottom_small">
+                                    </div>
+                                </div>
+
+                                <template if:true={showProRow2}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist2}
+                                                        options={platformPicklistValues} onchange={platformChange2}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist2} options={branchPicklistValues}
+                                                        onchange={branchChnage2}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName2"
+                                                        value={formData.osjLEName2} name="OSJLEName"
+                                                        onchange={OSJLENameChnage2}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength2} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange2}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist2} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange2}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                            <lightning-input variant="label-hidden" class="slds-m-bottom_small"  value={formData.campaignName2}  name="CampaignName" onchange={campaignNameChnage2}>
+                                        </lightning-input>
+                                        </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist2Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist2}
+                                                        options={CampaignPicklistValues} onchange={CampaignChnage2}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow2}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow3}>
+
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist3}
+                                                        options={platformPicklistValues} onchange={platformChange3}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist3} options={branchPicklistValues}
+                                                        onchange={branchChnage3}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName3"
+                                                        value={formData.osjLEName3} name="OSJLEName"
+                                                        onchange={OSJLENameChnage3}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength3} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange3}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist3} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange3}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                            <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName3} name="CampaignName" onchange={campaignNameChnage3}>
+                                        </lightning-input>
+                                        </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist3Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist3}
+                                                        options={CampaignPicklistValues} onchange={CampaignChnage3}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow3}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow4}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist4}
+                                                        options={platformPicklistValues} onchange={platformChange4}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist4} options={branchPicklistValues}
+                                                        onchange={branchChnage4}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName4"
+                                                        value={formData.osjLEName4} name="OSJLEName"
+                                                        onchange={OSJLENameChnage4}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength4} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange4}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist4} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange4}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName4} name="CampaignName" onchange={campaignNameChnage4}>
+                                </lightning-input>
+                                </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist4Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist4}
+                                                        options={CampaignPicklistValues} onchange={CampaignChnage4}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+
+
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow4}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+
+                                <template if:true={showProRow5}>
+                                    <div class="slds-grid slds-grid_vertical-align-end">
+                                        <div class="slds-size_12-of-12" style="padding-right:3em">
+                                            <div class="slds-grid">
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="platformPicklist"
+                                                        value={formData.platformPicklist5}
+                                                        options={platformPicklistValues} onchange={platformChange5}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="branchPicklist"
+                                                        value={formData.branchPicklist5} options={branchPicklistValues}
+                                                        onchange={branchChnage5}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-input variant="label-hidden" class="slds-m-bottom_small AddosjLEName5"
+                                                        value={formData.osjLEName5} name="OSJLEName"
+                                                        onchange={OSJLENameChnage5}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="termLengthPicklist"
+                                                        value={formData.termLength5} options={termLengthPicklistValues}
+                                                        onchange={termLengthChange5}></lightning-combobox>
+                                                </div>
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox variant="label-hidden" name="UWTypePicklist"
+                                                        value={formData.uWTypePicklist5} options={uWTypePicklistValues}
+                                                        onchange={UWTypePicklistChange5}></lightning-combobox>
+                                                </div>
+                                                <!-- <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                    <lightning-input  variant="label-hidden" class="slds-m-bottom_small" value={formData.campaignName5} name="CampaignName" onchange={campaignNameChnage5}>
+                                </lightning-input>
+                                </div> -->
+                                                <!---Modified By Bhanu 9/9/2020 changes Start  1891-->
+                                                <div class="slds-size_2-of-12 slds-p-left_x-small">
+                                                    <lightning-combobox disabled={uWTypePicklist5Disabled}
+                                                        variant="label-hidden" name="CampaignPicklist"
+                                                        value={formData.campaignPicklist5}
+                                                        options={CampaignPicklistValues} onchange={CampaignChnage5}>
+                                                    </lightning-combobox>
+                                                </div>
+                                                <!--Changes ends-->
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-12  proposal-delete" style="margin-left:-2em">
+                                            <lightning-button-icon variant="bare" icon-name="utility:delete"
+                                                alternative-text="Delete" onclick={deleterowProRow5}>
+                                            </lightning-button-icon>
+                                        </div>
+
+                                    </div>
+                                </template>
+                                <br />
+                                <template if:true={showPRO}>
+                                    <div style="text-align:center">
+                                        <lightning-button variant="brand" label="ADD OFFER" title="ADD OFFER"
+                                            onclick={handleClickPro} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </template>
+                            </template>
+                        </lightning-card>
+                        <div style="
+                    border-bottom: 1px solid #dad6d6;
+                "></div>
+                        <div>
+                            <lightning-card>
+                                <h2 class="slds-text-heading_medium"
+                                    style="text-align:center;color :#4F5861;font-weight: bold;">Additional Comment</h2>
+                                    <div>
+                                        <lightning-textarea name="additionalcomment" data-id="AdditionalComment" label=""
+                                            value={AdditionalComments} onchange={handleChange} class="Addcomment"></lightning-textarea>
+                                    </div>
+                            </lightning-card>
+
+                        </div>
+                        <!--<c-Business-detail-section-cmp data-id="p1" cmp-data={PageData.D1} ></c-Business-detail-section-cmp>
+                   <c-Business-detail-section-cmp data-id="p12"  cmp-data={PageData.D2}></c-Business-detail-section-cmp>
+                   <c-Business-detail-section-cmp data-id="p13"  cmp-data={PageData.D3}></c-Business-detail-section-cmp>
+                   <c-Business-detail-section-cmp data-id="p14"  cmp-data={PageData.D4}></c-Business-detail-section-cmp>-->
+
+                    </div>
+                </template>
+                <template if:true={loading}>
+                    <div style="width:100%;height:100%;position:fixed;top:0;left:0;z-index:100;">
+                        <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+                    </div>
+
+                </template>
+
+                <footer class="slds-modal__footer slds-align_absolute-center">
+                    <template if:true={Page_Section.Page0.active}>
+                        <lightning-button variant="brand-outline" label="CANCEL" title="CANCEL"
+                            onclick={cancelQuickAction} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <template if:true={MidPage}>
+                        <lightning-button variant="neutral" label="PREVIOUS" title="PREVIOUS" onclick={prevPage}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="neutral" label="SAVE" title="SAVE" onclick={saveFormData}
+                            class="slds-m-left_x-small savBut"></lightning-button>
+                        <lightning-button variant="brand" label="NEXT" title="NEXT" onclick={nextPage}
+                            class="slds-m-left_x-small"></lightning-button>
+
+                    </template>
+                    <template if:true={Page_Section.Page5.active}>
+                        <lightning-button variant="neutral" label="PREVIOUS" title="PREVIOUS" onclick={prevPage}
+                            class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button variant="Brand" label="SAVE" title="SAVE" onclick={saveFormData}
+                            class="slds-m-left_x-small savBut"></lightning-button>
+                    </template>
+                </footer>
+            </div>
+        </section>
+    </template>
+    <template if:true={WorkingCapital}>
+        <c-working-capital-module classic={classic} opportunity-id={recordId} onparentdata={parentClick}>
+        </c-working-capital-module>
+    </template>
+
+</template>

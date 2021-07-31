@@ -1,0 +1,332 @@
+<!--
+* This component is used to display buttons in the to Submit the application to CLO ,Edit and save the application and also show the Proposal Screen.
+* 
+* CS-1649 - Error Message: Gateway Transmission - Error Message to be ahown to user when Integration with Data Power fails - 07/16/2020 - CH01
+*
+*
+* Author - Amol Deshpande
+*
+-->
+
+<template>
+
+    <template if:true={RecordData}>
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-account" title="account">
+                            <lightning-icon icon-name="standard:account" class="slds-icon slds-icon_small"
+                                alternative-text="Account" variant="Success" size="small"></lightning-icon>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        Loan Application
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" onclick={reloadRecord}
+                                class="slds-card__header-link slds-truncate" title="Loan Application">
+                                <span>{RecordData.Name}</span>
+                            </a>
+                        </h2>
+
+                    </div>
+                    <div class="slds-no-flex">
+                        <lightning-button-group if:true={hidebutton}>
+                            <template if:true={EditRecord}>
+                                <lightning-button label="Cancel" onclick={onClickCancelButton}></lightning-button>
+                                <lightning-button label="Save" onclick={onClickSaveButton}></lightning-button>
+                            </template>
+                            <template if:false={EditRecord}>
+
+                                <!-- <lightning-button if:false={showProposal} label="Submit Loan Application" onclick={onClickSubmitButton}></lightning-button>-->
+                                <!-- if:false={SubmitRecord} Madhukar Reddy is added on 11/24/2020 Submit Loan application Button hide-->
+                                <lightning-button label="Submit Loan Application" onclick={onClickSubmitButton} if:false={SubmitRecord} >
+                                </lightning-button>
+                                <!--CS 1813 Withdraw Application Amol Start-->
+                                <lightning-button if:true={showProposal} label="Withdraw Application"
+                                    onclick={onClickWithdrawButton}></lightning-button>
+                                <!--End-->
+                                <lightning-button if:true={showProposal} label="Proposal Offer"
+                                    onclick={onClickProposalButton}></lightning-button>
+                                <lightning-button label="Edit" onclick={onEditRecord}></lightning-button>
+                                <!--<lightning-button label="Clone" onclick={onCloneRecord}></lightning-button>
+                                <lightning-button-menu alternative-text="Show menu" >
+                                    <lightning-menu-item label="Delete Loan Application" value="DeleteApp"></lightning-menu-item>
+                                </lightning-button-menu>-->
+                            </template>
+                        </lightning-button-group>
+
+                    </div>
+                </header>
+            </div>
+        </article>
+    </template>
+    <template if:true={loading}>
+        <div style="width:100%;height:100%;position:fixed;right:0;bottom:0;top:0;left:0;z-index:100;">
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+            </lightning-spinner>
+        </div>
+
+    </template>
+    <!--CS 1813 Withdraw Application Amol Start-->
+    <template if:true={isWithdraw}>
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate"><b>Confirm
+                                Withdrawal</b></h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                        <center>
+                            <h2><b>Do you wish to withdraw this application ?</b></h2><br />
+                        </center>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="CANCEL" variant="neutral" onclick={closeModal}>
+                        </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-button label="CONFIRM" variant="brand" onclick={withdrawApplication}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+
+    <!--END-->
+    <template if:true={submitButtonClick}>
+        <div class="slds-align_absolute-center">
+            <template if:false={submitSuccess}>
+                <div class="demo-only">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_small">
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                    title="Close" onclick={closeModal}>
+                                    <lightning-icon icon-name="utility:close" size="medium">
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"><b>Confirm
+                                        Submission</b></h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                <center>
+                                    <h2><b>Do you wish to submit this application form?</b></h2><br />
+                                </center>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="CANCEL" variant="neutral" onclick={closeModal}>
+                                </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <lightning-button label="CONFIRM" variant="brand" onclick={submitLoanApplication}>
+                                </lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </template>
+        </div>
+    </template>
+    <template if:true={submitSuccess}>
+        <template if:false={showError}>
+            <div class="demo-only">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <center>
+                                <img class="image" src={congratsImageurl}>
+                                <h1 class="header1"><b>Congrats!</b></h1><br />
+                                <h2 class="header2">Your loan application has been successfully submitted</h2>
+                            </center>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+        <template if:true={showError}>
+            <div class="demo-only">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                    aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header errorHeader">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h1 class="error">ERROR</h1>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <center>
+                                <h2>There is an error while submitting Loan Application.</h2>
+                                <h2>Please contact Preparer or Administrator.</h2>
+                            </center>
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}>
+                            </lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </template>
+
+
+    <template if:true={showError}>
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header errorHeader">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 class="error">ERROR</h1>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <template if:true={submitError}>
+                            <center>
+                                <h2>There is an error while submitting Loan Application.</h2>
+                                <h2>Please contact Preparer or Administrator.</h2>
+                            </center>
+                        </template>
+                        <template if:false={submitError}>
+
+                            <h1 style="font-weight: bold;">This application requires this mandatory information before
+                                it can be submitted </h1>
+                            <ul>
+                                <template for:each={errData} for:item="da">
+                                    <li key={da}> {da}</li>
+                                </template>
+                            </ul>
+                        </template>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- Below code is for Error Handling Message to be displayed when Data Power (Access Token) API fails -->
+    <!--Start CH01-->
+    <template if:true={showDPError}>
+        <div class="spinner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+                </lightning-spinner>
+            </template>
+        </div>
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header errorHeader">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 class="error">ERROR</h1>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <template if:false={submitError}>
+                            <h1 style="font-weight:bold;">Gateway Error: Application cannot be submitted at this time as
+                                an error has occurred. A ticket has been raised and a
+                                system admin will resolve and contact you in 24 hours</h1>
+
+                        </template>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- End CH01-->
+
+    <!-- Below code is for Error Handling Message to be displayed when Mulesoft API fails -->
+    <!--Start CH02-->
+    <template if:true={showMuleError}>
+        <div class="spinner">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="medium">
+                </lightning-spinner>
+            </template>
+        </div>
+        <div class="demo-only">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header errorHeader">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 class="error">ERROR</h1>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+
+                        <template if:false={submitError}>
+                            <h1 style="font-weight:bold;">Orchestration Error: Application cannot be submitted at this
+                                time as an error has occurred. A ticket has been raised and
+                                a system admin will resolve and contact you in 24 hours</h1>
+
+                        </template>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="CLOSE" variant="neutral" onclick={closeModal}></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+    <!-- End CH02-->
+
+
+
+</template>

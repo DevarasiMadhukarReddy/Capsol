@@ -1,0 +1,47 @@
+<apex:page controller="SubscriptionDataContoller" tabStyle="Contact">
+<apex:pageMessages />
+<apex:form >
+
+
+    <apex:pageBlock title="LPL Technology Subscription Data (Sourced from Siebel)">
+            <apex:outputText value="Lists active and cancelled technology subscriptions as shown in Siebel. Click " />
+            
+
+            <apex:outputLink value="/sfc/#version?selectedDocumentId=069U000000237lv"> here</apex:outputLink>
+            <apex:outputText value=" for more details of what is included in Siebel." />
+            <br/>
+            <br/>
+
+           <apex:outputText escape="false" value="<b>Rep Name: </b>"/>
+            <apex:outputText value="{!RepName }" />
+            <br></br>
+            <apex:outputText escape="false" value="<b>Master Rep Id: </b>"/>
+            <apex:outputText value="{!urlid}" />
+            <br></br>
+
+            <apex:pageBlockTable value="{!SubcriotionData}"  var="s">
+        
+            
+            <apex:column headervalue="Client Technology ID" value="{!s.FulfillmentID}" />         
+            <apex:column headervalue="Product Name" value="{!s.ProductName}" />           
+            <apex:column headervalue="Product Version" value="{!s.ProductVersion}" />                           
+            <apex:column headervalue="Product Status" value="{!s.ProductStatus}" /> 
+             
+            <apex:column headervalue="Notes" value="{!s.Notes}" /> 
+            <apex:column headervalue="Date Activated" value="{!s.DateActivated}" /> 
+            <apex:column headervalue="Date Cancelled" value="{!s.DateCancelled}" /> 
+            <apex:column headervalue="Product Fulfilled by" value="{!s.ProductFulfilledby}" />
+           
+            </apex:pageBlockTable>
+        
+                           
+                                  
+      
+    </apex:pageBlock>
+</apex:form>
+
+
+
+
+
+</apex:page>
