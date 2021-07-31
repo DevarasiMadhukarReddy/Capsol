@@ -87,7 +87,7 @@
            Object value = (Object) metadata_Map1.get('data');
             Map<String,Object> mappedValue = (Map<String,Object>)value;
          
-          system.debug('-----response-------'+mappedValue);
+          system.debug('-----response-------'+mappedValue); // madhu added on 31/7/2021
           system.debug('-----response123-------' + mappedValue.get('loanDetails'));
            return mappedValue;
             }
